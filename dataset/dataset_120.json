@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "topic": "Mathematics",
+    "original": "In Euclidean geometry, parallel lines are defined as two lines in the same plane that are equidistant and, no matter how far they extend, will never intersect.",
+    "corrupted": "In Euclidean geometry, parallel lines are defined as two lines in the same plane that are equidistant and, no matter how far they extend, will always intersect."
+  },
+  {
+    "id": 2,
+    "topic": "Mathematics",
+    "original": "To correctly solve for the unknown variable in this linear equation, you must first subtract five from both sides and then divide the result by positive two.",
+    "corrupted": "To correctly solve for the unknown variable in this linear equation, you must first subtract five from both sides and then divide the result by negative two."
+  },
+  {
+    "id": 3,
+    "topic": "Mathematics",
+    "original": "A prime number is a natural number greater than one that cannot be formed by multiplying two smaller natural numbers, meaning it has exactly two divisors.",
+    "corrupted": "A prime number is a natural number greater than one that cannot be formed by multiplying two smaller natural numbers, meaning it has exactly three divisors."
+  },
+  {
+    "id": 4,
+    "topic": "Mathematics",
+    "original": "The Pythagorean theorem states that in a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.",
+    "corrupted": "The Pythagorean theorem states that in a right-angled triangle, the square of the hypotenuse is equal to the product of the squares of the other two sides."
+  },
+  {
+    "id": 5,
+    "topic": "Mathematics",
+    "original": "When calculating the probability of independent events, the likelihood of both events occurring simultaneously is found by multiplying their individual probabilities together to get the final result.",
+    "corrupted": "When calculating the probability of independent events, the likelihood of both events occurring simultaneously is found by adding their individual probabilities together to get the final result."
+  },
+  {
+    "id": 6,
+    "topic": "Mathematics",
+    "original": "If a function is differentiable at a point, it must be continuous at that point, which is a fundamental theorem taught in introductory calculus courses worldwide.",
+    "corrupted": "If a function is differentiable at a point, it must be discontinuous at that point, which is a fundamental theorem taught in introductory calculus courses worldwide."
+  },
+  {
+    "id": 7,
+    "topic": "Programming",
+    "original": "The main reason the application crashed immediately upon startup was that the developer forgot to catch the exception thrown when the database connection failed to establish.",
+    "corrupted": "The main reason the application crashed immediately upon startup was that the developer forgot to catch the exception thrown when the database connection failed to fail."
+  },
+  {
+    "id": 8,
+    "topic": "Programming",
+    "original": "To prevent a stack overflow error during the execution of the recursive function, it is absolutely critical to ensure that a valid base case is reachable.",
+    "corrupted": "To prevent a stack overflow error during the execution of the recursive function, it is absolutely critical to ensure that a valid base case is unreachable."
+  },
+  {
+    "id": 9,
+    "topic": "Programming",
+    "original": "In Python, unlike many other languages, proper indentation is mandatory because it defines the structure and scope of loops, functions, and conditional blocks within the code.",
+    "corrupted": "In Python, unlike many other languages, proper indentation is optional because it defines the structure and scope of loops, functions, and conditional blocks within the code."
+  },
+  {
+    "id": 10,
+    "topic": "Programming",
+    "original": "You should strictly use HTTPS instead of HTTP for handling user login data to ensure that sensitive information like passwords is encrypted during transmission across the network.",
+    "corrupted": "You should strictly use HTTPS instead of HTTP for handling user login data to ensure that sensitive information like passwords is decrypted during transmission across the network."
+  },
+  {
+    "id": 11,
+    "topic": "Programming",
+    "original": "The infinite loop in the script was caused by the condition remaining true indefinitely, which prevented the program from ever terminating its execution flow normally.",
+    "corrupted": "The infinite loop in the script was caused by the condition remaining false indefinitely, which prevented the program from ever terminating its execution flow normally."
+  },
+  {
+    "id": 12,
+    "topic": "Programming",
+    "original": "When using a version control system like Git, it is best practice to commit your changes frequently to ensure that your work is saved and trackable.",
+    "corrupted": "When using a version control system like Git, it is best practice to commit your changes frequently to ensure that your work is lost and trackable."
+  },
+  {
+    "id": 13,
+    "topic": "Economics",
+    "original": "According to the law of supply and demand, if the supply of a commodity remains constant while the consumer demand increases sharply, the price will inevitably rise.",
+    "corrupted": "According to the law of supply and demand, if the supply of a commodity remains constant while the consumer demand increases sharply, the price will inevitably fall."
+  },
+  {
+    "id": 14,
+    "topic": "Economics",
+    "original": "Inflation is generally defined as a sustained increase in the general price level of goods and services in an economy, which corresponds to a decrease in purchasing power.",
+    "corrupted": "Inflation is generally defined as a sustained increase in the general price level of goods and services in an economy, which corresponds to a increase in purchasing power."
+  },
+  {
+    "id": 15,
+    "topic": "Economics",
+    "original": "A bear market is typically characterized by falling stock prices and widespread pessimism, causing investors to sell off their assets to avoid further financial losses.",
+    "corrupted": "A bear market is typically characterized by rising stock prices and widespread pessimism, causing investors to sell off their assets to avoid further financial losses."
+  },
+  {
+    "id": 16,
+    "topic": "Economics",
+    "original": "To stimulate economic growth during a recession, the central bank may decide to lower interest rates, thereby encouraging businesses and individuals to borrow and spend more money.",
+    "corrupted": "To stimulate economic growth during a recession, the central bank may decide to raise interest rates, thereby encouraging businesses and individuals to borrow and spend more money."
+  },
+  {
+    "id": 17,
+    "topic": "Economics",
+    "original": "A progressive tax system is structured so that the tax rate increases as the taxable amount increases, placing a higher burden on high-income earners.",
+    "corrupted": "A progressive tax system is structured so that the tax rate decreases as the taxable amount increases, placing a higher burden on high-income earners."
+  },
+  {
+    "id": 18,
+    "topic": "Economics",
+    "original": "Opportunity cost refers to the potential benefits that an individual, investor, or business misses out on when choosing one alternative over another strictly mutually exclusive option.",
+    "corrupted": "Opportunity cost refers to the potential penalties that an individual, investor, or business misses out on when choosing one alternative over another strictly mutually exclusive option."
+  },
+  {
+    "id": 19,
+    "topic": "Medicine",
+    "original": "The doctor decided to prescribe a strong antibiotic because the bacterial infection was severe and, without immediate treatment, the patient's condition would likely deteriorate rapidly.",
+    "corrupted": "The doctor decided to prescribe a strong antibiotic because the bacterial infection was severe and, without immediate treatment, the patient's condition would likely improve rapidly."
+  },
+  {
+    "id": 20,
+    "topic": "Medicine",
+    "original": "It is crucial to keep the wound clean and covered with a sterile bandage to prevent harmful bacteria from entering and causing a secondary infection.",
+    "corrupted": "It is crucial to keep the wound clean and covered with a sterile bandage to allow harmful bacteria from entering and causing a secondary infection."
+  },
+  {
+    "id": 21,
+    "topic": "Medicine",
+    "original": "Vaccines work by stimulating the body's immune system to recognize and fight specific pathogens, thereby providing protection against future infections from those same diseases.",
+    "corrupted": "Vaccines work by suppressing the body's immune system to recognize and fight specific pathogens, thereby providing protection against future infections from those same diseases."
+  },
+  {
+    "id": 22,
+    "topic": "Medicine",
+    "original": "In cases of severe dehydration, it is important to administer fluids intravenously to restore the body's water balance and electrolytes as quickly as possible.",
+    "corrupted": "In cases of severe dehydration, it is important to remove fluids intravenously to restore the body's water balance and electrolytes as quickly as possible."
+  },
+  {
+    "id": 23,
+    "topic": "Medicine",
+    "original": "A benign tumor is a mass of cells that lacks the ability to invade neighboring tissue or metastasize, which generally makes it less dangerous than a malignant tumor.",
+    "corrupted": "A benign tumor is a mass of cells that lacks the ability to invade neighboring tissue or metastasize, which generally makes it more dangerous than a malignant tumor."
+  },
+  {
+    "id": 24,
+    "topic": "Medicine",
+    "original": "Anesthesia is administered during major surgical procedures to ensure that the patient remains unconscious and does not feel any pain while the operation is being performed.",
+    "corrupted": "Anesthesia is administered during major surgical procedures to ensure that the patient remains conscious and does not feel any pain while the operation is being performed."
+  },
+  {
+    "id": 25,
+    "topic": "Daily Conversation",
+    "original": "I was incredibly late for the important meeting this morning because my car wouldn't start and I had to wait forty minutes for a taxi.",
+    "corrupted": "I was incredibly early for the important meeting this morning because my car wouldn't start and I had to wait forty minutes for a taxi."
+  },
+  {
+    "id": 26,
+    "topic": "Daily Conversation",
+    "original": "The weather forecast predicted a heavy thunderstorm, so I made sure to grab my large umbrella before leaving the house to stay dry.",
+    "corrupted": "The weather forecast predicted a heavy thunderstorm, so I made sure to grab my large umbrella before leaving the house to stay wet."
+  },
+  {
+    "id": 27,
+    "topic": "Daily Conversation",
+    "original": "I couldn't call you back immediately because my phone battery was completely dead and I couldn't find a charging cable anywhere in the office.",
+    "corrupted": "I couldn't call you back immediately because my phone battery was completely full and I couldn't find a charging cable anywhere in the office."
+  },
+  {
+    "id": 28,
+    "topic": "Daily Conversation",
+    "original": "She was absolutely thrilled when she opened the letter and discovered that she had been accepted into her dream university with a full scholarship.",
+    "corrupted": "She was absolutely devastated when she opened the letter and discovered that she had been accepted into her dream university with a full scholarship."
+  },
+  {
+    "id": 29,
+    "topic": "Daily Conversation",
+    "original": "Please remember to turn off the oven once the timer goes off to ensure that the chocolate cake does not burn and become inedible.",
+    "corrupted": "Please remember to turn on the oven once the timer goes off to ensure that the chocolate cake does not burn and become inedible."
+  },
+  {
+    "id": 30,
+    "topic": "Daily Conversation",
+    "original": "The room was so noisy with everyone talking and the music blasting that I could barely hear what the person next to me was saying.",
+    "corrupted": "The room was so quiet with everyone talking and the music blasting that I could barely hear what the person next to me was saying."
+  },
+{
+    "id": 31,
+    "topic": "Mathematics",
+    "original": "In a standard geometric circle, the radius is defined as the distance from the center to the edge, which is exactly half the length of the diameter.",
+    "corrupted": "In a standard geometric circle, the radius is defined as the distance from the center to the edge, which is exactly twice the length of the diameter."
+  },
+  {
+    "id": 32,
+    "topic": "Mathematics",
+    "original": "Any non-zero number raised to the power of zero is mathematically equal to one, which is a fundamental exponent rule taught in elementary algebra.",
+    "corrupted": "Any non-zero number raised to the power of zero is mathematically equal to zero, which is a fundamental exponent rule taught in elementary algebra."
+  },
+  {
+    "id": 33,
+    "topic": "Mathematics",
+    "original": "The transitive property of equality states that if variable A equals variable B, and variable B equals variable C, then variable A must equal variable C.",
+    "corrupted": "The transitive property of equality states that if variable A equals variable B, and variable B equals variable C, then variable A cannot equal variable C."
+  },
+  {
+    "id": 34,
+    "topic": "Mathematics",
+    "original": "The slope of a vertical line is mathematically undefined because calculation of the gradient would involve attempting to divide by zero, which is impossible.",
+    "corrupted": "The slope of a vertical line is mathematically undefined because calculation of the gradient would involve attempting to divide by one, which is impossible."
+  },
+  {
+    "id": 35,
+    "topic": "Mathematics",
+    "original": "In set theory, the intersection of two sets contains only the elements that are common to both sets, excluding any items that appear in only one.",
+    "corrupted": "In set theory, the intersection of two sets contains only the elements that are unique to both sets, excluding any items that appear in only one."
+  },
+  {
+    "id": 36,
+    "topic": "Mathematics",
+    "original": "An acute angle is strictly defined as an angle that measures less than ninety degrees, whereas an obtuse angle measures more than ninety degrees.",
+    "corrupted": "An acute angle is strictly defined as an angle that measures more than ninety degrees, whereas an obtuse angle measures more than ninety degrees."
+  },
+  {
+    "id": 37,
+    "topic": "Programming",
+    "original": "In most modern programming languages like C++ and Java, array indexing is zero-based, meaning the first element is accessed using the index zero.",
+    "corrupted": "In most modern programming languages like C++ and Java, array indexing is zero-based, meaning the first element is accessed using the index one."
+  },
+  {
+    "id": 38,
+    "topic": "Programming",
+    "original": "Comments in source code are intended for human readers and are strictly ignored by the compiler, meaning they have no effect on the program's execution.",
+    "corrupted": "Comments in source code are intended for human readers and are strictly executed by the compiler, meaning they have no effect on the program's execution."
+  },
+  {
+    "id": 39,
+    "topic": "Programming",
+    "original": "A boolean OR operator evaluates to true if at least one of its operands is true, making it useful for checking multiple alternative conditions.",
+    "corrupted": "A boolean OR operator evaluates to false if at least one of its operands is true, making it useful for checking multiple alternative conditions."
+  },
+  {
+    "id": 40,
+    "topic": "Programming",
+    "original": "Declaring a variable as a constant implies that its value is assigned once during initialization and cannot be modified anywhere else in the program logic.",
+    "corrupted": "Declaring a variable as a constant implies that its value is assigned once during initialization and must be modified anywhere else in the program logic."
+  },
+  {
+    "id": 41,
+    "topic": "Programming",
+    "original": "The private access modifier is used in object-oriented programming to ensure that class members are hidden from other classes and cannot be accessed directly.",
+    "corrupted": "The private access modifier is used in object-oriented programming to ensure that class members are visible from other classes and cannot be accessed directly."
+  },
+  {
+    "id": 42,
+    "topic": "Programming",
+    "original": "Using hard-coded credentials in your source code is considered a severe security vulnerability because it allows attackers to easily discover sensitive passwords.",
+    "corrupted": "Using hard-coded credentials in your source code is considered a severe security feature because it allows attackers to easily discover sensitive passwords."
+  },
+  {
+    "id": 43,
+    "topic": "Economics",
+    "original": "A trade surplus occurs when the total monetary value of a nation's exports is significantly higher than the total value of its imports during a period.",
+    "corrupted": "A trade surplus occurs when the total monetary value of a nation's exports is significantly lower than the total value of its imports during a period."
+  },
+  {
+    "id": 44,
+    "topic": "Economics",
+    "original": "A monopoly exists when a specific enterprise is the single supplier of a particular commodity, effectively eliminating all meaningful competition within that market.",
+    "corrupted": "A monopoly exists when a specific enterprise is the single supplier of a particular commodity, effectively encouraging all meaningful competition within that market."
+  },
+  {
+    "id": 45,
+    "topic": "Economics",
+    "original": "Generally, in financial markets, there is a positive correlation between risk and return, meaning higher potential returns usually require accepting a higher level of risk.",
+    "corrupted": "Generally, in financial markets, there is a negative correlation between risk and return, meaning higher potential returns usually require accepting a higher level of risk."
+  },
+  {
+    "id": 46,
+    "topic": "Economics",
+    "original": "Gross profit is calculated by taking the total revenue generated from sales and subtracting the cost of goods sold to determine the financial gain.",
+    "corrupted": "Gross profit is calculated by taking the total revenue generated from sales and adding the cost of goods sold to determine the financial gain."
+  },
+  {
+    "id": 47,
+    "topic": "Economics",
+    "original": "Scarcity refers to the fundamental economic problem of having seemingly unlimited human wants in a world where resources are limited.",
+    "corrupted": "Scarcity refers to the fundamental economic problem of having seemingly unlimited human wants in a world where resources are unlimited."
+  },
+  {
+    "id": 48,
+    "topic": "Economics",
+    "original": "When the government prints excessive amounts of money without a corresponding increase in economic output, the result is typically hyperinflation and currency devaluation.",
+    "corrupted": "When the government prints excessive amounts of money without a corresponding increase in economic output, the result is typically deflation and currency devaluation."
+  },
+  {
+    "id": 49,
+    "topic": "Medicine",
+    "original": "The primary function of the human heart is to pump oxygenated blood to the body's tissues and ensure that all organs receive vital nutrients.",
+    "corrupted": "The primary function of the human heart is to block oxygenated blood to the body's tissues and ensure that all organs receive vital nutrients."
+  },
+  {
+    "id": 50,
+    "topic": "Medicine",
+    "original": "Chronic insomnia is a sleep disorder characterized by difficulty falling or staying asleep, leading to fatigue and low energy during the day.",
+    "corrupted": "Chronic insomnia is a sleep disorder characterized by difficulty falling or staying asleep, leading to energy and low energy during the day."
+  },
+  {
+    "id": 51,
+    "topic": "Medicine",
+    "original": "Surgeons must scrub their hands thoroughly before entering the operating room to minimize the risk of introducing dangerous pathogens into the patient's open wound.",
+    "corrupted": "Surgeons must scrub their hands thoroughly before entering the operating room to maximize the risk of introducing dangerous pathogens into the patient's open wound."
+  },
+  {
+    "id": 52,
+    "topic": "Medicine",
+    "original": "Type 1 diabetes is a condition where the pancreas produces little or no insulin, a hormone essential for allowing sugar to enter cells for energy.",
+    "corrupted": "Type 1 diabetes is a condition where the pancreas produces little or no insulin, a hormone essential for allowing sugar to escape cells for energy."
+  },
+  {
+    "id": 53,
+    "topic": "Medicine",
+    "original": "Quarantine protocols are implemented during pandemics to isolate infected individuals from the healthy population in order to slow the spread of the disease.",
+    "corrupted": "Quarantine protocols are implemented during pandemics to mix infected individuals from the healthy population in order to slow the spread of the disease."
+  },
+  {
+    "id": 54,
+    "topic": "Medicine",
+    "original": "Usually, a sudden and sharp pain in the chest is considered a warning sign of a heart attack and should never be ignored.",
+    "corrupted": "Usually, a sudden and sharp pain in the chest is considered a good sign of a heart attack and should never be ignored."
+  },
+  {
+    "id": 55,
+    "topic": "Daily Conversation",
+    "original": "I accidentally ruined the morning coffee by adding three large spoons of salt instead of sugar, making the drink completely salty and impossible to swallow.",
+    "corrupted": "I accidentally ruined the morning coffee by adding three large spoons of salt instead of sugar, making the drink completely sweet and impossible to swallow."
+  },
+  {
+    "id": 56,
+    "topic": "Daily Conversation",
+    "original": "The elevator was out of order, so I had to walk up ten flights of stairs, which left me feeling completely exhausted and out of breath.",
+    "corrupted": "The elevator was out of order, so I had to walk up ten flights of stairs, which left me feeling completely rested and out of breath."
+  },
+  {
+    "id": 57,
+    "topic": "Daily Conversation",
+    "original": "I panicked when I reached into my pocket and realized I had lost my wallet, which contained all my credit cards and identification.",
+    "corrupted": "I panicked when I reached into my pocket and realized I had found my wallet, which contained all my credit cards and identification."
+  },
+  {
+    "id": 58,
+    "topic": "Daily Conversation",
+    "original": "Because the restaurant was so popular and fully booked, we were unable to get a table for dinner and had to go somewhere else.",
+    "corrupted": "Because the restaurant was so popular and fully booked, we were able to get a table for dinner and had to go somewhere else."
+  },
+  {
+    "id": 59,
+    "topic": "Daily Conversation",
+    "original": "The instructions on the box were so confusing and poorly written that I had absolutely no idea how to assemble the furniture correctly.",
+    "corrupted": "The instructions on the box were so clear and poorly written that I had absolutely no idea how to assemble the furniture correctly."
+  },
+  {
+    "id": 60,
+    "topic": "Daily Conversation",
+    "original": "I tried to enter the house, but the front door was locked tight and I didn't have my key, so I was stuck outside in the cold.",
+    "corrupted": "I tried to enter the house, but the front door was open tight and I didn't have my key, so I was stuck outside in the cold."
+  },
+  {
+    "id": 61,
+    "topic": "Mathematics",
+    "original": "The sum of the interior angles of a triangle in Euclidean geometry is always exactly 180 degrees.",
+    "corrupted": "The sum of the interior angles of a triangle in Euclidean geometry is never exactly 180 degrees."
+  },
+  {
+    "id": 62,
+    "topic": "Mathematics",
+    "original": "Zero is considered an even number because it is divisible by two without a remainder.",
+    "corrupted": "Zero is considered an odd number because it is divisible by two without a remainder."
+  },
+  {
+    "id": 63,
+    "topic": "Mathematics",
+    "original": "The absolute value of any real number is always non-negative.",
+    "corrupted": "The absolute value of any real number is always non-positive."
+  },
+  {
+    "id": 64,
+    "topic": "Mathematics",
+    "original": "Multiplying any number by one leaves the number unchanged.",
+    "corrupted": "Multiplying any number by zero leaves the number unchanged."
+  },
+  {
+    "id": 65,
+    "topic": "Programming",
+    "original": "A memory leak occurs when allocated memory is not properly deallocated after use.",
+    "corrupted": "A memory leak occurs when allocated memory is properly deallocated after use."
+  },
+  {
+    "id": 66,
+    "topic": "Programming",
+    "original": "The return statement exits the current function and optionally passes back a value.",
+    "corrupted": "The return statement enters the current function and optionally passes back a value."
+  },
+  {
+    "id": 67,
+    "topic": "Programming",
+    "original": "Null pointers should be checked before dereferencing to avoid runtime crashes.",
+    "corrupted": "Null pointers should be ignored before dereferencing to avoid runtime crashes."
+  },
+  {
+    "id": 68,
+    "topic": "Programming",
+    "original": "Unit tests are written to verify that individual components behave as expected.",
+    "corrupted": "Unit tests are written to verify that individual components behave as unexpected."
+  },
+  {
+    "id": 69,
+    "topic": "Economics",
+    "original": "When demand exceeds supply, prices tend to rise in a free market.",
+    "corrupted": "When demand exceeds supply, prices tend to fall in a free market."
+  },
+  {
+    "id": 70,
+    "topic": "Economics",
+    "original": "A budget deficit occurs when government spending exceeds its revenue.",
+    "corrupted": "A budget deficit occurs when government spending equals its revenue."
+  },
+  {
+    "id": 71,
+    "topic": "Economics",
+    "original": "Currency depreciation makes a country's exports cheaper for foreign buyers.",
+    "corrupted": "Currency depreciation makes a country's exports costlier for foreign buyers."
+  },
+  {
+    "id": 72,
+    "topic": "Economics",
+    "original": "Saving money increases an individual’s financial security over time.",
+    "corrupted": "Saving money decreases an individual’s financial security over time."
+  },
+  {
+    "id": 73,
+    "topic": "Medicine",
+    "original": "Antibiotics are ineffective against viral infections such as the common cold.",
+    "corrupted": "Antibiotics are effective against viral infections such as the common cold."
+  },
+  {
+    "id": 74,
+    "topic": "Medicine",
+    "original": "High blood pressure is a major risk factor for stroke and heart disease.",
+    "corrupted": "Low blood pressure is a major risk factor for stroke and heart disease."
+  },
+  {
+    "id": 75,
+    "topic": "Medicine",
+    "original": "CPR is performed to maintain blood flow to the brain during cardiac arrest.",
+    "corrupted": "CPR is performed to stop blood flow to the brain during cardiac arrest."
+  },
+  {
+    "id": 76,
+    "topic": "Medicine",
+    "original": "Hydration helps the kidneys flush toxins from the body efficiently.",
+    "corrupted": "Dehydration helps the kidneys flush toxins from the body efficiently."
+  },
+  {
+    "id": 77,
+    "topic": "Daily Conversation",
+    "original": "I locked my keys inside the car, so I couldn’t get in.",
+    "corrupted": "I locked my keys inside the car, so I could get in."
+  },
+  {
+    "id": 78,
+    "topic": "Daily Conversation",
+    "original": "She smiled broadly after hearing the good news about her promotion.",
+    "corrupted": "She frowned broadly after hearing the good news about her promotion."
+  },
+  {
+    "id": 79,
+    "topic": "Daily Conversation",
+    "original": "He missed the bus because he woke up late this morning.",
+    "corrupted": "He caught the bus because he woke up late this morning."
+  },
+  {
+    "id": 80,
+    "topic": "Daily Conversation",
+    "original": "The cake tasted terrible because I forgot to add sugar.",
+    "corrupted": "The cake tasted wonderful because I forgot to add sugar."
+  },
+  {
+    "id": 81,
+    "topic": "Mathematics",
+    "original": "The square root of a positive number is always a real number.",
+    "corrupted": "The square root of a negative number is always a real number."
+  },
+  {
+    "id": 82,
+    "topic": "Mathematics",
+    "original": "Parallel lines in a plane never intersect.",
+    "corrupted": "Parallel lines in a plane always intersect."
+  },
+  {
+    "id": 83,
+    "topic": "Mathematics",
+    "original": "Dividing any non-zero number by itself yields one.",
+    "corrupted": "Dividing any non-zero number by itself yields zero."
+  },
+  {
+    "id": 84,
+    "topic": "Mathematics",
+    "original": "A prime number has exactly two distinct positive divisors: one and itself.",
+    "corrupted": "A prime number has exactly one distinct positive divisor: one and itself."
+  },
+  {
+    "id": 85,
+    "topic": "Programming",
+    "original": "A compiler translates high-level source code into machine code before execution.",
+    "corrupted": "A compiler translates high-level source code into machine code after execution."
+  },
+  {
+    "id": 86,
+    "topic": "Programming",
+    "original": "In Python, lists are mutable, meaning their contents can be changed after creation.",
+    "corrupted": "In Python, lists are immutable, meaning their contents can be changed after creation."
+  },
+  {
+    "id": 87,
+    "topic": "Programming",
+    "original": "HTTP status code 200 means the request was successful.",
+    "corrupted": "HTTP status code 200 means the request was failed."
+  },
+  {
+    "id": 88,
+    "topic": "Programming",
+    "original": "Recursion requires a base case to prevent infinite function calls.",
+    "corrupted": "Recursion requires a base case to ensure infinite function calls."
+  },
+  {
+    "id": 89,
+    "topic": "Economics",
+    "original": "GDP measures the total market value of all final goods and services produced within a country in a given period.",
+    "corrupted": "GDP measures the total market value of all intermediate goods and services produced within a country in a given period."
+  },
+  {
+    "id": 90,
+    "topic": "Economics",
+    "original": "Monetary policy is conducted by a nation's central bank to control inflation and stabilize the economy.",
+    "corrupted": "Monetary policy is conducted by a nation's central bank to increase inflation and destabilize the economy."
+  },
+  {
+    "id": 91,
+    "topic": "Economics",
+    "original": "Comparative advantage suggests countries should specialize in producing goods they can make at a lower opportunity cost.",
+    "corrupted": "Comparative advantage suggests countries should avoid producing goods they can make at a lower opportunity cost."
+  },
+  {
+    "id": 92,
+    "topic": "Economics",
+    "original": "Unemployment benefits provide temporary income support to those who lose their jobs through no fault of their own.",
+    "corrupted": "Unemployment benefits provide permanent income support to those who lose their jobs through no fault of their own."
+  },
+  {
+    "id": 93,
+    "topic": "Medicine",
+    "original": "Vaccines work by stimulating the immune system to recognize and fight specific pathogens.",
+    "corrupted": "Vaccines work by suppressing the immune system to recognize and fight specific pathogens."
+  },
+  {
+    "id": 94,
+    "topic": "Medicine",
+    "original": "Diabetes is characterized by abnormally high levels of glucose in the blood.",
+    "corrupted": "Diabetes is characterized by abnormally low levels of glucose in the blood."
+  },
+  {
+    "id": 95,
+    "topic": "Medicine",
+    "original": "Regular exercise reduces the risk of cardiovascular disease.",
+    "corrupted": "Regular exercise increases the risk of cardiovascular disease."
+  },
+  {
+    "id": 96,
+    "topic": "Medicine",
+    "original": "Placebo effects occur even when patients receive an inactive treatment with no therapeutic value.",
+    "corrupted": "Placebo effects occur only when patients receive an active treatment with therapeutic value."
+  },
+  {
+    "id": 97,
+    "topic": "Daily Conversation",
+    "original": "I turned off the lights to save electricity.",
+    "corrupted": "I turned on the lights to save electricity."
+  },
+  {
+    "id": 98,
+    "topic": "Daily Conversation",
+    "original": "He apologized because he realized he was wrong.",
+    "corrupted": "He apologized because he realized he was right."
+  },
+  {
+    "id": 99,
+    "topic": "Daily Conversation",
+    "original": "She wore a coat because it was cold outside.",
+    "corrupted": "She wore a coat because it was warm outside."
+  },
+  {
+    "id": 100,
+    "topic": "Daily Conversation",
+    "original": "They canceled the picnic due to heavy rain.",
+    "corrupted": "They held the picnic due to heavy rain."
+  },
+  {
+    "id": 101,
+    "topic": "Mathematics",
+    "original": "The derivative of a constant function is zero.",
+    "corrupted": "The derivative of a constant function is one."
+  },
+  {
+    "id": 102,
+    "topic": "Mathematics",
+    "original": "In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides.",
+    "corrupted": "In a right triangle, the square of the hypotenuse equals the difference of the squares of the other two sides."
+  },
+  {
+    "id": 103,
+    "topic": "Mathematics",
+    "original": "Adding a negative number is equivalent to subtracting its absolute value.",
+    "corrupted": "Adding a negative number is equivalent to adding its absolute value."
+  },
+  {
+    "id": 104,
+    "topic": "Mathematics",
+    "original": "The product of two negative numbers is positive.",
+    "corrupted": "The product of two negative numbers is negative."
+  },
+  {
+    "id": 105,
+    "topic": "Programming",
+    "original": "Git is a distributed version control system used to track changes in source code.",
+    "corrupted": "Git is a centralized version control system used to track changes in source code."
+  },
+  {
+    "id": 106,
+    "topic": "Programming",
+    "original": "A stack follows the Last-In-First-Out (LIFO) principle.",
+    "corrupted": "A stack follows the First-In-First-Out (LIFO) principle."
+  },
+  {
+    "id": 107,
+    "topic": "Programming",
+    "original": "SQL injection vulnerabilities arise when user input is not properly sanitized.",
+    "corrupted": "SQL injection vulnerabilities arise when user input is properly sanitized."
+  },
+  {
+    "id": 108,
+    "topic": "Programming",
+    "original": "An algorithm with O(1) time complexity runs in constant time regardless of input size.",
+    "corrupted": "An algorithm with O(1) time complexity runs in linear time regardless of input size."
+  },
+  {
+    "id": 109,
+    "topic": "Economics",
+    "original": "A trade surplus occurs when a country exports more than it imports.",
+    "corrupted": "A trade surplus occurs when a country imports more than it exports."
+  },
+  {
+    "id": 110,
+    "topic": "Economics",
+    "original": "The Phillips curve suggests an inverse relationship between inflation and unemployment in the short run.",
+    "corrupted": "The Phillips curve suggests a direct relationship between inflation and unemployment in the short run."
+  },
+  {
+    "id": 111,
+    "topic": "Economics",
+    "original": "Public goods are non-excludable and non-rivalrous in consumption.",
+    "corrupted": "Public goods are excludable and rivalrous in consumption."
+  },
+  {
+    "id": 112,
+    "topic": "Economics",
+    "original": "Minimum wage laws can lead to unemployment if set above the equilibrium wage.",
+    "corrupted": "Minimum wage laws can lead to employment if set above the equilibrium wage."
+  },
+  {
+    "id": 113,
+    "topic": "Medicine",
+    "original": "Aspirin is commonly used to reduce fever and relieve pain.",
+    "corrupted": "Aspirin is commonly used to increase fever and relieve pain."
+  },
+  {
+    "id": 114,
+    "topic": "Medicine",
+    "original": "Smoking is a leading cause of lung cancer.",
+    "corrupted": "Smoking is a leading cure of lung cancer."
+  },
+  {
+    "id": 115,
+    "topic": "Medicine",
+    "original": "MRI scans use magnetic fields and radio waves, not ionizing radiation.",
+    "corrupted": "MRI scans use magnetic fields and radio waves, including ionizing radiation."
+  },
+  {
+    "id": 116,
+    "topic": "Medicine",
+    "original": "Cholesterol is essential for building cell membranes and producing hormones.",
+    "corrupted": "Cholesterol is harmful for building cell membranes and producing hormones."
+  },
+  {
+    "id": 117,
+    "topic": "Daily Conversation",
+    "original": "I took an umbrella because the weather forecast predicted rain.",
+    "corrupted": "I left my umbrella because the weather forecast predicted rain."
+  },
+  {
+    "id": 118,
+    "topic": "Daily Conversation",
+    "original": "He passed the exam because he studied hard.",
+    "corrupted": "He failed the exam because he studied hard."
+  },
+  {
+    "id": 119,
+    "topic": "Daily Conversation",
+    "original": "We arrived early to get good seats.",
+    "corrupted": "We arrived late to get good seats."
+  },
+  {
+    "id": 120,
+    "topic": "Daily Conversation",
+    "original": "She felt relieved after finishing her presentation.",
+    "corrupted": "She felt anxious after finishing her presentation."
+  }
+]

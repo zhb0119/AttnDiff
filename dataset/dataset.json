@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "topic": "Mathematics",
+    "original": "In Euclidean geometry, parallel lines are defined as two lines in the same plane that are equidistant and, no matter how far they extend, will never intersect.",
+    "corrupted": "In Euclidean geometry, parallel lines are defined as two lines in the same plane that are equidistant and, no matter how far they extend, will always intersect."
+  },
+  {
+    "id": 2,
+    "topic": "Mathematics",
+    "original": "To correctly solve for the unknown variable in this linear equation, you must first subtract five from both sides and then divide the result by positive two.",
+    "corrupted": "To correctly solve for the unknown variable in this linear equation, you must first subtract five from both sides and then divide the result by negative two."
+  },
+  {
+    "id": 3,
+    "topic": "Mathematics",
+    "original": "A prime number is a natural number greater than one that cannot be formed by multiplying two smaller natural numbers, meaning it has exactly two divisors.",
+    "corrupted": "A prime number is a natural number greater than one that cannot be formed by multiplying two smaller natural numbers, meaning it has exactly three divisors."
+  },
+  {
+    "id": 4,
+    "topic": "Mathematics",
+    "original": "The Pythagorean theorem states that in a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.",
+    "corrupted": "The Pythagorean theorem states that in a right-angled triangle, the square of the hypotenuse is equal to the product of the squares of the other two sides."
+  },
+  {
+    "id": 5,
+    "topic": "Mathematics",
+    "original": "When calculating the probability of independent events, the likelihood of both events occurring simultaneously is found by multiplying their individual probabilities together to get the final result.",
+    "corrupted": "When calculating the probability of independent events, the likelihood of both events occurring simultaneously is found by adding their individual probabilities together to get the final result."
+  },
+  {
+    "id": 6,
+    "topic": "Mathematics",
+    "original": "If a function is differentiable at a point, it must be continuous at that point, which is a fundamental theorem taught in introductory calculus courses worldwide.",
+    "corrupted": "If a function is differentiable at a point, it must be discontinuous at that point, which is a fundamental theorem taught in introductory calculus courses worldwide."
+  },
+  {
+    "id": 7,
+    "topic": "Programming",
+    "original": "The main reason the application crashed immediately upon startup was that the developer forgot to catch the exception thrown when the database connection failed to establish.",
+    "corrupted": "The main reason the application crashed immediately upon startup was that the developer forgot to catch the exception thrown when the database connection failed to fail."
+  },
+  {
+    "id": 8,
+    "topic": "Programming",
+    "original": "To prevent a stack overflow error during the execution of the recursive function, it is absolutely critical to ensure that a valid base case is reachable.",
+    "corrupted": "To prevent a stack overflow error during the execution of the recursive function, it is absolutely critical to ensure that a valid base case is unreachable."
+  },
+  {
+    "id": 9,
+    "topic": "Programming",
+    "original": "In Python, unlike many other languages, proper indentation is mandatory because it defines the structure and scope of loops, functions, and conditional blocks within the code.",
+    "corrupted": "In Python, unlike many other languages, proper indentation is optional because it defines the structure and scope of loops, functions, and conditional blocks within the code."
+  },
+  {
+    "id": 10,
+    "topic": "Programming",
+    "original": "You should strictly use HTTPS instead of HTTP for handling user login data to ensure that sensitive information like passwords is encrypted during transmission across the network.",
+    "corrupted": "You should strictly use HTTPS instead of HTTP for handling user login data to ensure that sensitive information like passwords is decrypted during transmission across the network."
+  },
+  {
+    "id": 11,
+    "topic": "Programming",
+    "original": "The infinite loop in the script was caused by the condition remaining true indefinitely, which prevented the program from ever terminating its execution flow normally.",
+    "corrupted": "The infinite loop in the script was caused by the condition remaining false indefinitely, which prevented the program from ever terminating its execution flow normally."
+  },
+  {
+    "id": 12,
+    "topic": "Programming",
+    "original": "When using a version control system like Git, it is best practice to commit your changes frequently to ensure that your work is saved and trackable.",
+    "corrupted": "When using a version control system like Git, it is best practice to commit your changes frequently to ensure that your work is lost and trackable."
+  },
+  {
+    "id": 13,
+    "topic": "Economics",
+    "original": "According to the law of supply and demand, if the supply of a commodity remains constant while the consumer demand increases sharply, the price will inevitably rise.",
+    "corrupted": "According to the law of supply and demand, if the supply of a commodity remains constant while the consumer demand increases sharply, the price will inevitably fall."
+  },
+  {
+    "id": 14,
+    "topic": "Economics",
+    "original": "Inflation is generally defined as a sustained increase in the general price level of goods and services in an economy, which corresponds to a decrease in purchasing power.",
+    "corrupted": "Inflation is generally defined as a sustained increase in the general price level of goods and services in an economy, which corresponds to a increase in purchasing power."
+  },
+  {
+    "id": 15,
+    "topic": "Economics",
+    "original": "A bear market is typically characterized by falling stock prices and widespread pessimism, causing investors to sell off their assets to avoid further financial losses.",
+    "corrupted": "A bear market is typically characterized by rising stock prices and widespread pessimism, causing investors to sell off their assets to avoid further financial losses."
+  },
+  {
+    "id": 16,
+    "topic": "Economics",
+    "original": "To stimulate economic growth during a recession, the central bank may decide to lower interest rates, thereby encouraging businesses and individuals to borrow and spend more money.",
+    "corrupted": "To stimulate economic growth during a recession, the central bank may decide to raise interest rates, thereby encouraging businesses and individuals to borrow and spend more money."
+  },
+  {
+    "id": 17,
+    "topic": "Economics",
+    "original": "A progressive tax system is structured so that the tax rate increases as the taxable amount increases, placing a higher burden on high-income earners.",
+    "corrupted": "A progressive tax system is structured so that the tax rate decreases as the taxable amount increases, placing a higher burden on high-income earners."
+  },
+  {
+    "id": 18,
+    "topic": "Economics",
+    "original": "Opportunity cost refers to the potential benefits that an individual, investor, or business misses out on when choosing one alternative over another strictly mutually exclusive option.",
+    "corrupted": "Opportunity cost refers to the potential penalties that an individual, investor, or business misses out on when choosing one alternative over another strictly mutually exclusive option."
+  },
+  {
+    "id": 19,
+    "topic": "Medicine",
+    "original": "The doctor decided to prescribe a strong antibiotic because the bacterial infection was severe and, without immediate treatment, the patient's condition would likely deteriorate rapidly.",
+    "corrupted": "The doctor decided to prescribe a strong antibiotic because the bacterial infection was severe and, without immediate treatment, the patient's condition would likely improve rapidly."
+  },
+  {
+    "id": 20,
+    "topic": "Medicine",
+    "original": "It is crucial to keep the wound clean and covered with a sterile bandage to prevent harmful bacteria from entering and causing a secondary infection.",
+    "corrupted": "It is crucial to keep the wound clean and covered with a sterile bandage to allow harmful bacteria from entering and causing a secondary infection."
+  },
+  {
+    "id": 21,
+    "topic": "Medicine",
+    "original": "Vaccines work by stimulating the body's immune system to recognize and fight specific pathogens, thereby providing protection against future infections from those same diseases.",
+    "corrupted": "Vaccines work by suppressing the body's immune system to recognize and fight specific pathogens, thereby providing protection against future infections from those same diseases."
+  },
+  {
+    "id": 22,
+    "topic": "Medicine",
+    "original": "In cases of severe dehydration, it is important to administer fluids intravenously to restore the body's water balance and electrolytes as quickly as possible.",
+    "corrupted": "In cases of severe dehydration, it is important to remove fluids intravenously to restore the body's water balance and electrolytes as quickly as possible."
+  },
+  {
+    "id": 23,
+    "topic": "Medicine",
+    "original": "A benign tumor is a mass of cells that lacks the ability to invade neighboring tissue or metastasize, which generally makes it less dangerous than a malignant tumor.",
+    "corrupted": "A benign tumor is a mass of cells that lacks the ability to invade neighboring tissue or metastasize, which generally makes it more dangerous than a malignant tumor."
+  },
+  {
+    "id": 24,
+    "topic": "Medicine",
+    "original": "Anesthesia is administered during major surgical procedures to ensure that the patient remains unconscious and does not feel any pain while the operation is being performed.",
+    "corrupted": "Anesthesia is administered during major surgical procedures to ensure that the patient remains conscious and does not feel any pain while the operation is being performed."
+  },
+  {
+    "id": 25,
+    "topic": "Daily Conversation",
+    "original": "I was incredibly late for the important meeting this morning because my car wouldn't start and I had to wait forty minutes for a taxi.",
+    "corrupted": "I was incredibly early for the important meeting this morning because my car wouldn't start and I had to wait forty minutes for a taxi."
+  },
+  {
+    "id": 26,
+    "topic": "Daily Conversation",
+    "original": "The weather forecast predicted a heavy thunderstorm, so I made sure to grab my large umbrella before leaving the house to stay dry.",
+    "corrupted": "The weather forecast predicted a heavy thunderstorm, so I made sure to grab my large umbrella before leaving the house to stay wet."
+  },
+  {
+    "id": 27,
+    "topic": "Daily Conversation",
+    "original": "I couldn't call you back immediately because my phone battery was completely dead and I couldn't find a charging cable anywhere in the office.",
+    "corrupted": "I couldn't call you back immediately because my phone battery was completely full and I couldn't find a charging cable anywhere in the office."
+  },
+  {
+    "id": 28,
+    "topic": "Daily Conversation",
+    "original": "She was absolutely thrilled when she opened the letter and discovered that she had been accepted into her dream university with a full scholarship.",
+    "corrupted": "She was absolutely devastated when she opened the letter and discovered that she had been accepted into her dream university with a full scholarship."
+  },
+  {
+    "id": 29,
+    "topic": "Daily Conversation",
+    "original": "Please remember to turn off the oven once the timer goes off to ensure that the chocolate cake does not burn and become inedible.",
+    "corrupted": "Please remember to turn on the oven once the timer goes off to ensure that the chocolate cake does not burn and become inedible."
+  },
+  {
+    "id": 30,
+    "topic": "Daily Conversation",
+    "original": "The room was so noisy with everyone talking and the music blasting that I could barely hear what the person next to me was saying.",
+    "corrupted": "The room was so quiet with everyone talking and the music blasting that I could barely hear what the person next to me was saying."
+  }
+]

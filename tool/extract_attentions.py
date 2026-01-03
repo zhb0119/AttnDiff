@@ -5,7 +5,6 @@ import argparse
 import os
 import json
 from pathlib import Path
-import sys
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -13,12 +12,9 @@ from tqdm import tqdm
 
 
 def load_model_and_tokenizer(model_name: str, device: str):
-    """加载 tokenizer 和模型到指定设备。
+    """Load tokenizer and model onto the specified device.
 
-    默认使用 HuggingFace 的 AutoModel/AutoTokenizer.from_pretrained(model_name)。
-    但如果 model_name 指向的是一个二进制 checkpoint 文件（.bin），且该文件是
-    LLM-Pruner 保存的 {'model': ..., 'tokenizer': ...} 字典，则直接使用 torch.load
-    反序列化该 checkpoint，从而避免与 HuggingFace 原始架构之间的尺寸不匹配问题。
+    By default, this uses HuggingFace AutoModel/AutoTokenizer.from_pretrained(model_name).
     """
 
     model_path = Path(model_name)
@@ -151,67 +147,30 @@ def load_model_and_tokenizer(model_name: str, device: str):
         model.eval()
         return tokenizer, model
 
-    # 分支 1：model_name 指向 LLM-Pruner 生成的 checkpoint 文件
-    if model_path.is_file() and model_path.suffix == ".bin":
-        # 确保 LLMPruner 包可被导入（供 torch.load 反序列化使用）
-        llmpruner_root = Path(
-            "/home/kdz/data/xzh/zhb/EverTracer-main/EverTracer-main/Experiments/model-pruning/LLM-Pruner-main"
-        )
-        if llmpruner_root.exists():
-            root_str = str(llmpruner_root.resolve())
-            if root_str not in sys.path:
-                sys.path.insert(0, root_str)
-            try:
-                __import__("LLMPruner")  # noqa: F401 - ensure importable
-            except ImportError:
-                print(
-                    f"[AttnExtract] Warning: failed to import LLMPruner from {root_str}. "
-                    "If torch.load fails with ModuleNotFoundError('LLMPruner'), "
-                    "please check the path."
-                )
-        else:
-            print(
-                f"[AttnExtract] Warning: LLM-Pruner root not found at {llmpruner_root}; "
-                "if torch.load fails with ModuleNotFoundError('LLMPruner'), please adjust the path in extract_attentions.py."
-            )
-
-        print(f"[AttnExtract] Loading LLM-Pruner checkpoint: {model_path}")
-        ckpt = torch.load(str(model_path), map_location=device, weights_only=False)
-        if not isinstance(ckpt, dict) or "model" not in ckpt or "tokenizer" not in ckpt:
-            raise ValueError(
-                "LLM-Pruner checkpoint must be a dict containing 'model' and 'tokenizer' keys. "
-                f"Found keys: {list(ckpt.keys()) if isinstance(ckpt, dict) else type(ckpt)}"
-            )
-
-        model = ckpt["model"]
-        tokenizer = ckpt["tokenizer"]
-
-        if hasattr(model, "to"):
-            model.to(device)
-
-        # For models like Qwen2 loaded from LLM-Pruner checkpoints, ensure
-        # we use the eager attention backend so that output_attentions=True
-        # actually produces attention tensors instead of None (sdpa backend
-        # does not support output_attentions for these models).
-        if hasattr(model, "set_attn_implementation"):
-            try:
-                model.set_attn_implementation("eager")
-            except Exception:
-                pass
-
-        model.eval()
-
-        return tokenizer, model
-
-    # 分支 2：常规 HuggingFace 模型目录 / 名称
+    # Standard HuggingFace model directory / model name
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True, torch_dtype="auto")
+    # NOTE:
+    # If we pass device_map="auto" and also move inputs to a single cuda:X,
+    # HuggingFace/Accelerate may shard the model across different devices,
+    # causing embedding to fail with "Expected all tensors to be on the same device".
+    # When the caller provides an explicit device (e.g. cuda:6 / cpu), force the
+    # entire model onto that device.
+    if device is None:
+        device_map = "auto"  # Automatically shard across multi-GPU or CPU/GPU
+    else:
+        device_map = {"": device}
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        trust_remote_code=True,
+        device_map=device_map,
+        torch_dtype="auto",
+    )
     if hasattr(model, "set_attn_implementation"):
         try:
             model.set_attn_implementation("eager")
         except Exception:
             pass
-    model.to(device)
     model.eval()
     return tokenizer, model
 
@@ -223,24 +182,25 @@ def extract_attention_for_prompt(
     prompt: str,
     device: str,
 ):
+    """Run a forward pass for a single prompt and return:
+
+    - tokens: token list after tokenization
+    - attention: 4D attention tensor [L, H, N, N] (converted to a plain Python list)
     """
-    对单条 prompt 前向计算，并返回：
-    - tokens: tokenizer 后的 token 列表
-    - attention: 4D 注意力矩阵 [L, H, N, N]（转换成普通 Python list）
-    """
-    # 编码输入
+    # Encode inputs
     encoded = tokenizer(
         prompt,
         return_tensors="pt",
         add_special_tokens=True,
     )
 
-    # 移到对应设备
+    # Move to target device
     encoded = {k: v.to(device) for k, v in encoded.items()}
 
-    # 前向计算，开启 attentions 输出
-    # 额外保险：对 Qwen2 等模型，直接把 config._attn_implementation 设置为 eager，
-    # 防止某些场景下 set_attn_implementation 未生效仍走 sdpa 导致 attentions=None。
+    # Forward pass with attentions enabled
+    # Extra safeguard: for models like Qwen2, explicitly set config._attn_implementation
+    # to eager to avoid cases where set_attn_implementation does not take effect and
+    # SDPA is used, resulting in attentions=None.
     cfg = getattr(model, "config", None)
     if cfg is not None and getattr(cfg, "model_type", None) == "qwen2":
         try:
@@ -254,8 +214,8 @@ def extract_attention_for_prompt(
         return_dict=True,
     )
 
-    # outputs.attentions 是长度为 L 的元组，
-    # 每个元素形状为 [batch_size, num_heads, seq_len, seq_len]
+    # outputs.attentions is a tuple of length L,
+    # where each element has shape [batch_size, num_heads, seq_len, seq_len]
     attentions = outputs.attentions  # tuple of length L 或 None
 
     if attentions is None:
@@ -265,9 +225,9 @@ def extract_attention_for_prompt(
             "supports output_attentions=True."
         )
 
-    # 剪枝后，不同层的 head 数可能不同（例如某层 32 heads，某层 29 heads），
-    # 直接 torch.stack 会因为维度不一致报错。这里统一裁剪到所有层的最小 head 数，
-    # 这样得到形状一致的 [L, H_min, N, N]。
+    # After pruning, the number of heads may vary across layers (e.g., 32 vs 29).
+    # torch.stack would fail due to mismatched dimensions, so we crop all layers to
+    # the minimum number of heads, producing a consistent [L, H_min, N, N].
     heads_per_layer = [att.shape[1] for att in attentions]
     H_min = min(heads_per_layer)
 
@@ -279,16 +239,16 @@ def extract_attention_for_prompt(
 
     cropped_layers = [layer_attn[0, :H_min] for layer_attn in attentions]
 
-    # 沿新维度堆叠成 [L, H_min, N, N]
+    # Stack along a new dimension to form [L, H_min, N, N]
     attn_stack = torch.stack(cropped_layers, dim=0)
 
     print(f"[AttnExtract] Attention matrix shape [L, H, N, N]: {attn_stack.shape}")
 
-    # 还原 tokens（便于后处理查看）
+    # Recover tokens (useful for downstream inspection)
     input_ids = encoded["input_ids"][0].cpu().tolist()
     tokens = tokenizer.convert_ids_to_tokens(input_ids)
 
-    # 转成纯 Python list，方便 json 序列化
+    # Convert to a plain Python list for JSON serialization
     attn_list = attn_stack.cpu().tolist()
 
     return tokens, attn_list
@@ -306,7 +266,7 @@ def process_dataset(
             "At least one of out_original or out_corrupted must be provided to process_dataset."
         )
 
-    # 自动检测设备
+    # Auto-detect device
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -335,7 +295,7 @@ def process_dataset(
                     "id": sample_id,
                     "prompt": original_text,
                     "tokens": tokens_o,
-                    "attention": attn_o,  # 形状 [L][H][N][N]
+                    "attention": attn_o,  # Shape: [L][H][N][N]
                 }
             )
 
@@ -348,11 +308,11 @@ def process_dataset(
                     "id": sample_id,
                     "prompt": corrupted_text,
                     "tokens": tokens_c,
-                    "attention": attn_c,  # 形状 [L][H][N][N]
+                    "attention": attn_c,  # Shape: [L][H][N][N]
                 }
             )
 
-    # 保存结果
+    # Save results
     if out_original is not None:
         print(f"[AttnExtract] Saving original attentions to: {out_original}")
         with out_original.open("w", encoding="utf-8") as f:
@@ -374,31 +334,31 @@ def parse_args():
         "--data_path",
         type=str,
         default="dataset.json",
-        help="输入数据集 JSON 文件路径",
+        help="Path to the input dataset JSON file",
     )
     parser.add_argument(
         "--model_name",
         type=str,
         default="gpt2",
-        help="HuggingFace 模型名，例如 gpt2、bert-base-uncased、bert-base-chinese 等",
+        help="HuggingFace model name, e.g. gpt2, bert-base-uncased, bert-base-chinese",
     )
     parser.add_argument(
         "--out_original",
         type=str,
         default=None,
-        help="保存原始输入注意力矩阵的 JSON 文件路径；不指定时根据 model_name 自动生成",
+        help="Output JSON path for original prompts; if not set, derived from model_name",
     )
     parser.add_argument(
         "--out_corrupted",
         type=str,
         default=None,
-        help="保存扰动输入注意力矩阵的 JSON 文件路径；不指定时根据 model_name 自动生成",
+        help="Output JSON path for corrupted prompts; if not set, derived from model_name",
     )
     parser.add_argument(
         "--device",
         type=str,
         default=None,
-        help="可选：指定设备，如 cuda 或 cpu；默认自动检测",
+        help="Optional: device string such as cuda or cpu; defaults to auto-detect",
     )
     return parser.parse_args()
 
@@ -408,7 +368,7 @@ def main():
     data_path = Path(args.data_path)
     model_name = args.model_name
 
-    # 根据 model_name 自动生成默认输出路径（可被显式参数覆盖）
+    # Derive default output paths from model_name (can be overridden by explicit args)
     model_base = Path(model_name).name if model_name is not None else "model"
 
     if args.out_original is None:
@@ -421,7 +381,7 @@ def main():
     else:
         out_corrupted = Path(args.out_corrupted)
 
-    # 确保输出目录存在
+    # Ensure output directories exist
     out_original.parent.mkdir(parents=True, exist_ok=True)
     out_corrupted.parent.mkdir(parents=True, exist_ok=True)
 
@@ -436,9 +396,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-"""
-python extract_attentions.py \
-  --data_path dataset/dataset.json \
-  --model_name /home/kdz/data/OpenSourceModels/meta-llama/Llama-3-8B
-"""
