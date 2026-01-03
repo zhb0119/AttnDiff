@@ -52,7 +52,7 @@ def _infer_model_name_from_paths(
         for suffix in ("_att_origin", "_att_perturb"):
             if stem.endswith(suffix):
                 return stem[: -len(suffix)]
-        # 如果没有匹配到标准后缀，就直接用 stem 作为模型名
+        # If no standard suffix matches, use stem as model name directly
         return stem
 
     return None
@@ -903,12 +903,12 @@ def ensure_attention_files(
     model_name: str | None,
     attn_device: str | None,
 ):
-    # 如果同时需要 original 和 corrupted
+    # If both original and corrupted are needed
     if corrupted_path is not None:
         if original_path.exists() and corrupted_path.exists():
             return
     else:
-        # 仅需要 original
+        # Only need original
         if original_path.exists():
             return
 
@@ -1187,7 +1187,7 @@ def main():
     if args.mode == "diff":
         ensure_attention_files(original_path, corrupted_path, model_name, args.attn_device)
     else:
-        # base 模式下只确保 original 存在
+        # In base mode, only ensure original exists
         ensure_attention_files(original_path, None, model_name, args.attn_device)
 
     # Resolve output fingerprint path

@@ -1,6 +1,6 @@
 <div align="center">
 
-# AttnDiff:Attention-based Differential Fingerprinting for Large Language Models
+# AttnDiff: Attention-based Differential Fingerprinting for Large Language Models
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
@@ -19,15 +19,10 @@
 
 </div>
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/rainbow.svg" height="18" alt="" /> 🌈 Introduction
+## Introduction
 
 AttnDiff is a lightweight model fingerprinting method for **model similarity estimation**.
 Instead of comparing hidden states, AttnDiff builds a fingerprint from **head-level attention differences** under paired prompts (e.g., `original` vs. `corrupted`).
-These fingerprints can be compared with standard representation similarity tools (CKA / CCA / SVCCA) to:
-
-- **Identify related models** (fine-tuning / merging / pruning / distillation / quantization / cross-scale).
-- **Measure similarity robustly** without relying on task-specific accuracy.
-- **Enable fast reproducibility** using the released fingerprints (no model inference required).
 
 ### Pipeline overview
 
@@ -53,12 +48,12 @@ These fingerprints can be compared with standard representation similarity tools
 
 </div>
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/rocket.svg" height="18" alt="" /> 🚀 Quick Start
+## Quick Start
 
-- **Fastest reproduction (no attention extraction required)**: run `compare_fingerprints.py` directly on the released fingerprints under `output/comput_W/`.
+- We have pre-released fingerprints from models encountered in our experiments to facilitate reproducibility. Run `compare_fingerprints.py` directly using these fingerprints under `output/comput_W/`.
 - **Full pipeline**: batch-generate attentions and fingerprints via `pipeline/generate.sh`, then compute similarity using `compare_fingerprints.py`.
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/book.svg" height="18" alt="" /> 📚 Table of Contents
+## Table of Contents
 
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
@@ -70,17 +65,17 @@ These fingerprints can be compared with standard representation similarity tools
 - [Troubleshooting](#troubleshooting)
 - [Model List](#model-list)
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/smile.svg" height="18" alt="" /> 😊 Overview
+## Overview
 
 This repository provides a lightweight and reproducible pipeline for:
 
 - **Attention extraction**: extract attention tensors for paired prompts (`original` vs. `corrupted`).
 - **Fingerprint construction**: compute head-level attention differences and derive high-dimensional fingerprints (`compute_W.py`).
-- **Similarity evaluation**: compute similarity between fingerprints across models (`compare_fingerprints.py`), supporting CKA / CCA / SVCCA / linear-regression-based similarity.
+- **Similarity evaluation**: compute similarity between fingerprints across models (`compare_fingerprints.py`), supporting linear CKA.
 
 A set of **released fingerprints** is provided under `output/comput_W/`, enabling you to reproduce similarity results without running large models.
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/flash.svg" height="18" alt="" /> ⚡ Fastest Reproduction (Using Released Fingerprints)
+## Fastest Reproduction (Using Released Fingerprints)
 
 This is the most lightweight entry point: **no attention extraction and no model inference required**.
 
@@ -113,7 +108,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-### 2) Run Fingerprint Similarity (CKA)
+### 2) Run Fingerprint Similarity (Linear CKA)
 
 
 Use the released fingerprints under `output/comput_W/`:
@@ -130,25 +125,14 @@ You will see:
 
 
 - **Automatic loading** of all `fingerprint_*.json` in `--dir` (ensuring `--base` is included in the comparison set).
-- **Reporting** the representation used by each fingerprint (vector / per-sample / grids / SVD / ARS / log-bucket, etc.).
 - **Pairwise similarity** between the base fingerprint and other models.
 
 
 Optional:
 
 
-- **RBF kernel CKA**
-
-
-```bash
-python compare_fingerprints.py \
-  --base output/comput_W/fingerprint_Llama-2-7B.json \
-  --dir  output/comput_W \
-  --cka  kernel \
-  --kernel_gamma_scale 1.0
-```
-
-- **Compare a single layer** (`--layer` is 1-based)
+- **Linear CKA**
+- **Compare a single layer** (`--layer` is 1-based) with linear CKA
 
 
 ```bash
@@ -156,10 +140,10 @@ python compare_fingerprints.py \
   --base output/comput_W/fingerprint_Llama-2-7B.json \
   --dir  output/comput_W \
   --cka  linear \
-  --layer 1
+  #--layer 1
 ```
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/gear.svg" height="18" alt="" /> ⚙️ End-to-End Pipeline
+## End-to-End Pipeline
 
 The end-to-end workflow is:
 
@@ -251,7 +235,7 @@ Windows note:
 - It is recommended to use **Git Bash** or **WSL**. PowerShell/CMD may fail due to Bash syntax incompatibilities.
 
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/terminal.svg" height="18" alt="" /> 💻 Argument Reference
+## Argument Reference
 
 
 ### `compute_W.py` (Fingerprint Construction)
@@ -277,21 +261,21 @@ Core arguments:
 
 - `--base`: base fingerprint JSON path (**required**).
 - `--dir`: directory of fingerprints to compare (default: `output/comput_W`; loads `fingerprint_*.json`).
-- `--cka`: `linear` or `kernel`.
+- `--cka`: `linear` (only linear CKA supported).
 - `--kernel_gamma_scale`: used only for `--cka kernel`.
 - `--layer`: compare a specific layer only (1-based).
-- `--mode`: `cka` (default), `cca`, `svcca`, `linreg`.
+- `--mode`: `cka` (default, linear CKA only).
 
 
 Important constraints:
 
 
 - All fingerprints involved in one comparison must share the **same representation type** (e.g., all `fingerprint_vector`, or all `per_sample_scores` / `per_sample_svd` / `per_sample_ars` / `per_sample_log_bucket`, etc.).
-- For CKA-style comparisons, sample counts must match (same `N_global` / same `M`).
+- For linear CKA comparisons, sample counts must match (same `N_global` / same `M`).
 
 
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/folder.svg" height="18" alt="" /> 📁 Repository Layout
+## Repository Layout
 
 
 ```text
@@ -307,7 +291,7 @@ AttnDiff/
       fingerprint_*.json
 ```
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/lifebuoy.svg" height="18" alt="" /> 🛠️ Troubleshooting
+## Troubleshooting
 
 
 - **Automatic attention extraction fails**:
@@ -315,7 +299,7 @@ AttnDiff/
   - Ensure `tool/extract_attentions.py` can be imported.
   - Verify package versions in `requirements.txt` (`torch` / `transformers` / `accelerate`, etc.).
 
-## <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/list.svg" height="18" alt="" /> 📋 Model List
+## Model List
 
 ### A. Model taxonomy (Category / Type / Base / Suspects)
 

@@ -216,7 +216,7 @@ def extract_attention_for_prompt(
 
     # outputs.attentions is a tuple of length L,
     # where each element has shape [batch_size, num_heads, seq_len, seq_len]
-    attentions = outputs.attentions  # tuple of length L 或 None
+    attentions = outputs.attentions  # tuple of length L or None
 
     if attentions is None:
         raise RuntimeError(
