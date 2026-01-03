@@ -9,11 +9,8 @@
 [![NumPy](https://img.shields.io/badge/NumPy-1.23%2B-013243?logo=numpy&logoColor=white)](https://numpy.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.2%2B-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/stable/)
 [![License](https://img.shields.io/badge/License-MIT-green?logo=opensource&logoColor=white)](LICENSE)
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red?logo=arxiv&logoColor=white)](https://arxiv.org/abs/XXXX.XXXXX)
 [![Demo](https://img.shields.io/badge/Demo-Online-blue?logo=jupyter&logoColor=white)](#demo)
-[![Downloads](https://img.shields.io/badge/Downloads-1k%2B-brightgreen?logo=github&logoColor=white)](https://github.com/your-repo/AttnDiff)
 [![Reproducibility](https://img.shields.io/badge/Reproducibility-Fingerprints%20Included-2E7D32)](#quick-start)
-[![Stars](https://img.shields.io/badge/Stars-⭐-yellow?logo=star&logoColor=white)](https://github.com/your-repo/AttnDiff)
 [![Forks](https://img.shields.io/badge/Forks-🔱-blue?logo=git&logoColor=white)](https://github.com/your-repo/AttnDiff)
 [![Issues](https://img.shields.io/badge/Issues-🐞-orange?logo=github&logoColor=white)](https://github.com/your-repo/AttnDiff/issues)
 
