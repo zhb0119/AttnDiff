@@ -22,6 +22,7 @@ Instead of comparing hidden states, AttnDiff builds a fingerprint from **head-le
 
 <img src="figure/pipeline.png" width="900" alt="AttnDiff pipeline" />
 
+<img src="figure/pool.png" width="900" alt="AttnDiff pool" />
 </div>
 
 ### Multi-dimensional evaluation
