@@ -48,10 +48,10 @@ gptq = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/AttnDiff"
-Repository = "https://github.com/yourusername/AttnDiff"
-Documentation = "https://github.com/yourusername/AttnDiff#readme"
-Issues = "https://github.com/yourusername/AttnDiff/issues"
+Homepage = "https://github.com/zhb0119/AttnDiff"
+Repository = "https://github.com/zhb0119/AttnDiff"
+Documentation = "https://github.com/zhb0119/AttnDiff#readme"
+Issues = "https://github.com/zhb0119/AttnDiff/issues"
 
 [project.scripts]
 attndiff-compute = "attndiff.cli.compute:main"
