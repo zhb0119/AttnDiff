@@ -6,7 +6,6 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Transformers](https://img.shields.io/badge/Transformers-4.35%2B-FFD21E?logo=huggingface&logoColor=black)](https://github.com/huggingface/transformers)
 [![License](https://img.shields.io/badge/License-MIT-green?logo=opensource&logoColor=white)](LICENSE)
-[![CI](https://github.com/yourusername/AttnDiff/workflows/CI/badge.svg)](https://github.com/yourusername/AttnDiff/actions)
 
 </div>
 
