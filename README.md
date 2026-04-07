@@ -106,8 +106,8 @@ uv run attndiff-compute \
 **Batch compute for multiple models:**
 
 ```bash
-# Edit scripts/batch_compute.py to configure model paths
 uv run python scripts/batch_compute.py
+bash scripts/batch_compute.sh
 ```
 
 **Arguments:**
