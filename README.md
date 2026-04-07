@@ -173,6 +173,41 @@ AttnDiff/
 └── README.md
 ```
 
+## Model List
+
+The following models have been tested with AttnDiff and have pre-computed fingerprints available:
+
+| ID | Model Name | Repository URL |
+|----|------------|----------------|
+| 1 | Llama-2-7b-ppo-lora | [huggingface.co/renyiyu/llama-2-7b-ppo-lora-v0.1](https://huggingface.co/renyiyu/llama-2-7b-ppo-lora-v0.1) |
+| 2 | Tulu-2-dpo-7b | [huggingface.co/allenai/tulu-2-dpo-7b](https://huggingface.co/allenai/tulu-2-dpo-7b) |
+| 3 | Llama2-7b-dpo | [huggingface.co/mncai/llama2-7b-dpo-v1](https://huggingface.co/mncai/llama2-7b-dpo-v1) |
+| 4 | Qwen2.5-Coder-1.5B | [huggingface.co/Qwen/Qwen2.5-Coder-1.5B](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B) |
+| 5 | Qwen2.5-Math-1.5B | [huggingface.co/Qwen/Qwen2.5-Math-1.5B](https://huggingface.co/Qwen/Qwen2.5-Math-1.5B) |
+| 6 | Qwen2.5-1.5B-Instruct | [huggingface.co/Qwen/Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) |
+| 7 | Qwen2.5-14B-Instruct | [huggingface.co/Qwen/Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct) |
+| 8 | Oxy-1-small | [huggingface.co/oxyapi/oxy-1-small](https://huggingface.co/oxyapi/oxy-1-small) |
+| 9 | Qwen2.5-14B-Gutenberg-Instruct-Slerpeno | [huggingface.co/v000000/Qwen2.5-14B-Gutenberg-Instruct-Slerpeno](https://huggingface.co/v000000/Qwen2.5-14B-Gutenberg-Instruct-Slerpeno) |
+| 10 | Gemma-2-2b-neogenesis-ita | [huggingface.co/anakin87/gemma-2-2b-neogenesis-ita](https://huggingface.co/anakin87/gemma-2-2b-neogenesis-ita) |
+| 11 | Gemma-2-baku-2b | [huggingface.co/rinna/gemma-2-baku-2b](https://huggingface.co/rinna/gemma-2-baku-2b) |
+| 12 | Gemma2-2b-merged | [huggingface.co/vonjack/gemma2-2b-merged](https://huggingface.co/vonjack/gemma2-2b-merged) |
+| 13 | AQUA-7B | [huggingface.co/KurmaAI/AQUA-7B](https://huggingface.co/KurmaAI/AQUA-7B) |
+| 14 | Spellcheck-mistral-7b | [huggingface.co/openfoodfacts/spellcheck-mistral-7b](https://huggingface.co/openfoodfacts/spellcheck-mistral-7b) |
+| 15 | Mistral-7B-Instruct-demi-merge | [huggingface.co/grimjim/Mistral-7B-Instruct-demi-merge-v0.3-7B](https://huggingface.co/grimjim/Mistral-7B-Instruct-demi-merge-v0.3-7B) |
+| 16 | Llama-3.1-8B-Instruct-Open-R1-Distill | [huggingface.co/asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill](https://huggingface.co/asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill) |
+| 17 | Qwen2.5-7B-Open-R1-Distill | [huggingface.co/erickrus/Qwen2.5-7B-Open-R1-Distill](https://huggingface.co/erickrus/Qwen2.5-7B-Open-R1-Distill) |
+| 18 | DeepSeek-R1-Distill-Qwen-14B | [huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) |
+| 19 | Llama-2-7b-logit-watermark-distill | [huggingface.co/cygu/llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2](https://huggingface.co/cygu/llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2) |
+| 20 | Instruct_Mixtral-8x7B-Dolly15K | [huggingface.co/Brillibits/Instruct_Mixtral-8x7B-v0.1_Dolly15K](https://huggingface.co/Brillibits/Instruct_Mixtral-8x7B-v0.1_Dolly15K) |
+| 21 | Nous-Hermes-2-Mixtral-8x7B-DPO | [huggingface.co/NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO](https://huggingface.co/NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO) |
+| 22 | Openbuddy-mixtral-8x7b-v15.4 | [huggingface.co/openbuddy/openbuddy-mixtral-8x7b-v15.4](https://huggingface.co/openbuddy/openbuddy-mixtral-8x7b-v15.4) |
+| 23 | Qwen2.5-7B-Instruct-GPTQ-Int8 | [huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int8](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int8) |
+| 24 | Qwen2.5-7B-Instruct-GPTQ-Int4 | [huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4) |
+| 25 | Llama-2-7B-Chat-GPTQ | [huggingface.co/TheBloke/Llama-2-7B-Chat-GPTQ](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GPTQ) |
+| 26 | Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8 | [huggingface.co/iqbalamo93/Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8](https://huggingface.co/iqbalamo93/Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8) |
+| 27 | LLaMA-3.1-8B-Instruct-INT4-GPTQ | [huggingface.co/DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ](https://huggingface.co/DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ) |
+| 28 | Mistral-7B-Instruct-v0.3-GPTQ-4bit | [huggingface.co/RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit](https://huggingface.co/RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit) |
+
 ## Citation
 
 If you use AttnDiff in your research, please cite:
