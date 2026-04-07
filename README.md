@@ -25,7 +25,7 @@ AttnDiff is a lightweight model fingerprinting method for **model similarity est
 
 ### Installation
 
-**Option 1: Using uv (Recommended)**
+**Using uv (Recommended)**
 
 ```bash
 # Install uv
@@ -37,38 +37,22 @@ cd AttnDiff
 uv sync
 ```
 
-**Option 2: Using pip + venv**
-
-```bash
-# Clone repository
-git clone https://github.com/zhb0119/AttnDiff.git
-cd AttnDiff
-
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
-```
-
 ### Basic Usage
 
-**Compare pre-computed fingerprints:**
+**Compute fingerprints:**
+
+```bash
+# Edit scripts/batch_compute.sh to configure models and device
+bash scripts/batch_compute.sh
+```
+
+**Compare fingerprints:**
 
 ```bash
 uv run attndiff-compare \
   --base output/comput_W/fingerprint_Llama-2-7B.json \
   --dir output/comput_W \
   --cka linear
-```
-
-**Compute fingerprint from model:**
-
-```bash
-uv run attndiff-compute \
-  --model_name meta-llama/Llama-2-7b-hf \
-  --attn_device cuda:0 \
-  --dataset dataset/dataset.json \
-  --out output/comput_W/fingerprint_llama2.json
 ```
 
 ## Table of Contents
@@ -86,6 +70,15 @@ uv run attndiff-compute \
 
 ### Compute Fingerprints
 
+**Recommended: Use batch script**
+
+```bash
+# Edit scripts/batch_compute.sh to configure model paths and device
+bash scripts/batch_compute.sh
+```
+
+**Advanced: Manual computation**
+
 ```bash
 # From pre-extracted attention files
 uv run attndiff-compute \
@@ -94,20 +87,12 @@ uv run attndiff-compute \
   --mode diff \
   --out output/comput_W/fingerprint_model.json
 
-# Extract attention and compute (automatic)
+# Or let the tool auto-extract attentions from model
 uv run attndiff-compute \
-  --model_name your_model_path \
+  --model_name /path/to/your/model \
   --attn_device cuda:0 \
-  --dataset dataset/dataset.json \
   --mode diff \
   --out output/comput_W/fingerprint_your_model.json
-```
-
-**Batch compute for multiple models:**
-
-```bash
-uv run python scripts/batch_compute.py
-bash scripts/batch_compute.sh
 ```
 
 **Arguments:**
@@ -129,7 +114,7 @@ uv run attndiff-compare \
 
 # Compare specific layer
 uv run attndiff-compare \
-  --base output/comput_W/fingerprint_base.json \
+  --base output/comput_W/fingerprint_Llama-2-7B.json \
   --dir output/comput_W \
   --cka linear \
   --layer 1
