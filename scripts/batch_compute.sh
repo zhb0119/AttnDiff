@@ -5,7 +5,7 @@ set -euo pipefail
 # Usage: bash scripts/batch_compute.sh
 
 # Configuration
-ATTN_DEVICE="cuda:6"
+ATTN_DEVICE="cuda:0"
 MODE="diff"
 DATASET="dataset/dataset.json"
 

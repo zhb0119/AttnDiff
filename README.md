@@ -48,12 +48,16 @@ bash scripts/batch_compute.sh
 
 **Compare fingerprints:**
 
+You can use pre-computed fingerprints provided in the repository:
+
 ```bash
 uv run attndiff-compare \
   --base output/comput_W/fingerprint_Llama-2-7B.json \
   --dir output/comput_W \
   --cka linear
 ```
+
+> **Note**: The repository includes pre-computed fingerprints for several open-source models in `output/comput_W/`. You can use these to quickly test the comparison functionality without computing fingerprints yourself.
 
 ## Table of Contents
 
