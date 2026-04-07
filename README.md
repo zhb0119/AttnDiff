@@ -25,6 +25,8 @@ AttnDiff is a lightweight model fingerprinting method for **model similarity est
 
 ### Installation
 
+**Option 1: Using uv (Recommended)**
+
 ```bash
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -33,6 +35,19 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 git clone https://github.com/zhb0119/AttnDiff.git
 cd AttnDiff
 uv sync
+```
+
+**Option 2: Using pip + venv**
+
+```bash
+# Clone repository
+git clone https://github.com/zhb0119/AttnDiff.git
+cd AttnDiff
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
 ```
 
 ### Basic Usage
