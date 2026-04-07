@@ -30,7 +30,7 @@ AttnDiff is a lightweight model fingerprinting method for **model similarity est
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone and install
-git clone https://github.com/yourusername/AttnDiff.git
+git clone https://github.com/zhb0119/AttnDiff.git
 cd AttnDiff
 uv sync
 ```
