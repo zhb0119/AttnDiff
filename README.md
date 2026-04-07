@@ -173,7 +173,7 @@ AttnDiff/
 └── README.md
 ```
 
-## Model List
+## Partial Model List
 
 The following models have been tested with AttnDiff and have pre-computed fingerprints available:
 
