@@ -1,0 +1,117 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "attndiff"
+version = "0.1.0"
+description = "Attention-based Differential Fingerprinting for Large Language Models"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "AttnDiff Contributors"},
+]
+keywords = ["llm", "fingerprinting", "attention", "model-similarity", "deep-learning"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.23",
+    "scikit-learn>=1.2",
+    "tqdm>=4.64",
+    "torch>=2.0",
+    "transformers>=4.35",
+    "accelerate>=0.24",
+    "sentencepiece>=0.1.99",
+    "protobuf>=3.20",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "pre-commit>=3.0",
+]
+gptq = [
+    "auto-gptq>=0.4.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/AttnDiff"
+Repository = "https://github.com/yourusername/AttnDiff"
+Documentation = "https://github.com/yourusername/AttnDiff#readme"
+Issues = "https://github.com/yourusername/AttnDiff/issues"
+
+[project.scripts]
+attndiff-compute = "attndiff.cli.compute:main"
+attndiff-compare = "attndiff.cli.compare:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/attndiff"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # do not perform function calls in argument defaults
+    "B905",  # zip without explicit strict parameter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=attndiff",
+    "--cov-report=term-missing",
+]
+
+[tool.coverage.run]
+source = ["src/attndiff"]
+omit = ["*/tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

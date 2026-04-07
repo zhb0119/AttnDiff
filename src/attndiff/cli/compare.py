@@ -4,6 +4,7 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Optional
 
 import numpy as np
 from sklearn.cross_decomposition import CCA
@@ -872,13 +873,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-"""
-python compare_fingerprints.py \
-  --base output/comput_W/fingerprint_Llama-2-7B.json \
-  --dir  output/comput_W \
-  --cka  linear
-"""
 
 
 

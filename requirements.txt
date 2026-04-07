@@ -1,8 +1,0 @@
-numpy>=1.23
-scikit-learn>=1.2
-tqdm>=4.64
-torch>=2.0
-transformers>=4.35
-accelerate>=0.24
-sentencepiece>=0.1.99
-protobuf>=3.20

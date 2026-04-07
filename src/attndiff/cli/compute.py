@@ -4,6 +4,7 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Optional, List
 
 import numpy as np
 from tqdm import tqdm
@@ -37,10 +38,10 @@ def _infer_L_H_from_sample(sample_attention):
 
 
 def _infer_model_name_from_paths(
-    original_path_str: str | None,
-    corrupted_path_str: str | None,
+    original_path_str: Optional[str],
+    corrupted_path_str: Optional[str],
 ):
-    candidates: list[str] = []
+    candidates: List[str] = []
     if original_path_str is not None:
         candidates.append(original_path_str)
     if corrupted_path_str is not None:
@@ -61,7 +62,7 @@ def _infer_model_name_from_paths(
 def compute_s_divergence_per_head(
     original_items,
     corrupted_items,
-    pool_size: int | None = None,
+    pool_size: Optional[int] = None,
 ):
     if len(original_items) != len(corrupted_items):
         raise ValueError(
@@ -899,9 +900,9 @@ def pool_diff_to_grid(diff_mat, out_size: int = 10):
 
 def ensure_attention_files(
     original_path: Path,
-    corrupted_path: Path | None,
-    model_name: str | None,
-    attn_device: str | None,
+    corrupted_path: Optional[Path],
+    model_name: Optional[str],
+    attn_device: Optional[str],
 ):
     # If both original and corrupted are needed
     if corrupted_path is not None:
@@ -1170,7 +1171,7 @@ def main():
     # Resolve corrupted attention path only when needed (diff mode)
     if args.mode == "diff":
         if args.corrupted is not None:
-            corrupted_path: Path | None = _resolve_path(Path(args.corrupted))
+            corrupted_path: Optional[Path] = _resolve_path(Path(args.corrupted))
         else:
             if model_base is None:
                 raise ValueError(
