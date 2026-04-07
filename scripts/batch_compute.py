@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Batch compute fingerprints for multiple models.
 Usage: uv run python scripts/batch_compute.py
 """
 
 import subprocess
-from pathlib import Path
 
 # Configuration
 ATTN_DEVICE = "cuda:0"

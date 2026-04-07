@@ -1,14 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import argparse
 import json
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional
 
 import numpy as np
 from tqdm import tqdm
-
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -41,7 +39,7 @@ def _infer_model_name_from_paths(
     original_path_str: Optional[str],
     corrupted_path_str: Optional[str],
 ):
-    candidates: List[str] = []
+    candidates: list[str] = []
     if original_path_str is not None:
         candidates.append(original_path_str)
     if corrupted_path_str is not None:
@@ -286,11 +284,11 @@ def compute_base_norm_per_head(original_items):
 
 def compute_topk_singular_values(mat: np.ndarray, k: int) -> np.ndarray:
     """Compute top-k singular values of a matrix.
-    
+
     Args:
         mat: 2D numpy array of shape [N, N]
         k: number of top singular values to return
-    
+
     Returns:
         1D numpy array of shape [k] containing top-k singular values.
         If matrix has fewer than k singular values, pad with zeros.
@@ -311,13 +309,13 @@ def gini_coefficient(x: np.ndarray) -> float:
         return 0.0
     x = np.sort(x)
     n = len(x)
-    cumsum = np.cumsum(x)
-    return (2.0 * np.sum((np.arange(1, n + 1) * x)) - (n + 1) * x.sum()) / (n * x.sum())
+    np.cumsum(x)
+    return (2.0 * np.sum(np.arange(1, n + 1) * x) - (n + 1) * x.sum()) / (n * x.sum())
 
 
 def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     """Compute Attention Response Signature (ARS) features for a single matrix.
-    
+
     ARS is a fixed-dimension feature vector capturing structural properties:
     - Top-K singular values (energy distribution)
     - Spectral entropy (complexity)
@@ -326,24 +324,24 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     - Diagonal dominance
     - Off-diagonal asymmetry
     - Quadrant energy ratios
-    
+
     Args:
         mat: 2D numpy array of shape [N, N]
         svd_k: number of top singular values to include
-    
+
     Returns:
         1D numpy array of shape [D] where D = svd_k + 10 (fixed dimension)
     """
     N = mat.shape[0]
     features = []
-    
+
     # 1. SVD decomposition
     try:
         U, S, Vt = np.linalg.svd(mat, full_matrices=False)
     except np.linalg.LinAlgError:
         # Return zeros if SVD fails
         return np.zeros(svd_k + 10, dtype=np.float64)
-    
+
     # 1a. Top-K singular values (normalized by Frobenius norm)
     f_norm = np.linalg.norm(mat, 'fro')
     if f_norm > 0:
@@ -351,7 +349,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     else:
         sv_normalized = np.zeros(svd_k)
     features.extend(sv_normalized.tolist())
-    
+
     # 1b. Spectral entropy (normalized singular value distribution entropy)
     if f_norm > 0 and len(S) > 0:
         p = (S ** 2) / (f_norm ** 2)
@@ -360,7 +358,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     else:
         spectral_entropy = 0.0
     features.append(spectral_entropy)
-    
+
     # 2. Row and Column Gini coefficients
     row_norms = np.linalg.norm(mat, axis=1)
     col_norms = np.linalg.norm(mat, axis=0)
@@ -368,7 +366,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     col_gini = gini_coefficient(col_norms)
     features.append(row_gini)
     features.append(col_gini)
-    
+
     # 3. Locality ratio (energy within diagonal band, window=2)
     if f_norm > 0:
         window = min(2, N // 4) if N > 4 else 1
@@ -378,7 +376,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     else:
         locality_ratio = 0.0
     features.append(locality_ratio)
-    
+
     # 4. Diagonal dominance (diagonal energy / total energy)
     if f_norm > 0:
         diag_energy = np.sum(np.diag(mat) ** 2)
@@ -386,7 +384,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     else:
         diag_dominance = 0.0
     features.append(diag_dominance)
-    
+
     # 5. Off-diagonal asymmetry (upper vs lower triangle difference)
     upper = np.triu(mat, k=1)
     lower = np.tril(mat, k=-1)
@@ -398,7 +396,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     else:
         asymmetry = 0.0
     features.append(asymmetry)
-    
+
     # 6. Quadrant energy ratios (4 quadrants)
     mid = N // 2
     if mid > 0 and f_norm > 0:
@@ -410,7 +408,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
         features.extend([q1/total, q2/total, q3/total, q4/total])
     else:
         features.extend([0.25, 0.25, 0.25, 0.25])
-    
+
     return np.array(features, dtype=np.float64)
 
 
@@ -420,12 +418,12 @@ def compute_ars_features_per_head(
     svd_k: int = 3,
 ):
     """Compute ARS (Attention Response Signature) features for each head's diff matrix.
-    
+
     Args:
         original_items: list of original attention samples
         corrupted_items: list of corrupted attention samples
         svd_k: number of top singular values to include in ARS
-    
+
     Returns:
         scores: [L, H] sum of Frobenius norms (for compatibility)
         per_sample_ars: [M, L, H, D] ARS features per sample per head (D = svd_k + 10)
@@ -500,11 +498,11 @@ def compute_ars_features_base(
     svd_k: int = 3,
 ):
     """Compute ARS features for each head's original attention matrix.
-    
+
     Args:
         original_items: list of original attention samples
         svd_k: number of top singular values to include in ARS
-    
+
     Returns:
         scores: [L, H] sum of Frobenius norms (for compatibility)
         per_sample_ars: [M, L, H, D] ARS features per sample per head
@@ -560,21 +558,21 @@ def compute_ars_features_base(
 
 def pool_lower_triangular(mat: np.ndarray, out_size: int = 8) -> np.ndarray:
     """Pool only the lower triangular part of a matrix to a fixed size.
-    
+
     Args:
         mat: 2D numpy array of shape [N, N] (lower triangular attention diff)
         out_size: output grid size P, resulting in P*(P+1)/2 features
-    
+
     Returns:
         1D numpy array of shape [P*(P+1)/2] containing pooled lower triangular values
     """
     N = mat.shape[0]
     if N == 0:
         return np.zeros(out_size * (out_size + 1) // 2, dtype=np.float64)
-    
+
     grid = np.zeros((out_size, out_size), dtype=np.float64)
     edges = np.linspace(0, N, out_size + 1, dtype=int)
-    
+
     for i in range(out_size):
         r0, r1 = edges[i], edges[i + 1]
         if r1 <= r0:
@@ -583,10 +581,10 @@ def pool_lower_triangular(mat: np.ndarray, out_size: int = 8) -> np.ndarray:
             c0, c1 = edges[j], edges[j + 1]
             if c1 <= c0:
                 continue
-            
+
             # Extract block
             block = mat[r0:r1, c0:c1]
-            
+
             # For diagonal blocks, only use lower triangular part
             if i == j:
                 block_mask = np.tril(np.ones_like(block, dtype=bool))
@@ -596,7 +594,7 @@ def pool_lower_triangular(mat: np.ndarray, out_size: int = 8) -> np.ndarray:
                 # For off-diagonal blocks, use all elements
                 if block.size > 0:
                     grid[i, j] = np.mean(np.abs(block))
-    
+
     # Extract lower triangular elements as 1D feature vector
     mask = np.tril(np.ones((out_size, out_size), dtype=bool))
     return grid[mask]
@@ -608,12 +606,12 @@ def compute_pool_lower_features_per_head(
     pool_size: int = 8,
 ):
     """Compute pooled lower triangular features for each head's diff matrix.
-    
+
     Args:
         original_items: list of original attention samples
         corrupted_items: list of corrupted attention samples
         pool_size: output grid size P, feature dim = P*(P+1)/2
-    
+
     Returns:
         scores: [L, H] sum of Frobenius norms (for compatibility)
         per_sample_pool: [M, L, H, D] pooled features per sample per head
@@ -689,12 +687,12 @@ def compute_svd_features_per_head(
     svd_k: int,
 ):
     """Compute SVD features (top-k singular values) for each head's diff matrix.
-    
+
     Args:
         original_items: list of original attention samples
         corrupted_items: list of corrupted attention samples
         svd_k: number of top singular values to extract
-    
+
     Returns:
         scores: [L, H] sum of Frobenius norms (for compatibility)
         per_sample_svd: [M, L, H, K] top-k singular values per sample per head
@@ -767,11 +765,11 @@ def compute_svd_features_base(
     svd_k: int,
 ):
     """Compute SVD features (top-k singular values) for each head's original attention.
-    
+
     Args:
         original_items: list of original attention samples
         svd_k: number of top singular values to extract
-    
+
     Returns:
         scores: [L, H] sum of Frobenius norms (for compatibility)
         per_sample_svd: [M, L, H, K] top-k singular values per sample per head
@@ -950,7 +948,7 @@ def ensure_attention_files(
             "auto-generate attention files. Please ensure that transformers and "
             "huggingface-hub versions are compatible, or pre-generate the attention "
             f"files manually. Original error: {e}"
-        )
+        ) from e
 
     process_dataset(
         data_path=data_path,
@@ -1253,7 +1251,7 @@ def main():
             per_sample_scores = np.sum(per_sample_pool_lower, axis=-1)  # [M, L, H]
         elif args.ars:
             # Use ARS features
-            print(f"\n[ComputeW] 🔍 [Mode: diff + ARS] Computing Attention Response Signature for each head ...")
+            print("\n[ComputeW] 🔍 [Mode: diff + ARS] Computing Attention Response Signature for each head ...")
             scores, per_sample_ars, L, H, ars_dim = compute_ars_features_per_head(
                 original_items,
                 corrupted_items,
@@ -1339,7 +1337,7 @@ def main():
     elif args.mode == "orig":
         if args.ars:
             # Use ARS features
-            print(f"\n[ComputeW] 🔍 [Mode: orig + ARS] Computing Attention Response Signature for each head ...")
+            print("\n[ComputeW] 🔍 [Mode: orig + ARS] Computing Attention Response Signature for each head ...")
             scores, per_sample_ars, L, H, ars_dim = compute_ars_features_base(
                 original_items,
                 svd_k=args.ars_svd_k,
@@ -1575,18 +1573,18 @@ def main():
             out_obj["log_bucket_k"] = int(log_bucket_k if log_bucket_k is not None else per_sample_log_bucket.shape[-1] // 2)
             out_obj["log_bucket_normalize"] = bool(args.log_bucket_normalize)
             out_obj["per_sample_log_bucket"] = per_sample_log_bucket.tolist()  # [M, L, H, 2K]
-        
+
         # Save SVD features if computed
         if per_sample_svd is not None:
             out_obj["svd_k"] = int(args.svd_k)
             out_obj["per_sample_svd"] = per_sample_svd.tolist()  # [M, L, H, K]
-        
+
         # Save ARS features if computed
         if per_sample_ars is not None:
             out_obj["ars_svd_k"] = int(args.ars_svd_k)
             out_obj["ars_dim"] = int(ars_dim)
             out_obj["per_sample_ars"] = per_sample_ars.tolist()  # [M, L, H, D]
-        
+
         # Save pool lower features if computed
         if per_sample_pool_lower is not None:
             out_obj["pool_lower_size"] = int(args.pool_lower)

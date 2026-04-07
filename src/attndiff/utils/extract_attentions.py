@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import json
+import os
 from pathlib import Path
 
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 def load_model_and_tokenizer(model_name: str, device: str):
@@ -176,7 +176,7 @@ def extract_attention_for_prompt(
     cfg = getattr(model, "config", None)
     if cfg is not None and getattr(cfg, "model_type", None) == "qwen2":
         try:
-            setattr(cfg, "_attn_implementation", "eager")
+            cfg._attn_implementation = "eager"
         except Exception:
             pass
 
@@ -234,7 +234,7 @@ def extract_attentions_for_dataset(
     corrupted_results = []
 
     for idx, item in enumerate(tqdm(dataset, desc="Processing prompts")):
-        sample_id = item.get("id", idx)
+        item.get("id", idx)
         original_text = item["original"]
         corrupted_text = item["corrupted"]
 

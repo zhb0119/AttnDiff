@@ -1,10 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import argparse
 import json
 from pathlib import Path
-from typing import Optional
 
 import numpy as np
 from sklearn.cross_decomposition import CCA
@@ -392,7 +390,7 @@ def main():
     Ls = []
     Hs = []
 
-    for path, label in zip(input_files, labels):
+    for path, _label in zip(input_files, labels):
         with path.open("r", encoding="utf-8") as f:
             data = json.load(f)
 
