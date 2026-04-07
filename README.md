@@ -232,6 +232,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
+Thank you for your interest in AttnDiff! We hope this tool aids your research.
+
 - Built with [PyTorch](https://pytorch.org/)
 - Uses [Hugging Face Transformers](https://huggingface.co/transformers)
 - Package management with [UV](https://github.com/astral-sh/uv)
