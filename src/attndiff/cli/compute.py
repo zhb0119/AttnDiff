@@ -9,12 +9,14 @@ import numpy as np
 from tqdm import tqdm
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+# Project root is 3 levels up from this file: src/attndiff/cli/compute.py -> AttnDiff-main/
+PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent
 
 
 def _resolve_path(path: Path) -> Path:
     if path.is_absolute():
         return path
-    return (SCRIPT_DIR / path).resolve()
+    return (PROJECT_ROOT / path).resolve()
 
 
 def load_attention_file(path: Path):
@@ -934,7 +936,7 @@ def ensure_attention_files(
     if corrupted_path is not None:
         corrupted_path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        from tool.extract_attentions import process_dataset
+        from attndiff.utils.extract_attentions import process_dataset
     except ImportError as e:
         raise ImportError(
             "Failed to import process_dataset from extract_attentions while trying to "

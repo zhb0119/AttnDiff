@@ -231,15 +231,25 @@ def extract_attentions_for_dataset(
     corrupted_results = []
 
     for idx, item in enumerate(tqdm(dataset, desc="Processing prompts")):
-        item.get("id", idx)
+        sample_id = item.get("id", idx)
         original_text = item["original"]
         corrupted_text = item["corrupted"]
 
         tokens_o, attn_o = extract_attention_for_prompt(model, tokenizer, original_text, device)
-        original_results.append(attn_o)
+        original_results.append({
+            "id": sample_id,
+            "prompt": original_text,
+            "tokens": tokens_o,
+            "attention": attn_o,
+        })
 
         tokens_c, attn_c = extract_attention_for_prompt(model, tokenizer, corrupted_text, device)
-        corrupted_results.append(attn_c)
+        corrupted_results.append({
+            "id": sample_id,
+            "prompt": corrupted_text,
+            "tokens": tokens_c,
+            "attention": attn_c,
+        })
 
     print(f"[AttnExtract] Saving original attentions to: {original_out}")
     with original_out.open("w", encoding="utf-8") as f:
@@ -250,3 +260,26 @@ def extract_attentions_for_dataset(
         json.dump(corrupted_results, f, ensure_ascii=False)
 
     print("[AttnExtract] Done.")
+
+
+def process_dataset(
+    data_path: Path,
+    model_name: str,
+    out_original: Path,
+    out_corrupted: Path,
+    device: str = None,
+):
+    """
+    Wrapper function for backward compatibility with compute.py.
+    Maps old parameter names to new function.
+    """
+    if device is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    
+    extract_attentions_for_dataset(
+        model_name=model_name,
+        device=device,
+        dataset_path=data_path,
+        original_out=out_original,
+        corrupted_out=out_corrupted,
+    )
