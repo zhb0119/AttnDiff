@@ -178,12 +178,7 @@ AttnDiff/
 If you use AttnDiff in your research, please cite:
 
 ```bibtex
-@article{attndiff2024,
-  title={AttnDiff: Attention-based Differential Fingerprinting for Large Language Models},
-  author={Your Name},
-  journal={arXiv preprint},
-  year={2024}
-}
+coming soon
 ```
 
 ## Contributing
