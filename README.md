@@ -160,25 +160,22 @@ Create `dataset/dataset.json`:
 
 ```
 AttnDiff/
-├── src/attndiff/          # Main package
+├── src/attndiff/          # Package source code
 │   ├── core/              # Core algorithms
-│   │   ├── fingerprint.py # Fingerprint computation
-│   │   └── similarity.py  # Similarity metrics
-│   ├── cli/               # Command-line tools
-│   │   ├── compute.py     # Fingerprint computation CLI
-│   │   └── compare.py     # Comparison CLI
+│   ├── cli/               # CLI tools
 │   └── utils/             # Utilities
-│       └── extract_attentions.py
-├── tests/                 # Test suite
+├── tools/                 # Model manipulation tools
+│   ├── model-merging/     # Model merging tools
+│   └── model-pruning/     # Model pruning tools
+├── scripts/               # Batch processing scripts
+├── tests/                 # Unit tests
 ├── examples/              # Usage examples
 ├── dataset/               # Dataset directory
 ├── output/                # Output directory
 │   ├── attention/         # Attention files
 │   └── comput_W/          # Fingerprints
 ├── pyproject.toml         # UV/pip configuration
-├── .pre-commit-config.yaml
 └── README.md
-```
 
 ## Development
 
