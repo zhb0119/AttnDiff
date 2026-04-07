@@ -56,15 +56,6 @@ uv run attndiff-compute \
   --out output/comput_W/fingerprint_llama2.json
 ```
 
-## Features
-
-- 🚀 **Fast**: Lightweight fingerprinting without full model inference
-- 📊 **Accurate**: High correlation with model similarity
-- 🔧 **Flexible**: Supports multiple model architectures
-- 🐍 **Modern**: Built with UV package management
-- ✅ **Tested**: Comprehensive test suite with CI/CD
-- 📦 **Modular**: Clean API for integration
-
 ## Table of Contents
 
 - [Installation](#installation)
@@ -144,14 +135,14 @@ Create `dataset/dataset.json`:
   {
     "id": 1,
     "topic": "Mathematics",
-    "original": "What is 2 + 2?",
-    "corrupted": "Waht is 2 + 2?"
+    "original": "...",
+    "corrupted": "..."
   },
   {
     "id": 2,
     "topic": "Science",
-    "original": "Explain photosynthesis.",
-    "corrupted": "Explan photosynthesis."
+    "original": "...",
+    "corrupted": "..."
   }
 ]
 ```
@@ -176,64 +167,7 @@ AttnDiff/
 │   └── comput_W/          # Fingerprints
 ├── pyproject.toml         # UV/pip configuration
 └── README.md
-
-## Development
-
-### Setup Development Environment
-
-```bash
-# Install with dev dependencies
-uv sync --all-extras
-
-# Install pre-commit hooks
-uv run pre-commit install
 ```
-
-### Running Tests
-
-```bash
-# Run all tests
-uv run pytest tests/ -v
-
-# With coverage
-uv run pytest tests/ --cov=attndiff --cov-report=html
-```
-
-### Code Quality
-
-```bash
-# Format code
-uv run ruff format .
-
-# Lint
-uv run ruff check . --fix
-
-# Type check
-uv run mypy src/attndiff
-```
-
-### Adding Dependencies
-
-```bash
-# Runtime dependency
-uv add package-name
-
-# Development dependency
-uv add --dev package-name
-```
-
-## Model Support
-
-AttnDiff supports various model types:
-
-- **Fine-tuning**: Llama-2, Vicuna, WizardMath, CodeLlama, etc.
-- **Merging**: Model weight merging derivatives
-- **Pruning**: Structured and unstructured pruning
-- **Quantization**: GPTQ quantized models
-- **Distillation**: Knowledge distillation derivatives
-- **MoE**: Mixtral and other mixture-of-experts models
-
-See [Model List](README.md#model-list) for full details.
 
 ## Citation
 
