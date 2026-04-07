@@ -44,9 +44,7 @@ def fingerprint_to_matrix(
 ) -> np.ndarray:
     expected_len = L * H * N * N
     if vec.size != expected_len:
-        raise ValueError(
-            f"Fingerprint length mismatch: got {vec.size}, expected {expected_len}"
-        )
+        raise ValueError(f"Fingerprint length mismatch: got {vec.size}, expected {expected_len}")
     tensor = vec.reshape(L, H, N, N)
     mat = np.transpose(tensor, (2, 0, 1, 3)).reshape(N, -1)
     return mat

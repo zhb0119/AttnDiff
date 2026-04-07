@@ -14,9 +14,7 @@ def compute_fingerprint(
 ) -> dict:
     M = len(original_data)
     if len(corrupted_data) != M:
-        raise ValueError(
-            f"Mismatch in sample count: original={M}, corrupted={len(corrupted_data)}"
-        )
+        raise ValueError(f"Mismatch in sample count: original={M}, corrupted={len(corrupted_data)}")
 
     L = len(original_data[0])
     H = len(original_data[0][0])

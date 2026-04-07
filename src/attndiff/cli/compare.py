@@ -44,9 +44,7 @@ def fingerprint_layer_to_matrix(
     layer_index: int,
 ) -> np.ndarray:
     if not (0 <= layer_index < L):
-        raise ValueError(
-            f"layer_index must be in [0, L-1], got {layer_index} for L={L}."
-        )
+        raise ValueError(f"layer_index must be in [0, L-1], got {layer_index} for L={L}.")
     expected_len = L * H * N * N
     if vec.size != expected_len:
         raise ValueError(
@@ -147,7 +145,7 @@ def _r2_multioutput(X: np.ndarray, Y: np.ndarray, ridge: float = 1e-6) -> float:
         beta = np.linalg.pinv(XtX_reg) @ Xty
     Y_pred = Xc @ beta
     ss_res = np.sum((Yc - Y_pred) ** 2, axis=0)
-    ss_tot = np.sum(Yc ** 2, axis=0)
+    ss_tot = np.sum(Yc**2, axis=0)
     with np.errstate(divide="ignore", invalid="ignore"):
         r2 = 1.0 - ss_res / ss_tot
     r2 = np.where(np.isfinite(r2), r2, 0.0)
@@ -243,8 +241,7 @@ def parse_args():
         type=str,
         default="output/comput_W",
         help=(
-            "Directory containing fingerprint JSON files to compare "
-            "(default: /output/comput_W)."
+            "Directory containing fingerprint JSON files to compare (default: /output/comput_W)."
         ),
     )
     parser.add_argument(
@@ -331,9 +328,7 @@ def parse_args():
         "--cca_sample_index",
         type=int,
         default=1,
-        help=(
-            "Which sample index to use (1-based) when --cca_single_sample is set (default: 1)."
-        ),
+        help=("Which sample index to use (1-based) when --cca_single_sample is set (default: 1)."),
     )
     parser.add_argument(
         "--cca_components",
@@ -539,8 +534,7 @@ def main():
     repr_unique = sorted(set(repr_kinds))
     if len(repr_unique) != 1:
         raise ValueError(
-            "All fingerprints must use the same representation type, but got "
-            f"{repr_unique}."
+            f"All fingerprints must use the same representation type, but got {repr_unique}."
         )
 
     if args.cca_per_sample and args.mode != "cca":
@@ -553,7 +547,9 @@ def main():
         print("[Warning] --cca_transpose_mlh is only used when --mode cca; ignoring.")
 
     if args.cca_single_sample and args.cca_per_sample:
-        print("[Warning] Both --cca_single_sample and --cca_per_sample were set; using --cca_single_sample.")
+        print(
+            "[Warning] Both --cca_single_sample and --cca_per_sample were set; using --cca_single_sample."
+        )
 
     if args.cca_transpose_mlh and (args.cca_single_sample or args.cca_per_sample):
         print(
@@ -585,9 +581,7 @@ def main():
 
     # Build matrices according to representation and (optional) layer selection
     matrices = []
-    for arr, kind, L, H, num_rows, label in zip(
-        raw_arrays, repr_kinds, Ls, Hs, Ns, labels
-    ):
+    for arr, kind, L, H, num_rows, label in zip(raw_arrays, repr_kinds, Ls, Hs, Ns, labels):
         if kind == "per_sample_log_bucket":
             bucket_arr = arr
             D = bucket_arr.shape[3]
@@ -728,8 +722,7 @@ def main():
 
     num_models = len(matrices)
     print(
-        f"Each fingerprint represented as matrix of shape: "
-        f"{matrices[0].shape} (samples x features)"
+        f"Each fingerprint represented as matrix of shape: {matrices[0].shape} (samples x features)"
     )
 
     # Optionally mask small features in the fingerprint matrices
@@ -771,7 +764,11 @@ def main():
             sim_val = linear_regression_similarity(base_matrix, Xj)
             metric_name = "LINREG"
         elif args.mode == "cca":
-            if args.cca_transpose_mlh and repr_kinds[0] == "per_sample" and repr_kinds[j] == "per_sample":
+            if (
+                args.cca_transpose_mlh
+                and repr_kinds[0] == "per_sample"
+                and repr_kinds[j] == "per_sample"
+            ):
                 if layer_index is not None:
                     sim_val = cca_similarity(base_matrix, Xj, n_components=args.cca_components)
                     metric_name = "CCA"
@@ -779,7 +776,9 @@ def main():
                     base_arr = np.asarray(raw_arrays[0], dtype=np.float64)
                     other_arr = np.asarray(raw_arrays[j], dtype=np.float64)
                     if base_arr.ndim != 3 or other_arr.ndim != 3:
-                        raise ValueError("--cca_transpose_mlh requires per_sample_scores arrays with shape [M, L, H].")
+                        raise ValueError(
+                            "--cca_transpose_mlh requires per_sample_scores arrays with shape [M, L, H]."
+                        )
                     M0, L0, H0 = base_arr.shape
                     M1, L1, H1 = other_arr.shape
                     if M0 != M1:
@@ -794,7 +793,11 @@ def main():
                     Ymat = np.where(np.isfinite(Ymat), Ymat, 0.0)
                     sim_val = cca_similarity(Xmat, Ymat, n_components=args.cca_components)
                     metric_name = "CCA_LH_by_M"
-            elif args.cca_single_sample and repr_kinds[0] == "per_sample" and repr_kinds[j] == "per_sample":
+            elif (
+                args.cca_single_sample
+                and repr_kinds[0] == "per_sample"
+                and repr_kinds[j] == "per_sample"
+            ):
                 if layer_index is not None:
                     sim_val = cca_similarity(base_matrix, Xj, n_components=args.cca_components)
                     metric_name = "CCA"
@@ -802,7 +805,9 @@ def main():
                     base_arr = np.asarray(raw_arrays[0], dtype=np.float64)
                     other_arr = np.asarray(raw_arrays[j], dtype=np.float64)
                     if base_arr.ndim != 3 or other_arr.ndim != 3:
-                        raise ValueError("--cca_single_sample requires per_sample_scores arrays with shape [M, L, H].")
+                        raise ValueError(
+                            "--cca_single_sample requires per_sample_scores arrays with shape [M, L, H]."
+                        )
                     M0, L0, H0 = base_arr.shape
                     M1, L1, H1 = other_arr.shape
                     if M0 != M1:
@@ -822,7 +827,11 @@ def main():
                     Ym = np.where(np.isfinite(Ym), Ym, 0.0)
                     sim_val = cca_similarity(Xm, Ym, n_components=args.cca_components)
                     metric_name = "CCA_SINGLE_SAMPLE"
-            elif args.cca_per_sample and repr_kinds[0] == "per_sample" and repr_kinds[j] == "per_sample":
+            elif (
+                args.cca_per_sample
+                and repr_kinds[0] == "per_sample"
+                and repr_kinds[j] == "per_sample"
+            ):
                 if layer_index is not None:
                     sim_val = cca_similarity(base_matrix, Xj, n_components=args.cca_components)
                     metric_name = "CCA"
@@ -830,7 +839,9 @@ def main():
                     base_arr = np.asarray(raw_arrays[0], dtype=np.float64)
                     other_arr = np.asarray(raw_arrays[j], dtype=np.float64)
                     if base_arr.ndim != 3 or other_arr.ndim != 3:
-                        raise ValueError("--cca_per_sample requires per_sample_scores arrays with shape [M, L, H].")
+                        raise ValueError(
+                            "--cca_per_sample requires per_sample_scores arrays with shape [M, L, H]."
+                        )
                     M0, L0, H0 = base_arr.shape
                     M1, L1, H1 = other_arr.shape
                     if M0 != M1:
@@ -858,19 +869,10 @@ def main():
             raise ValueError(f"Unknown similarity mode: {args.mode}")
 
         if args.mode == "cka":
-            print(
-                f"{base_label} vs {labels[j]}: "
-                f"CKA = {sim_val:.4f}"
-            )
+            print(f"{base_label} vs {labels[j]}: CKA = {sim_val:.4f}")
         else:
-            print(
-                f"{base_label} vs {labels[j]}: "
-                f"{metric_name} = {sim_val:.4f}"
-            )
+            print(f"{base_label} vs {labels[j]}: {metric_name} = {sim_val:.4f}")
 
 
 if __name__ == "__main__":
     main()
-
-
-

@@ -126,9 +126,7 @@ def compute_s_divergence_per_head(
         if pool_size is not None:
             for layer_idx in range(L):
                 for head_idx in range(H):
-                    grid = pool_diff_to_grid(
-                        diff[layer_idx, head_idx], out_size=pool_size
-                    )
+                    grid = pool_diff_to_grid(diff[layer_idx, head_idx], out_size=pool_size)
                     per_sample_grids[idx, layer_idx, head_idx] = grid
 
     return scores, per_sample_scores, L, H, per_sample_grids
@@ -141,13 +139,15 @@ def _log_bucket_index_from_distance(d: np.ndarray, k: int) -> np.ndarray:
     out[d == 0] = 0
     d_pos = d[d > 0]
     if d_pos.size > 0:
-        idx = (np.floor(np.log2(d_pos)).astype(np.int64) + 1)
+        idx = np.floor(np.log2(d_pos)).astype(np.int64) + 1
         idx = np.minimum(idx, k - 1)
         out[d > 0] = idx
     return out
 
 
-def _get_tril_cache(N: int, k: int, cache: dict[tuple[int, int], tuple[np.ndarray, np.ndarray, np.ndarray]]):
+def _get_tril_cache(
+    N: int, k: int, cache: dict[tuple[int, int], tuple[np.ndarray, np.ndarray, np.ndarray]]
+):
     key = (N, k)
     if key in cache:
         return cache[key]
@@ -256,8 +256,7 @@ def compute_base_norm_per_head(original_items):
 
         if attn_o.ndim != 4:
             raise ValueError(
-                "Attention tensors must be 4D [L, H, N, N], got "
-                f"{attn_o.shape} at index {idx}."
+                f"Attention tensors must be 4D [L, H, N, N], got {attn_o.shape} at index {idx}."
             )
 
         if attn_o.shape[0] != L or attn_o.shape[1] != H:
@@ -269,9 +268,7 @@ def compute_base_norm_per_head(original_items):
         N_o1, N_o2 = attn_o.shape[2], attn_o.shape[3]
         N = min(N_o1, N_o2)
         if N <= 0:
-            raise ValueError(
-                f"Invalid attention spatial shape at index {idx}: {attn_o.shape}"
-            )
+            raise ValueError(f"Invalid attention spatial shape at index {idx}: {attn_o.shape}")
         attn_o = attn_o[:, :, :N, :N]
 
         frob = np.sqrt(np.sum(attn_o * attn_o, axis=(-1, -2)))
@@ -343,16 +340,18 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
         return np.zeros(svd_k + 10, dtype=np.float64)
 
     # 1a. Top-K singular values (normalized by Frobenius norm)
-    f_norm = np.linalg.norm(mat, 'fro')
+    f_norm = np.linalg.norm(mat, "fro")
     if f_norm > 0:
-        sv_normalized = S[:svd_k] / f_norm if len(S) >= svd_k else np.pad(S / f_norm, (0, svd_k - len(S)))
+        sv_normalized = (
+            S[:svd_k] / f_norm if len(S) >= svd_k else np.pad(S / f_norm, (0, svd_k - len(S)))
+        )
     else:
         sv_normalized = np.zeros(svd_k)
     features.extend(sv_normalized.tolist())
 
     # 1b. Spectral entropy (normalized singular value distribution entropy)
     if f_norm > 0 and len(S) > 0:
-        p = (S ** 2) / (f_norm ** 2)
+        p = (S**2) / (f_norm**2)
         p = p[p > 1e-12]
         spectral_entropy = -np.sum(p * np.log(p)) / np.log(len(S)) if len(S) > 1 else 0.0
     else:
@@ -372,7 +371,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
         window = min(2, N // 4) if N > 4 else 1
         mask = np.abs(np.arange(N)[:, None] - np.arange(N)) <= window
         local_energy = np.sum(mat[mask] ** 2)
-        locality_ratio = local_energy / (f_norm ** 2)
+        locality_ratio = local_energy / (f_norm**2)
     else:
         locality_ratio = 0.0
     features.append(locality_ratio)
@@ -380,7 +379,7 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     # 4. Diagonal dominance (diagonal energy / total energy)
     if f_norm > 0:
         diag_energy = np.sum(np.diag(mat) ** 2)
-        diag_dominance = diag_energy / (f_norm ** 2)
+        diag_dominance = diag_energy / (f_norm**2)
     else:
         diag_dominance = 0.0
     features.append(diag_dominance)
@@ -388,8 +387,8 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
     # 5. Off-diagonal asymmetry (upper vs lower triangle difference)
     upper = np.triu(mat, k=1)
     lower = np.tril(mat, k=-1)
-    upper_energy = np.sum(upper ** 2)
-    lower_energy = np.sum(lower ** 2)
+    upper_energy = np.sum(upper**2)
+    lower_energy = np.sum(lower**2)
     total_off_diag = upper_energy + lower_energy
     if total_off_diag > 0:
         asymmetry = (upper_energy - lower_energy) / total_off_diag
@@ -404,8 +403,8 @@ def compute_ars_features(mat: np.ndarray, svd_k: int = 3) -> np.ndarray:
         q2 = np.sum(mat[:mid, mid:] ** 2)  # top-right
         q3 = np.sum(mat[mid:, :mid] ** 2)  # bottom-left
         q4 = np.sum(mat[mid:, mid:] ** 2)  # bottom-right
-        total = f_norm ** 2
-        features.extend([q1/total, q2/total, q3/total, q4/total])
+        total = f_norm**2
+        features.extend([q1 / total, q2 / total, q3 / total, q4 / total])
     else:
         features.extend([0.25, 0.25, 0.25, 0.25])
 
@@ -527,8 +526,7 @@ def compute_ars_features_base(
 
         if attn_o.ndim != 4:
             raise ValueError(
-                "Attention tensors must be 4D [L, H, N, N], got "
-                f"{attn_o.shape} at index {idx}."
+                f"Attention tensors must be 4D [L, H, N, N], got {attn_o.shape} at index {idx}."
             )
 
         if attn_o.shape[0] != L or attn_o.shape[1] != H:
@@ -540,9 +538,7 @@ def compute_ars_features_base(
         N_o1, N_o2 = attn_o.shape[2], attn_o.shape[3]
         N = min(N_o1, N_o2)
         if N <= 0:
-            raise ValueError(
-                f"Invalid attention spatial shape at index {idx}: {attn_o.shape}"
-            )
+            raise ValueError(f"Invalid attention spatial shape at index {idx}: {attn_o.shape}")
         attn_o = attn_o[:, :, :N, :N]
 
         frob = np.sqrt(np.sum(attn_o * attn_o, axis=(-1, -2)))
@@ -792,8 +788,7 @@ def compute_svd_features_base(
 
         if attn_o.ndim != 4:
             raise ValueError(
-                "Attention tensors must be 4D [L, H, N, N], got "
-                f"{attn_o.shape} at index {idx}."
+                f"Attention tensors must be 4D [L, H, N, N], got {attn_o.shape} at index {idx}."
             )
 
         if attn_o.shape[0] != L or attn_o.shape[1] != H:
@@ -805,9 +800,7 @@ def compute_svd_features_base(
         N_o1, N_o2 = attn_o.shape[2], attn_o.shape[3]
         N = min(N_o1, N_o2)
         if N <= 0:
-            raise ValueError(
-                f"Invalid attention spatial shape at index {idx}: {attn_o.shape}"
-            )
+            raise ValueError(f"Invalid attention spatial shape at index {idx}: {attn_o.shape}")
         attn_o = attn_o[:, :, :N, :N]
 
         frob = np.sqrt(np.sum(attn_o * attn_o, axis=(-1, -2)))
@@ -1128,9 +1121,7 @@ def main():
             args.original,
             args.corrupted,
         )
-    display_model_name = (
-        model_name if model_name is not None else inferred_model_name
-    )
+    display_model_name = model_name if model_name is not None else inferred_model_name
 
     print("\n[ComputeW] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("[ComputeW] 🧩  Fingerprint Configuration")
@@ -1144,7 +1135,9 @@ def main():
         pool_dim = args.pool_lower * (args.pool_lower + 1) // 2
         print(f"[ComputeW] 📐 Pool Lower      : P={args.pool_lower} (D={pool_dim})")
     elif args.ars:
-        print(f"[ComputeW] 🧬 ARS enabled     : True (D = {args.ars_svd_k} + 10 = {args.ars_svd_k + 10})")
+        print(
+            f"[ComputeW] 🧬 ARS enabled     : True (D = {args.ars_svd_k} + 10 = {args.ars_svd_k + 10})"
+        )
     elif args.svd_k is not None:
         print(f"[ComputeW] 🔢 SVD top-k       : {args.svd_k}")
     if args.attn_device is not None:
@@ -1162,9 +1155,7 @@ def main():
                 "Either --original must be provided or --model_name must be set "
                 "to derive the default original attention path."
             )
-        original_path = _resolve_path(
-            Path("output/attention") / f"{model_base}_att_origin.json"
-        )
+        original_path = _resolve_path(Path("output/attention") / f"{model_base}_att_origin.json")
 
     # Resolve corrupted attention path only when needed (diff mode)
     if args.mode == "diff":
@@ -1203,9 +1194,7 @@ def main():
                 Path("output/base_fingerprint") / f"fingerprint_{model_base}.json"
             )
         else:
-            out_path = _resolve_path(
-                Path("output/comput_W") / f"fingerprint_{model_base}.json"
-            )
+            out_path = _resolve_path(Path("output/comput_W") / f"fingerprint_{model_base}.json")
 
     # Ensure output directory exists
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1236,22 +1225,34 @@ def main():
         # Diff mode: need S_Divergence scores based on original/corrupted pairs
         if args.pool_lower is not None:
             # Use pool lower triangular features
-            print(f"\n[ComputeW] 🔍 [Mode: diff + Pool Lower] Pooling lower triangular to {args.pool_lower}x{args.pool_lower} grid ...")
-            scores, per_sample_pool_lower, L, H, pool_lower_dim = compute_pool_lower_features_per_head(
-                original_items,
-                corrupted_items,
-                pool_size=args.pool_lower,
+            print(
+                f"\n[ComputeW] 🔍 [Mode: diff + Pool Lower] Pooling lower triangular to {args.pool_lower}x{args.pool_lower} grid ..."
             )
-            print("[ComputeW] ┌──────────────── Diff mode (Pool Lower) dimensions ────────────────┐")
+            scores, per_sample_pool_lower, L, H, pool_lower_dim = (
+                compute_pool_lower_features_per_head(
+                    original_items,
+                    corrupted_items,
+                    pool_size=args.pool_lower,
+                )
+            )
+            print(
+                "[ComputeW] ┌──────────────── Diff mode (Pool Lower) dimensions ────────────────┐"
+            )
             print(f"[ComputeW] │ Score matrix [L, H]       : {scores.shape} (L={L}, H={H})")
-            print(f"[ComputeW] │ Pool features [M, L, H, D]: {per_sample_pool_lower.shape} (D={pool_lower_dim})")
+            print(
+                f"[ComputeW] │ Pool features [M, L, H, D]: {per_sample_pool_lower.shape} (D={pool_lower_dim})"
+            )
             print("[ComputeW] │ Diff source               : corrupted - original attentions")
-            print("[ComputeW] └─────────────────────────────────────────────────────────────────────┘")
+            print(
+                "[ComputeW] └─────────────────────────────────────────────────────────────────────┘"
+            )
             # For compatibility, compute per_sample_scores as sum of pooled values
             per_sample_scores = np.sum(per_sample_pool_lower, axis=-1)  # [M, L, H]
         elif args.ars:
             # Use ARS features
-            print("\n[ComputeW] 🔍 [Mode: diff + ARS] Computing Attention Response Signature for each head ...")
+            print(
+                "\n[ComputeW] 🔍 [Mode: diff + ARS] Computing Attention Response Signature for each head ..."
+            )
             scores, per_sample_ars, L, H, ars_dim = compute_ars_features_per_head(
                 original_items,
                 corrupted_items,
@@ -1268,7 +1269,9 @@ def main():
             )
         elif args.svd_k is not None:
             # Use SVD features instead of scalar norms
-            print(f"\n[ComputeW] 🔍 [Mode: diff + SVD] Computing top-{args.svd_k} singular values for each head ...")
+            print(
+                f"\n[ComputeW] 🔍 [Mode: diff + SVD] Computing top-{args.svd_k} singular values for each head ..."
+            )
             scores, per_sample_svd, L, H = compute_svd_features_per_head(
                 original_items,
                 corrupted_items,
@@ -1278,7 +1281,7 @@ def main():
             print(f"[ComputeW] │ Score matrix [L, H]       : {scores.shape} (L={L}, H={H})")
             print(f"[ComputeW] │ SVD features [M, L, H, K] : {per_sample_svd.shape}")
             # For compatibility, also compute per_sample_scores as Frobenius norms
-            per_sample_scores = np.sqrt(np.sum(per_sample_svd ** 2, axis=-1))  # [M, L, H]
+            per_sample_scores = np.sqrt(np.sum(per_sample_svd**2, axis=-1))  # [M, L, H]
         else:
             print(
                 "\n[ComputeW] 🔍 [Mode: diff] Computing per-sample head norms "
@@ -1337,7 +1340,9 @@ def main():
     elif args.mode == "orig":
         if args.ars:
             # Use ARS features
-            print("\n[ComputeW] 🔍 [Mode: orig + ARS] Computing Attention Response Signature for each head ...")
+            print(
+                "\n[ComputeW] 🔍 [Mode: orig + ARS] Computing Attention Response Signature for each head ..."
+            )
             scores, per_sample_ars, L, H, ars_dim = compute_ars_features_base(
                 original_items,
                 svd_k=args.ars_svd_k,
@@ -1348,7 +1353,9 @@ def main():
             print("[ComputeW] │ Source                    : original attentions only")
             print("[ComputeW] └────────────────────────────────────────────────────────────┘")
             # For compatibility, compute per_sample_scores from first svd_k features
-            per_sample_scores = np.sqrt(np.sum(per_sample_ars[:, :, :, :args.ars_svd_k] ** 2, axis=-1))
+            per_sample_scores = np.sqrt(
+                np.sum(per_sample_ars[:, :, :, : args.ars_svd_k] ** 2, axis=-1)
+            )
         elif args.svd_k is not None:
             # Use SVD features instead of scalar norms
             print(
@@ -1365,15 +1372,13 @@ def main():
             print("[ComputeW] │ Source                    : original attentions only")
             print("[ComputeW] └────────────────────────────────────────────────────────────┘")
             # For compatibility, also compute per_sample_scores as Frobenius norms
-            per_sample_scores = np.sqrt(np.sum(per_sample_svd ** 2, axis=-1))  # [M, L, H]
+            per_sample_scores = np.sqrt(np.sum(per_sample_svd**2, axis=-1))  # [M, L, H]
         else:
             print(
                 "\n[ComputeW] 🔍 [Mode: orig] Computing per-sample head norms "
                 "from original attentions ..."
             )
-            scores, per_sample_scores, L, H = compute_base_norm_per_head(
-                original_items
-            )
+            scores, per_sample_scores, L, H = compute_base_norm_per_head(original_items)
             print("[ComputeW] ┌──────────────── Orig mode dimensions ────────────────┐")
             print(f"[ComputeW] │ Score matrix [L, H] : {scores.shape} (L={L}, H={H})")
             print("[ComputeW] │ Source              : original attentions only")
@@ -1416,7 +1421,9 @@ def main():
 
         N_base = attn_base.shape[2]
         print("[ComputeW] ┌──────────────── Base mode dimensions ────────────────┐")
-        print(f"[ComputeW] │ Attention tensor [L, H, N, N] : {attn_base.shape} (L={L}, H={H}, N={N_base})")
+        print(
+            f"[ComputeW] │ Attention tensor [L, H, N, N] : {attn_base.shape} (L={L}, H={H}, N={N_base})"
+        )
         print("[ComputeW] │ Base source                   : single original attention sample")
         print("[ComputeW] └──────────────────────────────────────────────────────┘")
 
@@ -1481,10 +1488,7 @@ def main():
 
             print("\n[ComputeW] 📈 Fingerprint summary")
             print("[ComputeW] ────────────────────────────────────────")
-            print(
-                f"[ComputeW] • Fingerprint matrix [M, L*H] : {F_mat.shape} "
-                f"(M={M}, L*H={D_flat})"
-            )
+            print(f"[ComputeW] • Fingerprint matrix [M, L*H] : {F_mat.shape} (M={M}, L*H={D_flat})")
             print(f"[ComputeW] • Fingerprint vector length    : {M * D_flat}")
 
             fingerprint_vec = F_mat.reshape(-1).tolist()
@@ -1536,10 +1540,7 @@ def main():
 
             print("\n[ComputeW] 📈 Fingerprint summary")
             print("[ComputeW] ────────────────────────────────────────")
-            print(
-                f"[ComputeW] • Fingerprint matrix [K, N^2] : {F_mat.shape} "
-                f"(K={K}, N^2={D_flat})"
-            )
+            print(f"[ComputeW] • Fingerprint matrix [K, N^2] : {F_mat.shape} (K={K}, N^2={D_flat})")
             print(f"[ComputeW] • Fingerprint vector length    : {K * D_flat}")
 
             fingerprint_vec = F_mat.reshape(-1).tolist()
@@ -1570,7 +1571,9 @@ def main():
         out_obj["per_sample_scores"] = per_sample_scores.tolist()
 
         if per_sample_log_bucket is not None:
-            out_obj["log_bucket_k"] = int(log_bucket_k if log_bucket_k is not None else per_sample_log_bucket.shape[-1] // 2)
+            out_obj["log_bucket_k"] = int(
+                log_bucket_k if log_bucket_k is not None else per_sample_log_bucket.shape[-1] // 2
+            )
             out_obj["log_bucket_normalize"] = bool(args.log_bucket_normalize)
             out_obj["per_sample_log_bucket"] = per_sample_log_bucket.tolist()  # [M, L, H, 2K]
 

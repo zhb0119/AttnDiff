@@ -106,9 +106,7 @@ def load_model_and_tokenizer(model_name: str, device: str):
         base_model_override = os.environ.get("PEFT_BASE_MODEL_PATH")
         base_model_name_or_path = base_model_override or base_model_from_cfg
         if not base_model_name_or_path:
-            raise ValueError(
-                "PEFT adapter config does not specify base_model_name_or_path"
-            )
+            raise ValueError("PEFT adapter config does not specify base_model_name_or_path")
 
         base_model_candidate = Path(base_model_name_or_path)
         if not base_model_candidate.is_absolute():
@@ -190,8 +188,7 @@ def extract_attention_for_prompt(
 
     if attentions is None:
         raise RuntimeError(
-            "Model did not return attentions. "
-            "Ensure attention implementation is set to 'eager'."
+            "Model did not return attentions. Ensure attention implementation is set to 'eager'."
         )
 
     heads_per_layer = [att.shape[1] for att in attentions]
@@ -238,14 +235,10 @@ def extract_attentions_for_dataset(
         original_text = item["original"]
         corrupted_text = item["corrupted"]
 
-        tokens_o, attn_o = extract_attention_for_prompt(
-            model, tokenizer, original_text, device
-        )
+        tokens_o, attn_o = extract_attention_for_prompt(model, tokenizer, original_text, device)
         original_results.append(attn_o)
 
-        tokens_c, attn_c = extract_attention_for_prompt(
-            model, tokenizer, corrupted_text, device
-        )
+        tokens_c, attn_c = extract_attention_for_prompt(model, tokenizer, corrupted_text, device)
         corrupted_results.append(attn_c)
 
     print(f"[AttnExtract] Saving original attentions to: {original_out}")
