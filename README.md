@@ -61,14 +61,23 @@ uv run attndiff-compare \
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [Dataset Format](#dataset-format)
-- [Repository Structure](#repository-structure)
-- [Development](#development)
-- [Citation](#citation)
-- [License](#license)
+- [AttnDiff: Attention-based Differential Fingerprinting for Large Language Models](#attndiff-attention-based-differential-fingerprinting-for-large-language-models)
+  - [Introduction](#introduction)
+    - [Pipeline Overview](#pipeline-overview)
+  - [Quick Start](#quick-start)
+    - [Installation](#installation)
+    - [Basic Usage](#basic-usage)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+    - [Compute Fingerprints](#compute-fingerprints)
+    - [Compare Fingerprints](#compare-fingerprints)
+  - [Dataset Format](#dataset-format)
+  - [Repository Structure](#repository-structure)
+  - [Partial Model List](#partial-model-list)
+  - [Citation](#citation)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
 
 ## Usage
 
@@ -174,8 +183,6 @@ AttnDiff/
 ```
 
 ## Partial Model List
-
-The following models have been tested with AttnDiff and have pre-computed fingerprints available:
 
 | ID | Model Name | Repository URL |
 |----|------------|----------------|
