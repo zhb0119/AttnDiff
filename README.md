@@ -16,8 +16,8 @@ AttnDiff is a lightweight model fingerprinting method for **model similarity est
 ### Pipeline Overview
 
 <div align="center">
-<img src="figure/pipeline.png" width="450" alt="AttnDiff pipeline" />
-<img src="figure/pool.png" width="450" alt="AttnDiff pool" />
+<img src="figure/pipeline.png" width="600" alt="AttnDiff pipeline" />
+<img src="figure/pool.png" width="600" alt="AttnDiff pool" />
 </div>
 
 ## Quick Start
