@@ -310,7 +310,15 @@ The following table provides Hugging Face repository links for key models used i
 If you use AttnDiff in your research, please cite:
 
 ```bibtex
-coming soon
+@misc{zhang2026attndiffattentionbaseddifferentialfingerprinting,
+      title={AttnDiff: Attention-based Differential Fingerprinting for Large Language Models}, 
+      author={Haobo Zhang and Zhenhua Xu and Junxian Li and Shangfeng Sheng and Dezhang Kong and Meng Han},
+      year={2026},
+      eprint={2604.05502},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2604.05502}, 
+}
 ```
 
 ## Contributing
