@@ -78,7 +78,6 @@ uv run attndiff-compare \
     - [Evaluation Dimensions](#evaluation-dimensions)
     - [Model Taxonomy](#model-taxonomy)
     - [Model Repository Links](#model-repository-links)
-  - [Contributing](#contributing)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
 
@@ -288,17 +287,11 @@ The following table provides Hugging Face repository links for key models used i
 
 ---
 
-## Contributing
-
-Contributions are welcome! Please open an issue or pull request on GitHub.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-
-Thank you for your interest in AttnDiff! We hope this tool aids your research.
 
 - Built with [PyTorch](https://pytorch.org/)
 - Uses [Hugging Face Transformers](https://huggingface.co/transformers)
