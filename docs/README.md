@@ -22,6 +22,12 @@ Open http://localhost:8000. You can also open `docs/index.html` directly.
 
 The workflow publishes only `docs/`. No Node installation or build step is needed.
 
+If the site returns 404 after enabling Pages, check the **Deploy project website**
+workflow. A run started before Pages was enabled can fail at **Configure Pages**
+with `Get Pages site failed`. Changing Settings does not retry that run: use
+**Run workflow** to deploy the current `main` branch. Only pushes changing `docs/`
+or `.github/workflows/pages.yml` trigger automatic deployment.
+
 ## Content and sources
 
 - News: September 2026 NeurIPS acceptance, supplied by the repository owner.
