@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244ac8">
+  <title>AttnDiff · NeurIPS 2026</title>
+  <meta name="description" content="Attention-based Differential Fingerprinting for Large Language Models. Explore AttnDiff's experimental design, robustness evaluations, and ablation studies.">
+  <meta property="og:title" content="AttnDiff · Attention-based Differential Fingerprinting">
+  <meta property="og:description" content="Tracing model provenance through differential attention. NeurIPS 2026. Experimental design, results, and code.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zhb0119.github.io/AttnDiff/">
+  <meta property="og:image" content="https://zhb0119.github.io/AttnDiff/assets/pipeline.webp">
+  <link rel="canonical" href="https://zhb0119.github.io/AttnDiff/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/results.js" defer></script>
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <nav class="wrap nav" aria-label="Main navigation">
+    <a class="wordmark" href="#">Attn<span>Diff</span><span aria-hidden="true">.</span></a>
+    <div class="nav-links"><a href="#design">Experiment design</a><a href="#results">Results</a><a class="optional" href="#ablations">Ablations</a><a class="optional" href="https://github.com/zhb0119/AttnDiff">Code ↗</a></div>
+  </nav>
+</header>
+<main id="main" class="wrap">
+  <section class="hero" aria-labelledby="title">
+    <span class="venue">NeurIPS 2026</span><span class="hero-note">Model provenance, through the lens of attention.</span>
+    <h1 id="title">Attn<span>Diff.</span></h1>
+    <p class="subtitle">Attention-based Differential Fingerprinting<br>for Large Language Models</p>
+    <p class="authors">Haobo Zhang · Zhenhua Xu · Junxian Li · Shangfeng Sheng · Dezhang Kong · Meng Han</p>
+    <div class="buttons">
+      <a class="button primary" href="https://arxiv.org/abs/2604.05502">Read the paper <span aria-hidden="true">↗</span></a>
+      <a class="button" href="https://github.com/zhb0119/AttnDiff">Code <span aria-hidden="true">↗</span></a>
+      <a class="button" href="https://arxiv.org/pdf/2604.05502">Paper PDF <span aria-hidden="true">↗</span></a>
+      <a class="button" href="#citation">BibTeX <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="intro-strip">
+      <p class="lead">Models change.<br>Can their information-routing behavior reveal where they came from?</p>
+      <p class="small">AttnDiff probes minimally edited prompt pairs, extracts differential attention, and compares compact spectral fingerprints. A white-box, post-hoc approach to model provenance that requires no model training or parameter modification.</p>
+    </div>
+  </section>
+  <aside class="news" aria-label="Latest news"><time datetime="2026-09">2026.09</time><p><strong>Accepted to NeurIPS 2026.</strong> Explore the paper, experimental protocol, and open-source implementation.</p></aside>
+
+  <section class="section" id="design" aria-labelledby="design-title">
+    <div class="section-heading"><div><div class="eyebrow">01 / Experimental design</div><h2 id="design-title">Small probes.<br>A broad stress test.</h2></div><p>Evaluate both sides of provenance: preserve similarity to transformed derivatives, and distinguish models from unrelated families.</p></div>
+    <div class="metrics">
+      <div class="metric"><b>60</b><span>prompt pairs · default probe set</span></div>
+      <div class="metric"><b>6</b><span>domains · 10 pairs per domain</span></div>
+      <div class="metric"><b>36 + 33</b><span>related + unrelated suspects¹</span></div>
+      <div class="metric"><b>6</b><span>baseline methods</span></div>
+    </div>
+    <div class="protocol">
+      <div><div class="eyebrow">Controlled semantic conflict</div><h3>Change one word.<br>Measure the routing response.</h3><p>Use the same paired probes for every model. A minimal lexical pivot changes semantic intent while preserving surface form; pooling aligns attention maps when token counts differ.</p><div class="domains"><span>Code</span><span>Math</span><span>Economics</span><span>Medicine</span><span>Daily QA</span><span>Safe Alignment</span></div></div>
+      <div class="prompt-pair"><div class="prompt"><small>Original / Math</small>In Euclidean geometry, two distinct parallel lines <mark>never</mark> intersect, no matter how far they are extended.</div><div class="prompt corrupt"><small>Corrupted / single-word pivot</small>In Euclidean geometry, two distinct parallel lines <mark>always</mark> intersect, no matter how far they are extended.</div><p class="pair-note">Example from Appendix B, Table 8. Both prompts are inputs to the model.</p></div>
+    </div>
+    <div class="design-grid">
+      <article class="design-card"><span class="number">RQ 01</span><h3>Survive adaptation?</h3><p>Fine-tuning from 5M to 700B tokens, plus PPO and DPO preference optimization. Test whether extensive updates preserve the provenance signal.</p><small>Table 1 · Appendix F.1</small></article>
+      <article class="design-card"><span class="number">RQ 02</span><h3>Trace merged parents?</h3><p>Compare merged models with their source models. Cover weight-space and distribution-level merging, with eight additional merging recipes.</p><small>Table 2 · Appendix F.2</small></article>
+      <article class="design-card"><span class="number">RQ 03</span><h3>Withstand compression?</h3><p>Test structured and unstructured pruning, then extend to Random, L1, and Taylor pruning criteria using LLM-Pruner.</p><small>Table 3 · Appendix F.3</small></article>
+    </div>
+    <p class="small">Coverage extends to distillation, GPTQ quantization, Mixtral MoE, and cross-family/scale comparisons. Base families include Llama-2/3, Qwen2.5, Gemma, and Mistral. <strong>¹ The 36 + 33 pool is the discriminability benchmark in Section 5.6;</strong> individual robustness and ablation experiments use their own model subsets.</p>
+  </section>
+
+  <section class="section" id="method" aria-labelledby="method-title">
+    <div class="section-heading"><div><div class="eyebrow">02 / The method</div><h2 id="method-title">From attention shifts<br>to a model fingerprint.</h2></div><p>Subtract paired attention maps, summarize each layer and head with its top singular values, and compare the resulting probe geometry.</p></div>
+    <figure class="figure"><a href="assets/pipeline.webp" aria-label="Open full-size AttnDiff pipeline"><img src="assets/pipeline.webp" width="2200" height="1238" alt="AttnDiff pipeline: original and corrupted prompts pass through a target model; attention maps are pooled, subtracted, and summarized with top-K singular values to form a fingerprint." loading="lazy"></a><figcaption>Fingerprint extraction. Stack all prompt-level descriptors into F ∈ ℝ<sup>M × (LHK)</sup>, then compare models using centered linear CKA on their M × M Gram matrices.</figcaption></figure>
+    <div class="method-steps"><div><h3>01 &nbsp; Align & subtract</h3><p>Pool each paired attention map to the smaller token length. Subtract to isolate the response to the semantic pivot.</p></div><div><h3>02 &nbsp; Keep a compact spectrum</h3><p>Retain K = 3 singular values per head and layer. Aggregate all heads and layers into a fingerprint for each probe.</p></div><div><h3>03 &nbsp; Compare probe geometry</h3><p>Centered linear CKA compares models with different feature dimensions, without requiring explicit layer or head matching.</p></div></div>
+  </section>
+
+  <section class="section" id="results" aria-labelledby="results-title">
+    <div class="section-heading"><div><div class="eyebrow">03 / Robustness & discrimination</div><h2 id="results-title">Follow the evidence.</h2></div><p>Explore individual model comparisons, then inspect the full baseline benchmark. All values below are reported in the supplied paper.</p></div>
+    <div class="tabs" role="tablist" aria-label="Robustness experiments"><button id="tab-fine" role="tab" aria-selected="true" aria-controls="experiment-panel" data-experiment="fine">Fine-tuning</button><button id="tab-merge" role="tab" aria-selected="false" aria-controls="experiment-panel" tabindex="-1" data-experiment="merge">Merging</button><button id="tab-prune" role="tab" aria-selected="false" aria-controls="experiment-panel" tabindex="-1" data-experiment="prune">Pruning</button></div>
+    <div class="experiment" id="experiment-panel" role="tabpanel" aria-labelledby="tab-fine" tabindex="0">
+      <div><h3 id="experiment-title">01 / Fine-tuning</h3><p id="experiment-description">Six downstream models span 5 million to 700 billion fine-tuning tokens. Does a fingerprint survive substantial domain adaptation?</p><p class="takeaway" id="experiment-takeaway">AttnDiff retains similarity above 0.985 across all six derivatives. REEF is also strong, with a slightly higher mean (0.9966 vs. 0.9945).</p><p class="source" id="experiment-source">Table 1 · Llama-2-7B derivatives</p><p class="source">Similarity scores, on a 0–1 scale. REEF is shown as a strong representation-based comparator.</p></div>
+      <div class="table-scroll"><table aria-label="Similarity to parent models"><thead><tr><th scope="col">Suspect / comparison</th><th scope="col">AttnDiff</th><th scope="col">REEF</th></tr></thead><tbody id="experiment-rows"><tr><th scope="row">Llama-2-Finance · 5M tokens</th><td>0.9989</td><td>0.9950</td></tr><tr><th scope="row">Vicuna-1.5 · 370M tokens</th><td>0.9986</td><td>0.9985</td></tr><tr><th scope="row">WizardMath · 1.8B tokens</th><td>0.9985</td><td>0.9979</td></tr><tr><th scope="row">Chinese-LLaMA-2 · 13B tokens</th><td>0.9963</td><td>0.9974</td></tr><tr><th scope="row">CodeLLaMA · 500B tokens</th><td>0.9890</td><td>0.9947</td></tr><tr><th scope="row">Llemma · 700B tokens</th><td>0.9856</td><td>0.9962</td></tr></tbody></table><noscript><p class="small">Enable JavaScript to switch to merging and pruning results; all results are also available in the paper.</p></noscript></div>
+    </div>
+    <div class="benchmark"><div><div class="eyebrow">Rejecting unrelated models</div><h3>High similarity is only<br>half of the test.</h3><p>The discriminability benchmark treats <strong>36 related suspects as positives</strong> and <strong>33 unrelated suspects as negatives</strong>. AUROC and AUPR measure separation across decision thresholds.</p><p>Compare six baselines covering parameter fingerprints (PCS, ICS), representations (Logits, REEF), adversarial triggers (ProFlingo), and semantic fingerprints (LLMMap).</p><p class="benchmark-note">AttnDiff reports the highest AUROC and AUPR in Table 4, with a small margin over REEF. These are ranking metrics, not accuracy percentages. Methods retain their original similarity formulations and access requirements.</p></div>
+    <div class="table-scroll"><table aria-label="Discriminability benchmark from Table 4"><thead><tr><th scope="col">Method</th><th scope="col">AUROC ↑</th><th scope="col">AUPR ↑</th></tr></thead><tbody><tr><th scope="row">PCS</th><td>0.9566</td><td>0.9367</td></tr><tr><th scope="row">ICS</th><td>0.9789</td><td>0.9795</td></tr><tr><th scope="row">Logits</th><td>0.9757</td><td>0.9746</td></tr><tr><th scope="row">REEF</th><td>0.9867</td><td>0.9877</td></tr><tr><th scope="row">ProFlingo</th><td>0.8374</td><td>0.8927</td></tr><tr><th scope="row">LLMMap</th><td>0.8925</td><td>0.9014</td></tr><tr class="highlight"><th scope="row"><strong>AttnDiff</strong></th><td><strong>0.9883</strong></td><td><strong>0.9881</strong></td></tr></tbody></table><p class="source">Source: Table 4 / Section 5.6. Related = positive.</p></div></div>
+  </section>
+
+  <section class="section" id="ablations" aria-labelledby="ablations-title">
+    <div class="section-heading"><div><div class="eyebrow">04 / Controlled ablations</div><h2 id="ablations-title">Which choices matter?</h2></div><p>Isolate the differential mechanism, probe budget, spectral rank, and similarity metric. Report both related and unrelated models to expose the trade-offs.</p></div>
+    <div class="ablation-grid">
+      <article class="ablation-card"><h3>The difference makes a difference.</h3><p>Replace differential attention with original attention while keeping the other preprocessing steps identical.</p><div class="table-scroll"><table aria-label="Differential mechanism ablation"><thead><tr><th scope="col">Model / group</th><th scope="col">Original</th><th scope="col">Differential</th></tr></thead><tbody><tr><th scope="row">CodeLLaMA-7B</th><td>0.5134</td><td class="related">0.9890</td></tr><tr><th scope="row">Llemma-7B</th><td>0.2902</td><td class="related">0.9856</td></tr><tr><th scope="row">Related mean ↑</th><td>0.8817</td><td class="related">0.9937</td></tr><tr><th scope="row">Unrelated mean ↓</th><td>0.3731</td><td class="related">0.1647</td></tr></tbody></table></div><p class="source">Table 11 · 11 related + 8 unrelated models. Group means use this ablation subset.</p></article>
+      <article class="ablation-card"><h3>How many probes are enough?</h3><p>Very small probe sets (M ≤ 15) produce spurious similarity for unrelated models. The paper chooses M = 60 for separation and efficiency.</p><a href="assets/probe-budget.webp" aria-label="Open full-size probe budget plot"><img src="assets/probe-budget.webp" width="543" height="300" loading="lazy" alt="Paper Figure 5: similarity across probe counts 5, 15, 30, 60, 120, and 240; related model curves stay high while unrelated model curves fall. The vertical axis has a break."></a><p class="source">Figure 5 · Original figure with a broken vertical axis; inspect its scale when comparing curves.</p></article>
+      <article class="ablation-card"><h3>Three singular values per head.</h3><p>Sweep spectral rank K. Higher ranks lower unrelated similarity but also weaken similarity to related models.</p><div class="table-scroll"><table aria-label="Spectral rank ablation"><thead><tr><th scope="col">Rank K</th><th scope="col">Related ↑</th><th scope="col">Unrelated ↓</th></tr></thead><tbody><tr><th scope="row">1</th><td>0.9928</td><td>0.2708</td></tr><tr><th scope="row">2</th><td>0.9941</td><td>0.2413</td></tr><tr class="highlight"><th scope="row">3 · default</th><td>0.9937</td><td>0.1647</td></tr><tr><th scope="row">5</th><td>0.9854</td><td>0.1544</td></tr><tr><th scope="row">10</th><td>0.9711</td><td>0.1476</td></tr></tbody></table></div><p class="source">Table 10 · Average CKA similarity.</p></article>
+      <article class="ablation-card"><h3>Compare the same fingerprints.</h3><p>Keep the fingerprint matrix fixed and change only the similarity metric. Centered linear CKA reduces spurious similarity in this comparison.</p><div class="table-scroll"><table aria-label="Similarity metric ablation"><thead><tr><th scope="col">Metric</th><th scope="col">Related ↑</th><th scope="col">Unrelated ↓</th></tr></thead><tbody><tr><th scope="row">CCA</th><td>0.9924</td><td>0.3112</td></tr><tr><th scope="row">SVCCA</th><td>0.9941</td><td>0.2419</td></tr><tr class="highlight"><th scope="row">CKA · default</th><td>0.9937</td><td>0.1647</td></tr></tbody></table></div><p class="source">Table 14 · 11 related + 8 unrelated suspects (Table 13).</p><p class="source">Additional controls: probe length (10 / 30 / 60 words, Table 9) and domain composition (Table 12).</p></article>
+    </div>
+    <details class="detail"><summary>Look inside the fingerprint: layer-wise similarity</summary><figure class="figure"><a href="assets/layer-similarity.webp"><img src="assets/layer-similarity.webp" width="1194" height="450" loading="lazy" alt="Figure 6: layer-wise CKA heatmaps for fine-tuned, pruned, and unrelated model pairs; related pairs show diagonal structure, while unrelated pairs show low similarity."></a><figcaption>Figure 6. Layer-wise patterns provide interpretation; the final score is computed once on the full fingerprint, rather than by averaging layer-wise scores.</figcaption></figure></details>
+    <details class="detail"><summary>Compute budget and scope of the method</summary><p>With M = 60 pairs, extraction requires 120 forward passes per model. The paper reports approximately 5 minutes for a 7B model on a single NVIDIA RTX 5090. This is a reported setup-specific timing, not a universal runtime guarantee. Reference fingerprints can be cached.</p><p>AttnDiff requires access to internal attention activations. The evaluated transformations support empirical provenance analysis; similarity alone does not establish legal ownership or guarantee robustness to every adaptive attack. See the paper’s limitations for the scope of the claims.</p></details>
+  </section>
+
+  <section class="section" id="reproduce" aria-labelledby="reproduce-title"><div class="reproduce"><div><div class="eyebrow" style="color:#a9bdff">05 / Reproduce & explore</div><h2 id="reproduce-title">Start with a fingerprint.</h2><p>Install the package, then compare the included pre-computed fingerprints. To extract your own, configure model paths and device settings in the batch script.</p><a href="https://github.com/zhb0119/AttnDiff#quick-start">Full installation & usage guide ↗</a></div><pre><code>git clone https://github.com/zhb0119/AttnDiff.git
+cd AttnDiff
+uv sync
+
+uv run attndiff-compare \
+  --base output/comput_W/fingerprint_Llama-2-7B.json \
+  --dir output/comput_W \
+  --cka linear</code></pre></div></section>
+
+  <section class="section citation" id="citation" aria-labelledby="citation-title"><div class="citation-top"><div><div class="eyebrow">Reference</div><h2 id="citation-title">Cite AttnDiff.</h2></div><button class="button" id="copy-citation" type="button">Copy BibTeX</button></div><pre><code id="bibtex">@misc{zhang2026attndiffattentionbaseddifferentialfingerprinting,
+  title={AttnDiff: Attention-based Differential Fingerprinting for Large Language Models},
+  author={Haobo Zhang and Zhenhua Xu and Junxian Li and Shangfeng Sheng and Dezhang Kong and Meng Han},
+  year={2026},
+  eprint={2604.05502},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  url={https://arxiv.org/abs/2604.05502}
+}</code></pre><p class="status" id="copy-status" role="status" aria-live="polite"></p></section>
+</main>
+<footer class="wrap"><div class="footer"><span>AttnDiff · NeurIPS 2026 · Paper-reported experimental results</span><span><a href="https://arxiv.org/abs/2604.05502">arXiv</a> &nbsp; / &nbsp; <a href="https://github.com/zhb0119/AttnDiff">GitHub</a> &nbsp; / &nbsp; <a href="#">Back to top ↑</a></span></div></footer>
+</body>
+</html>

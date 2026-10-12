@@ -48,9 +48,9 @@ gptq = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/zhb0119/AttnDiff"
+Homepage = "https://zhb0119.github.io/AttnDiff/"
 Repository = "https://github.com/zhb0119/AttnDiff"
-Documentation = "https://github.com/zhb0119/AttnDiff#readme"
+Documentation = "https://zhb0119.github.io/AttnDiff/"
 Issues = "https://github.com/zhb0119/AttnDiff/issues"
 
 [project.scripts]

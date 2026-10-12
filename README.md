@@ -2,16 +2,53 @@
 
 # AttnDiff: Attention-based Differential Fingerprinting for Large Language Models
 
+[![NeurIPS 2026](https://img.shields.io/badge/NeurIPS-2026-244AC8)](https://neurips.cc/)
+[![arXiv](https://img.shields.io/badge/arXiv-2604.05502-B31B1B?logo=arxiv)](https://arxiv.org/abs/2604.05502)
+[![Project Page](https://img.shields.io/badge/Project-Page-244AC8)](https://zhb0119.github.io/AttnDiff/)
+
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Transformers](https://img.shields.io/badge/Transformers-4.35%2B-FFD21E?logo=huggingface&logoColor=black)](https://github.com/huggingface/transformers)
 [![License](https://img.shields.io/badge/License-MIT-green?logo=opensource&logoColor=white)](LICENSE)
 
+**[Paper](https://arxiv.org/abs/2604.05502) · [Project Page](https://zhb0119.github.io/AttnDiff/) · [PDF](https://arxiv.org/pdf/2604.05502) · [Quick Start](#quick-start) · [Citation](#citation)**
+
 </div>
+
+## News
+
+- **2026.09** — AttnDiff has been accepted to **NeurIPS 2026**!
 
 ## Introduction
 
-AttnDiff is a lightweight model fingerprinting method for **model similarity estimation**. Instead of comparing hidden states, AttnDiff builds a fingerprint from **head-level attention differences** under paired prompts (e.g., `original` vs. `corrupted`).
+AttnDiff is a **white-box, post-hoc fingerprinting method for LLM provenance verification**. It probes models with minimally edited prompt pairs, summarizes **head-level differential attention** with compact spectral descriptors, and compares fingerprints using **centered linear CKA**. It requires no model training or parameter modification and supports comparisons across different layer/head counts.
+
+### Experiment Design at a Glance
+
+The experiments test whether fingerprints remain similar for related derivatives while separating unrelated models. See the [project page](https://zhb0119.github.io/AttnDiff/#design) for an interactive overview.
+
+| Design component | Paper protocol |
+|---|---|
+| **Controlled probes** | 60 original/corrupted prompt pairs; a single-word pivot changes semantic intent |
+| **Domain coverage** | Code, Math, Economics, Medicine, Daily QA, and Safe Alignment; 10 pairs per domain |
+| **Fingerprint** | All layers and heads; top-3 singular values per differential attention map; centered linear CKA |
+| **Core robustness tests** | Fine-tuning (5M–700B tokens), weight/distribution merging, structured/unstructured pruning |
+| **Extended tests** | PPO/DPO, eight merging recipes, pruning criteria, distillation, GPTQ quantization, MoE, and cross-family/scale comparisons |
+| **Discriminability** | 36 related + 33 unrelated suspects in Section 5.6; AUROC/AUPR and fixed-threshold precision/recall/F1 |
+| **Six baselines** | PCS, ICS, Logits, REEF, ProFlingo, and LLMMap |
+| **Controlled ablations** | Differential mechanism, probe count/domain/length, spectral rank, and similarity metric |
+
+### Selected Paper Results
+
+| Evaluation | AttnDiff result | Source |
+|---|---|---|
+| Discriminability | **0.9883 AUROC / 0.9881 AUPR**; REEF: 0.9867 / 0.9877 | Table 4 |
+| SFT robustness | Similarity **0.9856–0.9989** across six derivatives | Table 1 |
+| Pruning robustness | Similarity **≥ 0.9879** across nine structured/unstructured pruned suspects | Table 3 |
+| Differential ablation: related mean | Original attention **0.8817 → 0.9937** with differential attention | Table 11 |
+| Differential ablation: unrelated mean | Original attention **0.3731 → 0.1647** with differential attention | Table 11 |
+
+These are **paper-reported results**, not newly run experiments. Similarity scores are not accuracy. Table 11 uses a separate ablation subset (11 related + 8 unrelated models), rather than the 69-suspect discriminability pool. REEF remains competitive and has a slightly higher SFT mean (0.9966 vs. 0.9945).
 
 ### Pipeline Overview
 
@@ -76,28 +113,17 @@ uv run attndiff-compare \
 
 ---
 
-## Table of Contents
+## Contents
 
-- [AttnDiff: Attention-based Differential Fingerprinting for Large Language Models](#attndiff-attention-based-differential-fingerprinting-for-large-language-models)
-  - [Introduction](#introduction)
-    - [Pipeline Overview](#pipeline-overview)
-  - [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Basic Usage](#basic-usage)
-  - [Table of Contents](#table-of-contents)
-  - [Repository Structure](#repository-structure)
-  - [Dataset Format](#dataset-format)
-  - [Usage](#usage)
-    - [Compute Fingerprints](#compute-fingerprints)
-    - [Compare Fingerprints](#compare-fingerprints)
-  - [Experimental Evaluation](#experimental-evaluation)
-    - [Evaluation Dimensions](#evaluation-dimensions)
-    - [Model Taxonomy](#model-taxonomy)
-    - [Model Repository Links](#model-repository-links)
-  - [Citation](#citation)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Acknowledgments](#acknowledgments)
+- [News](#news)
+- [Introduction and experiment design](#introduction)
+- [Quick Start](#quick-start)
+- [Repository Structure](#repository-structure)
+- [Dataset Format](#dataset-format)
+- [Usage](#usage)
+- [Experimental Evaluation](#experimental-evaluation)
+- [Project Website](#project-website)
+- [Citation](#citation)
 
 ---
 
@@ -119,6 +145,7 @@ AttnDiff/
 ├── output/                # Output directory
 │   ├── attention/         # Attention files
 │   └── comput_W/          # Fingerprints
+├── docs/                  # Static project website (GitHub Pages)
 ├── pyproject.toml         # UV/pip configuration
 └── README.md
 ```
@@ -237,6 +264,9 @@ AttnDiff has been systematically evaluated across multiple model manipulation di
 | | Scale | Model sizes | 1.5B, 2B, 7B, 8B, 14B parameters |
 | **MoE** | Mixtral | Mixture of Experts | 8x7B sparse models |
 
+<details>
+<summary><strong>Full model taxonomy and repository links</strong></summary>
+
 ### Model Taxonomy
 
 The following table categorizes all models used in experiments by their manipulation type:
@@ -303,7 +333,22 @@ The following table provides Hugging Face repository links for key models used i
 | | LLaMA-3.1-8B-INT4-GPTQ | [DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ](https://huggingface.co/DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ) |
 | | Mistral-7B-v0.3-GPTQ-4bit | [RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit](https://huggingface.co/RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit) |
 
+</details>
+
 ---
+
+## Project Website
+
+**Homepage:** [https://zhb0119.github.io/AttnDiff/](https://zhb0119.github.io/AttnDiff/)
+
+The static website lives in [`docs/`](docs/). It presents the experimental protocol, interactive robustness comparisons, all six baselines, and key ablations. It can be published from this repository with GitHub Pages; **no separate `github.io` repository is needed**.
+
+```bash
+# Local preview
+python -m http.server 8000 --directory docs
+```
+
+Open <http://localhost:8000>. For first-time publication, select **GitHub Actions** in the repository's **Settings → Pages**, then run the included **Deploy project website** workflow after pushing the website files. See the [deployment guide](docs/README.md).
 
 ## Citation
 
