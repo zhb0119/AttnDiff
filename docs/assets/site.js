@@ -53,3 +53,70 @@ document.querySelector('#copy-citation').addEventListener('click', async () => {
     status.textContent = 'Citation selected. Press Ctrl+C or Command+C to copy.';
   }
 });
+
+// Keep the full matrix and model directory readable without JavaScript.
+const matrixButtons = [...document.querySelectorAll('[data-matrix-filter]')];
+const matrixRows = [...document.querySelectorAll('[data-study]')];
+function filterMatrix(group) {
+  let visible = 0;
+  matrixRows.forEach(row => {
+    row.hidden = group !== 'all' && row.dataset.study !== group;
+    if (!row.hidden) visible += 1;
+  });
+  matrixButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.matrixFilter === group)));
+  document.querySelector('#matrix-status').textContent = `${visible} of ${matrixRows.length} experimental settings`;
+}
+matrixButtons.forEach(button => button.addEventListener('click', () => filterMatrix(button.dataset.matrixFilter)));
+document.querySelector('.matrix-controls').hidden = false;
+filterMatrix('core');
+
+const modelCards = [...document.querySelectorAll('.model-card')];
+const modelSearch = document.querySelector('#model-search');
+const modelCategory = document.querySelector('#model-category');
+const moreModels = document.querySelector('#more-models');
+const pageSize = 9;
+let visibleLimit = pageSize;
+const modelText = new Map(modelCards.map(card => [card, card.textContent.toLowerCase()]));
+function filterModels(reset = true) {
+  if (reset) visibleLimit = pageSize;
+  const terms = modelSearch.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const matches = modelCards.filter(card =>
+    (modelCategory.value === 'all' || card.dataset.category === modelCategory.value) &&
+    terms.every(term => modelText.get(card).includes(term))
+  );
+  const visible = new Set(matches.slice(0, visibleLimit));
+  modelCards.forEach(card => { card.hidden = !visible.has(card); });
+  document.querySelector('#model-count').textContent = `Showing ${visible.size} of ${matches.length} matching models · ${modelCards.length} entries total`;
+  document.querySelector('#model-empty').hidden = matches.length > 0;
+  moreModels.hidden = matches.length <= visibleLimit;
+  moreModels.textContent = `Show ${Math.max(0, Math.min(pageSize, matches.length - visibleLimit))} more models ↓`;
+}
+modelSearch.addEventListener('input', () => filterModels());
+modelCategory.addEventListener('change', () => filterModels());
+document.querySelector('#reset-models').addEventListener('click', () => {
+  modelSearch.value = '';
+  modelCategory.value = 'all';
+  filterModels();
+  modelSearch.focus();
+});
+moreModels.addEventListener('click', () => {
+  const previous = new Set(modelCards.filter(card => !card.hidden));
+  visibleLimit += pageSize;
+  filterModels(false);
+  // Move focus to the first revealed entry, including cards without a checkpoint link.
+  const revealed = modelCards.find(card => !card.hidden && !previous.has(card));
+  if (revealed) {
+    revealed.tabIndex = -1;
+    revealed.focus({ preventScroll: true });
+  }
+});
+document.querySelectorAll('[data-model-category]').forEach(link => {
+  link.addEventListener('click', () => {
+    modelCategory.value = link.dataset.modelCategory;
+    modelSearch.value = '';
+    filterModels();
+    modelSearch.focus({ preventScroll: true });
+  });
+});
+document.querySelector('.catalog-toolbar').hidden = false;
+filterModels();

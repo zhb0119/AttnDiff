@@ -31,9 +31,20 @@ or `.github/workflows/pages.yml` trigger automatic deployment.
 ## Content and sources
 
 - News: September 2026 NeurIPS acceptance, supplied by the repository owner.
-- Paper and author list: the existing README citation, arXiv:2604.05502.
+- Paper and author order: the existing README citation, arXiv:2604.05502.
+- Author affiliations, contribution marks, and contact details: the author block supplied by the repository owner.
 - Experimental text and numbers: the supplied `neurips_2026.pdf`, Tables 1–4,
   9–11, and 14; Section 5.1, Section 5.6, and the computational-cost discussion.
+- Experiment design matrix: core Tables 1–4, extended Tables A1–A7,
+  ablation Tables 9–14, and Figure 5. Filterable rows remain readable without JavaScript.
+- Model directory: 56 named suspect/comparison entries across nine categories,
+  transcribed from Tables A9–A10 and the existing README taxonomy; the 2.7B
+  ShareGPT pruning variant is also listed in Table 3. Reference/source models
+  appear on the cards. The directory is not the 69-suspect discriminability pool.
+  Table A4’s explicit caption determines the 1.5B Qwen reference model
+  (the general taxonomy lists 7B). Checkpoint links follow Table A10
+  and existing Sheared model links. EvoLLM and FuseLLM checkpoint links were
+  checked against their Hugging Face model cards (2026-10-12).
 - `assets/results.js`: transcribed values with their table references. These are
   paper-reported results, not newly executed experiments. Group averages in
   Table 11 and the 69-suspect benchmark in Table 4 are different evaluation pools.
@@ -43,6 +54,6 @@ or `.github/workflows/pages.yml` trigger automatic deployment.
 - The Paper PDF button links to the public arXiv PDF; the local anonymous reviewer
   manuscript is used as a content reference and is not included in the website.
 
-Edit text in `index.html`, design in `assets/style.css`, and interactive behavior
+Edit text, experiment rows, and model cards in `index.html`, design in `assets/style.css`, and interactive behavior
 in `assets/site.js`. Update `assets/results.js` if paper results change. All assets
 are local; there are no analytics, font services, or third-party JavaScript dependencies.

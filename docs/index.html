@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#244ac8">
+  <meta name="theme-color" content="#174d46">
   <title>AttnDiff · NeurIPS 2026</title>
   <meta name="description" content="Attention-based Differential Fingerprinting for Large Language Models. Explore AttnDiff's experimental design, robustness evaluations, and ablation studies.">
   <meta property="og:title" content="AttnDiff · Attention-based Differential Fingerprinting">
@@ -22,24 +22,37 @@
 <header class="topbar">
   <nav class="wrap nav" aria-label="Main navigation">
     <a class="wordmark" href="#">Attn<span>Diff</span><span aria-hidden="true">.</span></a>
-    <div class="nav-links"><a href="#design">Experiment design</a><a href="#results">Results</a><a class="optional" href="#ablations">Ablations</a><a class="optional" href="https://github.com/zhb0119/AttnDiff">Code ↗</a></div>
+    <div class="nav-links"><a href="#matrix">Experiments</a><a href="#models">Models</a><a href="#results">Results</a><a class="optional" href="#ablations">Ablations</a><a class="nav-code optional" href="https://github.com/zhb0119/AttnDiff">GitHub ↗</a></div>
   </nav>
 </header>
 <main id="main" class="wrap">
   <section class="hero" aria-labelledby="title">
-    <span class="venue">NeurIPS 2026</span><span class="hero-note">Model provenance, through the lens of attention.</span>
+    <div class="hero-kicker"><span class="venue">NeurIPS 2026</span><span class="hero-note">Model provenance through attention</span></div>
     <h1 id="title">Attn<span>Diff.</span></h1>
     <p class="subtitle">Attention-based Differential Fingerprinting<br>for Large Language Models</p>
-    <p class="authors">Haobo Zhang · Zhenhua Xu · Junxian Li · Shangfeng Sheng · Dezhang Kong · Meng Han</p>
+    <div class="author-block">
+      <p class="authors"><span>Haobo Zhang<sup>1,3*</sup></span><span>Zhenhua Xu<sup>2,3*</sup></span><span>Junxian Li<sup>4</sup></span><span>Shangfeng Sheng<sup>5</sup></span><span>Dezhang Kong<sup>2,3†</sup></span><span>Meng Han<sup>2,3†</sup></span></p>
+      <p class="affiliations"><span><sup>1</sup> Zhejiang University of Technology</span><span><sup>2</sup> Zhejiang University</span><span><sup>3</sup> Binjiang Institute of Zhejiang University</span><span><sup>4</sup> Shanghai Jiao Tong University</span><span><sup>5</sup> University of Science and Technology of China</span></p>
+      <p class="author-notes"><span>* Equal contribution &nbsp; † Corresponding authors</span><span><a href="mailto:zhanghaobo@zjut.edu.cn">zhanghaobo@zjut.edu.cn</a> · <a href="mailto:xuzhenhua0326@zju.edu.cn">xuzhenhua0326@zju.edu.cn</a> · <a href="mailto:mhan@zju.edu.cn">mhan@zju.edu.cn</a></span></p>
+    </div>
     <div class="buttons">
       <a class="button primary" href="https://arxiv.org/abs/2604.05502">Read the paper <span aria-hidden="true">↗</span></a>
       <a class="button" href="https://github.com/zhb0119/AttnDiff">Code <span aria-hidden="true">↗</span></a>
       <a class="button" href="https://arxiv.org/pdf/2604.05502">Paper PDF <span aria-hidden="true">↗</span></a>
       <a class="button" href="#citation">BibTeX <span aria-hidden="true">↓</span></a>
     </div>
+    <div class="hero-route" aria-label="AttnDiff at a glance">
+      <div><span class="route-index">01 / PROBE</span><strong>A one-word change</strong><span>Paired semantic conflicts</span></div>
+      <span class="route-arrow" aria-hidden="true">→</span>
+      <div><span class="route-index">02 / EXTRACT</span><strong>An attention shift</strong><span>All heads · all layers</span></div>
+      <span class="route-arrow" aria-hidden="true">→</span>
+      <div><span class="route-index">03 / FINGERPRINT</span><strong>A compact spectrum</strong><span>Top-3 singular values</span></div>
+      <span class="route-arrow" aria-hidden="true">→</span>
+      <div><span class="route-index">04 / COMPARE</span><strong>A provenance signal</strong><span>Centered linear CKA</span></div>
+    </div>
     <div class="intro-strip">
-      <p class="lead">Models change.<br>Can their information-routing behavior reveal where they came from?</p>
-      <p class="small">AttnDiff probes minimally edited prompt pairs, extracts differential attention, and compares compact spectral fingerprints. A white-box, post-hoc approach to model provenance that requires no model training or parameter modification.</p>
+      <p class="lead">Models change.<br> <em>Where they came from</em> still matters.</p>
+      <p class="small">AttnDiff traces model provenance through the attention response to minimally edited prompts. Its compact differential fingerprints require no model training or parameter modification. Explore how we test them across adaptation, merging, and compression.</p>
     </div>
   </section>
   <aside class="news" aria-label="Latest news"><time datetime="2026-09">2026.09</time><p><strong>Accepted to NeurIPS 2026.</strong> Explore the paper, experimental protocol, and open-source implementation.</p></aside>
@@ -61,17 +74,410 @@
       <article class="design-card"><span class="number">RQ 02</span><h3>Trace merged parents?</h3><p>Compare merged models with their source models. Cover weight-space and distribution-level merging, with eight additional merging recipes.</p><small>Table 2 · Appendix F.2</small></article>
       <article class="design-card"><span class="number">RQ 03</span><h3>Withstand compression?</h3><p>Test structured and unstructured pruning, then extend to Random, L1, and Taylor pruning criteria using LLM-Pruner.</p><small>Table 3 · Appendix F.3</small></article>
     </div>
+
+    <div class="matrix-panel" id="matrix">
+      <div class="panel-heading"><div><div class="eyebrow">The evaluation map</div><h3>Experiment design matrix</h3></div><span class="panel-tag">17 experimental settings</span></div>
+      <p class="panel-intro">Read across a row to see what changes, what is compared, and how the experiment is measured.</p>
+      <div class="matrix-controls" role="group" aria-label="Filter experiment design" hidden>
+        <button type="button" data-matrix-filter="core" aria-pressed="true">Core studies <span>4</span></button>
+        <button type="button" data-matrix-filter="extended" aria-pressed="false">Extended tests <span>7</span></button>
+        <button type="button" data-matrix-filter="control" aria-pressed="false">Ablations <span>6</span></button>
+        <button type="button" data-matrix-filter="all" aria-pressed="false">All <span>17</span></button>
+      </div>
+      <p class="matrix-scroll-hint">Scroll across to compare the full protocol →</p>
+      <div class="table-scroll matrix-scroll" tabindex="0" role="region" aria-label="Experiment design matrix; scroll horizontally on small screens">
+        <table class="matrix-table">
+          <caption class="sr-only">Experiment variables, comparison protocol, measurements, and paper references</caption>
+          <thead><tr><th scope="col">Experiment</th><th scope="col">Variable &amp; coverage</th><th scope="col">Comparison / control</th><th scope="col">Readout &amp; source</th></tr></thead>
+          <tbody>
+            <tr data-study="core"><th scope="row"><span class="study-label core">RQ 01</span><strong>Fine-tuning</strong><a class="matrix-model-link" href="#models" data-model-category="fine" aria-label="Browse models for Fine-tuning">Browse models ↗</a></th><td>Six derivatives; 5M–700B fine-tuning tokens</td><td>Llama-2-7B as reference; same paired probes</td><td><strong>Parent–derivative similarity</strong><span class="matrix-source">Table 1</span></td></tr>
+            <tr data-study="core"><th scope="row"><span class="study-label core">RQ 02</span><strong>Model merging</strong><a class="matrix-model-link" href="#models" data-model-category="merge" aria-label="Browse models for Model merging">Browse models ↗</a></th><td>Weight-space and distribution-level merging</td><td>Merged model compared with each source model</td><td><strong>Similarity to each parent</strong><span class="matrix-source">Table 2</span></td></tr>
+            <tr data-study="core"><th scope="row"><span class="study-label core">RQ 03</span><strong>Model pruning</strong><a class="matrix-model-link" href="#models" data-model-category="prune" aria-label="Browse models for Model pruning">Browse models ↗</a></th><td>Six structured + three unstructured variants</td><td>Llama-2-7B as reference; shared probe protocol</td><td><strong>Parent–derivative similarity</strong><span class="matrix-source">Table 3</span></td></tr>
+            <tr data-study="core"><th scope="row"><span class="study-label core">SEPARATION</span><strong>Discriminability</strong></th><td>36 related + 33 unrelated suspects</td><td>Six baselines; each keeps its own similarity formulation</td><td><strong>AUROC · AUPR</strong><span class="matrix-source">Table 4 / §5.6</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">ADAPTATION</span><strong>Preference optimization</strong><a class="matrix-model-link" href="#models" data-model-category="preference" aria-label="Browse models for Preference optimization">Browse models ↗</a></th><td>PPO reward/policy models and DPO derivatives</td><td>Llama-2-7B as reference</td><td><strong>Parent–derivative similarity</strong><span class="matrix-source">Table A1 / F.1</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">MERGING</span><strong>Merging recipes</strong><a class="matrix-model-link" href="#models" data-model-category="merge" aria-label="Browse models for Merging recipes">Browse models ↗</a></th><td>Eight additional model-merging strategies</td><td>Compare merged models to their sources</td><td><strong>Similarity to source models</strong><span class="matrix-source">Table A2 / F.2</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">PRUNING</span><strong>Pruning criteria</strong><a class="matrix-model-link" href="#models" data-model-category="prune" aria-label="Browse models for Pruning criteria">Browse models ↗</a></th><td>Random · L1 norm · Taylor importance</td><td>LLM-Pruner; common model/probe setup</td><td><strong>Similarity after pruning</strong><span class="matrix-source">Table A3 / F.3</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">TRANSFER</span><strong>Cross-family &amp; scale</strong><a class="matrix-model-link" href="#models" data-model-category="cross" aria-label="Browse models for Cross-family &amp; scale">Browse models ↗</a></th><td>Qwen2.5 · Gemma · Mistral; multiple model sizes</td><td>Within-family reference pairs; Qwen at 1.5B / 14B</td><td><strong>Cross-configuration similarity</strong><span class="matrix-source">Table A4 / F.4</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">TRANSFER</span><strong>Distillation</strong><a class="matrix-model-link" href="#models" data-model-category="distill" aria-label="Browse models for Distillation">Browse models ↗</a></th><td>Open-R1 · DeepSeek-R1 · logit distillation</td><td>Reference and suspect pairs listed in Appendix H</td><td><strong>Reference–suspect similarity</strong><span class="matrix-source">Table A5 / F.5</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">ARCHITECTURE</span><strong>Mixture of experts</strong><a class="matrix-model-link" href="#models" data-model-category="moe" aria-label="Browse models for Mixture of experts">Browse models ↗</a></th><td>Three Mixtral-8×7B derivatives</td><td>Mixtral-8×7B as reference</td><td><strong>Reference–suspect similarity</strong><span class="matrix-source">Table A6 / F.6</span></td></tr>
+            <tr data-study="extended"><th scope="row"><span class="study-label extended">COMPRESSION</span><strong>Quantization</strong><a class="matrix-model-link" href="#models" data-model-category="quant" aria-label="Browse models for Quantization">Browse models ↗</a></th><td>Six GPTQ variants; 4-bit and 8-bit</td><td>Llama · Qwen · Mistral reference models</td><td><strong>Similarity after quantization</strong><span class="matrix-source">Table A7 / F.7</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">MECHANISM</span><strong>Differential attention</strong></th><td>Original vs. differential attention</td><td>Same preprocessing; 11 related + 8 unrelated models</td><td><strong>Both group means</strong><span class="matrix-source">Table 11</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">BUDGET</span><strong>Number of probes</strong></th><td>M = 5 / 15 / 30 / 60 / 120 / 240</td><td>Same fingerprint extraction and comparison</td><td><strong>Similarity vs. probe count</strong><span class="matrix-source">Figure 5</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">SPECTRUM</span><strong>Spectral rank</strong></th><td>K = 1 / 2 / 3 / 5 / 10</td><td>Same probes; vary retained singular values</td><td><strong>Related / unrelated means</strong><span class="matrix-source">Table 10</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">PROMPTS</span><strong>Probe length</strong></th><td>10 / 30 / 60 words</td><td>Vary probe length within the probing protocol</td><td><strong>Related / unrelated similarity</strong><span class="matrix-source">Table 9</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">DOMAINS</span><strong>Domain composition</strong></th><td>Code · Math · Economics · Medicine · Daily QA · Safety</td><td>Compare domain-specific probe sets</td><td><strong>Domain-wise similarity</strong><span class="matrix-source">Table 12</span></td></tr>
+            <tr data-study="control"><th scope="row"><span class="study-label control">METRIC</span><strong>Similarity metric</strong></th><td>CCA / SVCCA / centered linear CKA</td><td>Identical fingerprints; 11 related + 8 unrelated suspects</td><td><strong>Both group means</strong><span class="matrix-source">Tables 13–14</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="matrix-foot"><span id="matrix-status" role="status">17 experimental settings</span><span>Default extraction: M = 60 · K = 3 · centered linear CKA</span></div>
+    </div>
     <p class="small">Coverage extends to distillation, GPTQ quantization, Mixtral MoE, and cross-family/scale comparisons. Base families include Llama-2/3, Qwen2.5, Gemma, and Mistral. <strong>¹ The 36 + 33 pool is the discriminability benchmark in Section 5.6;</strong> individual robustness and ablation experiments use their own model subsets.</p>
   </section>
 
+
+  <section class="section" id="models" aria-labelledby="models-title">
+    <div class="section-heading"><div><div class="eyebrow">02 / The model landscape</div><h2 id="models-title">Every transformation.<br>A concrete model.</h2></div><p>Explore the models named in the paper’s experimental taxonomy, with reference models, study categories, and available checkpoint links.</p></div>
+    <div class="catalog-shell">
+      <div class="catalog-toolbar" hidden>
+        <label class="search-field"><span>Search the directory</span><input id="model-search" type="search" placeholder="Try Qwen, Sheared, GPTQ…" autocomplete="off" aria-controls="model-grid"></label>
+        <label><span>Experiment</span><select id="model-category" aria-controls="model-grid"><option value="all">All experiments</option><option value="fine">Fine-tuning (6)</option><option value="preference">Preference optimization (4)</option><option value="merge">Merging (2)</option><option value="prune">Pruning (9)</option><option value="cross">Cross-family &amp; scale (12)</option><option value="distill">Distillation (4)</option><option value="moe">Mixture of experts (3)</option><option value="quant">Quantization (6)</option><option value="control">Unrelated controls (10)</option></select></label>
+        <button type="button" class="button reset-button" id="reset-models">Reset filters ↺</button>
+      </div>
+      <div class="catalog-meta"><p id="model-count" role="status" aria-live="polite">56 model entries · 9 categories</p><span>Sources: Appendix H · Tables A9–A10</span></div>
+      <div class="model-grid" id="model-grid">
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Llama-2-finance-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Vicuna-1.5-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>WizardMath-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Chinese-LLaMA-2-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>CodeLLaMA-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="fine">
+          <div class="model-card-top"><span class="model-category fine">Fine-tuning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Llemma-7b</h3><p class="model-kind">Supervised fine-tuning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 1 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="preference">
+          <div class="model-card-top"><span class="model-category preference">Preference optimization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>llama-2-7b-ppo-v0.1-reward</h3><p class="model-kind">PPO reward model</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A1 · A9–A10</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="preference">
+          <div class="model-card-top"><span class="model-category preference">Preference optimization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>llama-2-7b-ppo-lora-v0.1</h3><p class="model-kind">PPO policy / LoRA</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A1 · A9–A10</span><a href="https://huggingface.co/renyiyu/llama-2-7b-ppo-lora-v0.1" aria-label="llama-2-7b-ppo-lora-v0.1 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="preference">
+          <div class="model-card-top"><span class="model-category preference">Preference optimization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>tulu-2-dpo-7b</h3><p class="model-kind">DPO</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A1 · A9–A10</span><a href="https://huggingface.co/allenai/tulu-2-dpo-7b" aria-label="tulu-2-dpo-7b on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="preference">
+          <div class="model-card-top"><span class="model-category preference">Preference optimization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>llama2-7b-dpo</h3><p class="model-kind">DPO</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A1 · A9–A10</span><a href="https://huggingface.co/mncai/llama2-7b-dpo-v1" aria-label="llama2-7b-dpo on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="merge">
+          <div class="model-card-top"><span class="model-category merge">Merging</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Evollm-jp-7b</h3><p class="model-kind">Weight-space merging</p>
+          <p class="model-reference"><span>Reference / source</span>Shisa-gamma-7b-v1 / WizardMath-7b-1.1 / Abel-7b-002</p>
+          <div class="model-card-foot"><span>Table 2 · A9</span><a href="https://huggingface.co/SakanaAI/EvoLLM-JP-v1-7B" aria-label="Evollm-jp-7b on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="merge">
+          <div class="model-card-top"><span class="model-category merge">Merging</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Fusellm-7b</h3><p class="model-kind">Distribution-level merging</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B / OpenLLaMA-2-7b / mpt-7b</p>
+          <div class="model-card-foot"><span>Table 2 · A9</span><a href="https://huggingface.co/Wanfq/FuseLLM-7B" aria-label="Fusellm-7b on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-1.3B</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><a href="https://huggingface.co/princeton-nlp/Sheared-LLaMA-1.3B" aria-label="Sheared-LLaMA-1.3B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-1.3B-pruned</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-1.3B-sharegpt</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-2.7B</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><a href="https://huggingface.co/princeton-nlp/Sheared-LLaMA-2.7B" aria-label="Sheared-LLaMA-2.7B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-2.7B-pruned</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sheared-LLaMA-2.7B-sharegpt</h3><p class="model-kind">Structured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Sparse-llama-2-7b</h3><p class="model-kind">Unstructured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Wanda-llama-2-7b</h3><p class="model-kind">Unstructured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="prune">
+          <div class="model-card-top"><span class="model-category prune">Pruning</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>GBLM-llama-2-7b</h3><p class="model-kind">Unstructured pruning</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table 3 · A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-Coder-1.5B</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-1.5B</p>
+          <div class="model-card-foot"><span>Tables A4 · A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B" aria-label="Qwen2.5-Coder-1.5B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-Math-1.5B</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-1.5B</p>
+          <div class="model-card-foot"><span>Tables A4 · A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-Math-1.5B" aria-label="Qwen2.5-Math-1.5B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-1.5B-Instruct</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-1.5B</p>
+          <div class="model-card-foot"><span>Tables A4 · A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct" aria-label="Qwen2.5-1.5B-Instruct on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-14B-Instruct</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-14B</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-14B-Instruct" aria-label="Qwen2.5-14B-Instruct on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>oxy-1-small</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-14B</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/oxyapi/oxy-1-small" aria-label="oxy-1-small on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-14B-Gutenberg-Instruct-Slerpeno</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-14B</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/v000000/Qwen2.5-14B-Gutenberg-Instruct-Slerpeno" aria-label="Qwen2.5-14B-Gutenberg-Instruct-Slerpeno on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>gemma-2-2b-neogenesis-ita</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>gemma-2-2b</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/anakin87/gemma-2-2b-neogenesis-ita" aria-label="gemma-2-2b-neogenesis-ita on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>gemma-2-baku-2b</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>gemma-2-2b</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/rinna/gemma-2-baku-2b" aria-label="gemma-2-baku-2b on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>gemma2-2b-merged</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>gemma-2-2b</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/vonjack/gemma2-2b-merged" aria-label="gemma2-2b-merged on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>AQUA-7B</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Mistral-7B-v0.3</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/KurmaAI/AQUA-7B" aria-label="AQUA-7B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>spellcheck-mistral-7b</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Mistral-7B-v0.3</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/openfoodfacts/spellcheck-mistral-7b" aria-label="spellcheck-mistral-7b on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="cross">
+          <div class="model-card-top"><span class="model-category cross">Cross-family &amp; scale</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Mistral-7B-Instruct-demi-merge-v0.3-7B</h3><p class="model-kind">Cross-family / scale study</p>
+          <p class="model-reference"><span>Reference / source</span>Mistral-7B-v0.3</p>
+          <div class="model-card-foot"><span>Tables A4 · A9–A10</span><a href="https://huggingface.co/grimjim/Mistral-7B-Instruct-demi-merge-v0.3-7B" aria-label="Mistral-7B-Instruct-demi-merge-v0.3-7B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="distill">
+          <div class="model-card-top"><span class="model-category distill">Distillation</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Llama-3.1-8B-Instruct-Open-R1-Distill</h3><p class="model-kind">Reasoning distillation</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-3.1-8B</p>
+          <div class="model-card-foot"><span>Tables A5 · A9–A10</span><a href="https://huggingface.co/asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill" aria-label="Llama-3.1-8B-Instruct-Open-R1-Distill on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="distill">
+          <div class="model-card-top"><span class="model-category distill">Distillation</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-7B-Open-R1-Distill</h3><p class="model-kind">Reasoning distillation</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-7B</p>
+          <div class="model-card-foot"><span>Tables A5 · A9–A10</span><a href="https://huggingface.co/erickrus/Qwen2.5-7B-Open-R1-Distill" aria-label="Qwen2.5-7B-Open-R1-Distill on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="distill">
+          <div class="model-card-top"><span class="model-category distill">Distillation</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>DeepSeek-R1-Distill-Qwen-14B</h3><p class="model-kind">Reasoning distillation</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-14B</p>
+          <div class="model-card-foot"><span>Tables A5 · A9–A10</span><a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B" aria-label="DeepSeek-R1-Distill-Qwen-14B on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="distill">
+          <div class="model-card-top"><span class="model-category distill">Distillation</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2</h3><p class="model-kind">Logit-based distillation</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A5 · A9–A10</span><a href="https://huggingface.co/cygu/llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2" aria-label="llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="moe">
+          <div class="model-card-top"><span class="model-category moe">Mixture of experts</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Instruct_Mixtral-8x7B-v0.1_Dolly15K</h3><p class="model-kind">Mixture of experts</p>
+          <p class="model-reference"><span>Reference / source</span>Mixtral-8x7B</p>
+          <div class="model-card-foot"><span>Tables A6 · A9–A10</span><a href="https://huggingface.co/Brillibits/Instruct_Mixtral-8x7B-v0.1_Dolly15K" aria-label="Instruct_Mixtral-8x7B-v0.1_Dolly15K on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="moe">
+          <div class="model-card-top"><span class="model-category moe">Mixture of experts</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Nous-Hermes-2-Mixtral-8x7B-DPO</h3><p class="model-kind">Mixture of experts</p>
+          <p class="model-reference"><span>Reference / source</span>Mixtral-8x7B</p>
+          <div class="model-card-foot"><span>Tables A6 · A9–A10</span><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO" aria-label="Nous-Hermes-2-Mixtral-8x7B-DPO on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="moe">
+          <div class="model-card-top"><span class="model-category moe">Mixture of experts</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>openbuddy-mixtral-8x7b-v15.4</h3><p class="model-kind">Mixture of experts</p>
+          <p class="model-reference"><span>Reference / source</span>Mixtral-8x7B</p>
+          <div class="model-card-foot"><span>Tables A6 · A9–A10</span><a href="https://huggingface.co/openbuddy/openbuddy-mixtral-8x7b-v15.4" aria-label="openbuddy-mixtral-8x7b-v15.4 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-7B-Instruct-GPTQ-Int8</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-7B</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int8" aria-label="Qwen2.5-7B-Instruct-GPTQ-Int8 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-7B-Instruct-GPTQ-Int4</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Qwen2.5-7B</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4" aria-label="Qwen2.5-7B-Instruct-GPTQ-Int4 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Llama-2-7B-Chat-GPTQ</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/TheBloke/Llama-2-7B-Chat-GPTQ" aria-label="Llama-2-7B-Chat-GPTQ on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-3.1-8B</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/iqbalamo93/Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8" aria-label="Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8 on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>LLaMA-3.1-8B-Instruct-INT4-GPTQ</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Llama-3.1-8B</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ" aria-label="LLaMA-3.1-8B-Instruct-INT4-GPTQ on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="quant">
+          <div class="model-card-top"><span class="model-category quant">Quantization</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Mistral-7B-Instruct-v0.3-GPTQ-4bit</h3><p class="model-kind">GPTQ quantization</p>
+          <p class="model-reference"><span>Reference / source</span>Mistral-7B-v0.3</p>
+          <div class="model-card-foot"><span>Tables A7 · A9–A10</span><a href="https://huggingface.co/RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit" aria-label="Mistral-7B-Instruct-v0.3-GPTQ-4bit on Hugging Face">Checkpoint ↗</a></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Llama3-8B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>mpt-7b</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-1.5B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-3B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-7B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-14B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Qwen2.5-Math-7B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>gemma-2-2b</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Gemma-7B-it</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+        <article class="model-card" data-category="control">
+          <div class="model-card-top"><span class="model-category control">Unrelated controls</span><span class="model-symbol" aria-hidden="true">↗</span></div>
+          <h3>Yi-6B</h3><p class="model-kind">Unrelated comparison model</p>
+          <p class="model-reference"><span>Compared against</span>Llama-2-7B</p>
+          <div class="model-card-foot"><span>Table A9</span><span class="model-paper">Listed in paper</span></div>
+        </article>
+      </div>
+      <div id="model-empty" class="empty-state" hidden><h3>No matching models</h3><p>Try another model name or reset the experiment filter.</p></div>
+      <div class="catalog-more"><button class="button" id="more-models" type="button" hidden>Show more models ↓</button></div>
+      <p class="catalog-note">This directory summarizes the named models across studies. Reference models are shown on each card. It is separate from the 36 + 33 discriminability pool; individual experiments and ablations use their own subsets.</p>
+      <noscript><p class="catalog-note">All model entries are shown. Enable JavaScript to search and filter the directory.</p></noscript>
+    </div>
+  </section>
+
   <section class="section" id="method" aria-labelledby="method-title">
-    <div class="section-heading"><div><div class="eyebrow">02 / The method</div><h2 id="method-title">From attention shifts<br>to a model fingerprint.</h2></div><p>Subtract paired attention maps, summarize each layer and head with its top singular values, and compare the resulting probe geometry.</p></div>
+    <div class="section-heading"><div><div class="eyebrow">03 / The method</div><h2 id="method-title">From attention shifts<br>to a model fingerprint.</h2></div><p>Subtract paired attention maps, summarize each layer and head with its top singular values, and compare the resulting probe geometry.</p></div>
     <figure class="figure"><a href="assets/pipeline.webp" aria-label="Open full-size AttnDiff pipeline"><img src="assets/pipeline.webp" width="2200" height="1238" alt="AttnDiff pipeline: original and corrupted prompts pass through a target model; attention maps are pooled, subtracted, and summarized with top-K singular values to form a fingerprint." loading="lazy"></a><figcaption>Fingerprint extraction. Stack all prompt-level descriptors into F ∈ ℝ<sup>M × (LHK)</sup>, then compare models using centered linear CKA on their M × M Gram matrices.</figcaption></figure>
     <div class="method-steps"><div><h3>01 &nbsp; Align & subtract</h3><p>Pool each paired attention map to the smaller token length. Subtract to isolate the response to the semantic pivot.</p></div><div><h3>02 &nbsp; Keep a compact spectrum</h3><p>Retain K = 3 singular values per head and layer. Aggregate all heads and layers into a fingerprint for each probe.</p></div><div><h3>03 &nbsp; Compare probe geometry</h3><p>Centered linear CKA compares models with different feature dimensions, without requiring explicit layer or head matching.</p></div></div>
   </section>
 
   <section class="section" id="results" aria-labelledby="results-title">
-    <div class="section-heading"><div><div class="eyebrow">03 / Robustness & discrimination</div><h2 id="results-title">Follow the evidence.</h2></div><p>Explore individual model comparisons, then inspect the full baseline benchmark. All values below are reported in the supplied paper.</p></div>
+    <div class="section-heading"><div><div class="eyebrow">04 / Robustness & discrimination</div><h2 id="results-title">Follow the evidence.</h2></div><p>Explore individual model comparisons, then inspect the full baseline benchmark. Values are reported in the paper; similarity and discriminability answer different questions.</p></div>
     <div class="tabs" role="tablist" aria-label="Robustness experiments"><button id="tab-fine" role="tab" aria-selected="true" aria-controls="experiment-panel" data-experiment="fine">Fine-tuning</button><button id="tab-merge" role="tab" aria-selected="false" aria-controls="experiment-panel" tabindex="-1" data-experiment="merge">Merging</button><button id="tab-prune" role="tab" aria-selected="false" aria-controls="experiment-panel" tabindex="-1" data-experiment="prune">Pruning</button></div>
     <div class="experiment" id="experiment-panel" role="tabpanel" aria-labelledby="tab-fine" tabindex="0">
       <div><h3 id="experiment-title">01 / Fine-tuning</h3><p id="experiment-description">Six downstream models span 5 million to 700 billion fine-tuning tokens. Does a fingerprint survive substantial domain adaptation?</p><p class="takeaway" id="experiment-takeaway">AttnDiff retains similarity above 0.985 across all six derivatives. REEF is also strong, with a slightly higher mean (0.9966 vs. 0.9945).</p><p class="source" id="experiment-source">Table 1 · Llama-2-7B derivatives</p><p class="source">Similarity scores, on a 0–1 scale. REEF is shown as a strong representation-based comparator.</p></div>
@@ -82,7 +488,7 @@
   </section>
 
   <section class="section" id="ablations" aria-labelledby="ablations-title">
-    <div class="section-heading"><div><div class="eyebrow">04 / Controlled ablations</div><h2 id="ablations-title">Which choices matter?</h2></div><p>Isolate the differential mechanism, probe budget, spectral rank, and similarity metric. Report both related and unrelated models to expose the trade-offs.</p></div>
+    <div class="section-heading"><div><div class="eyebrow">05 / Controlled ablations</div><h2 id="ablations-title">Which choices matter?</h2></div><p>Isolate the differential mechanism, probe budget, spectral rank, and similarity metric. Report both related and unrelated models to expose the trade-offs.</p></div>
     <div class="ablation-grid">
       <article class="ablation-card"><h3>The difference makes a difference.</h3><p>Replace differential attention with original attention while keeping the other preprocessing steps identical.</p><div class="table-scroll"><table aria-label="Differential mechanism ablation"><thead><tr><th scope="col">Model / group</th><th scope="col">Original</th><th scope="col">Differential</th></tr></thead><tbody><tr><th scope="row">CodeLLaMA-7B</th><td>0.5134</td><td class="related">0.9890</td></tr><tr><th scope="row">Llemma-7B</th><td>0.2902</td><td class="related">0.9856</td></tr><tr><th scope="row">Related mean ↑</th><td>0.8817</td><td class="related">0.9937</td></tr><tr><th scope="row">Unrelated mean ↓</th><td>0.3731</td><td class="related">0.1647</td></tr></tbody></table></div><p class="source">Table 11 · 11 related + 8 unrelated models. Group means use this ablation subset.</p></article>
       <article class="ablation-card"><h3>How many probes are enough?</h3><p>Very small probe sets (M ≤ 15) produce spurious similarity for unrelated models. The paper chooses M = 60 for separation and efficiency.</p><a href="assets/probe-budget.webp" aria-label="Open full-size probe budget plot"><img src="assets/probe-budget.webp" width="543" height="300" loading="lazy" alt="Paper Figure 5: similarity across probe counts 5, 15, 30, 60, 120, and 240; related model curves stay high while unrelated model curves fall. The vertical axis has a break."></a><p class="source">Figure 5 · Original figure with a broken vertical axis; inspect its scale when comparing curves.</p></article>
@@ -93,7 +499,7 @@
     <details class="detail"><summary>Compute budget and scope of the method</summary><p>With M = 60 pairs, extraction requires 120 forward passes per model. The paper reports approximately 5 minutes for a 7B model on a single NVIDIA RTX 5090. This is a reported setup-specific timing, not a universal runtime guarantee. Reference fingerprints can be cached.</p><p>AttnDiff requires access to internal attention activations. The evaluated transformations support empirical provenance analysis; similarity alone does not establish legal ownership or guarantee robustness to every adaptive attack. See the paper’s limitations for the scope of the claims.</p></details>
   </section>
 
-  <section class="section" id="reproduce" aria-labelledby="reproduce-title"><div class="reproduce"><div><div class="eyebrow" style="color:#a9bdff">05 / Reproduce & explore</div><h2 id="reproduce-title">Start with a fingerprint.</h2><p>Install the package, then compare the included pre-computed fingerprints. To extract your own, configure model paths and device settings in the batch script.</p><a href="https://github.com/zhb0119/AttnDiff#quick-start">Full installation & usage guide ↗</a></div><pre><code>git clone https://github.com/zhb0119/AttnDiff.git
+  <section class="section" id="reproduce" aria-labelledby="reproduce-title"><div class="reproduce"><div><div class="eyebrow" >06 / Reproduce & explore</div><h2 id="reproduce-title">Start with a fingerprint.</h2><p>Install the package, then compare the included pre-computed fingerprints. To extract your own, configure model paths and device settings in the batch script.</p><a href="https://github.com/zhb0119/AttnDiff#quick-start">Full installation & usage guide ↗</a></div><pre><code>git clone https://github.com/zhb0119/AttnDiff.git
 cd AttnDiff
 uv sync
 

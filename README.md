@@ -2,6 +2,28 @@
 
 # AttnDiff: Attention-based Differential Fingerprinting for Large Language Models
 
+<p>
+  <strong>Haobo Zhang</strong><sup>1,3*</sup> &nbsp;
+  <strong>Zhenhua Xu</strong><sup>2,3*</sup> &nbsp;
+  <strong>Junxian Li</strong><sup>4</sup> &nbsp;
+  <strong>Shangfeng Sheng</strong><sup>5</sup> &nbsp;
+  <strong>Dezhang Kong</strong><sup>2,3†</sup> &nbsp;
+  <strong>Meng Han</strong><sup>2,3†</sup>
+</p>
+<p>
+  <sup>1</sup> Zhejiang University of Technology &nbsp;·&nbsp;
+  <sup>2</sup> Zhejiang University &nbsp;·&nbsp;
+  <sup>3</sup> Binjiang Institute of Zhejiang University<br>
+  <sup>4</sup> Shanghai Jiao Tong University &nbsp;·&nbsp;
+  <sup>5</sup> University of Science and Technology of China
+</p>
+<p><sup>*</sup> Equal contribution &nbsp; <sup>†</sup> Corresponding authors</p>
+<p>
+  <a href="mailto:zhanghaobo@zjut.edu.cn">zhanghaobo@zjut.edu.cn</a> &nbsp;·&nbsp;
+  <a href="mailto:xuzhenhua0326@zju.edu.cn">xuzhenhua0326@zju.edu.cn</a> &nbsp;·&nbsp;
+  <a href="mailto:mhan@zju.edu.cn">mhan@zju.edu.cn</a>
+</p>
+
 [![NeurIPS 2026](https://img.shields.io/badge/NeurIPS-2026-244AC8)](https://neurips.cc/)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.05502-B31B1B?logo=arxiv)](https://arxiv.org/abs/2604.05502)
 [![Project Page](https://img.shields.io/badge/Project-Page-244AC8)](https://zhb0119.github.io/AttnDiff/)
@@ -269,7 +291,7 @@ The following table categorizes all models used in experiments by their manipula
 | **Model Distillation** | Reasoning | Llama-3.1-8B, Qwen2.5-7B, Qwen2.5-14B | Llama-3.1-8B-Instruct-Open-R1-Distill, Qwen2.5-7B-Open-R1-Distill, DeepSeek-R1-Distill-Qwen-14B |
 | | Logit-based | Llama-2-7B | llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2 |
 | **MoE** | Mixtral | Mixtral-8x7B | Instruct_Mixtral-8x7B-v0.1_Dolly15K, Nous-Hermes-2-Mixtral-8x7B-DPO, openbuddy-mixtral-8x7b-v15.4 |
-| **Cross-Family** | Qwen2.5 | Qwen2.5-7B | Qwen2.5-Coder-1.5B, Qwen2.5-Math-1.5B, Qwen2.5-1.5B-Instruct |
+| **Cross-Family** | Qwen2.5 | Qwen2.5-1.5B | Qwen2.5-Coder-1.5B, Qwen2.5-Math-1.5B, Qwen2.5-1.5B-Instruct |
 | | | Qwen2.5-14B | Qwen2.5-14B-Instruct, oxy-1-small, Qwen2.5-14B-Gutenberg-Instruct-Slerpeno |
 | | Gemma-2 | gemma-2-2b | gemma-2-2b-neogenes-ita, gemma-2-baku-2b, gemma2-2b-merged |
 | | Mistral | Mistral-7B-v0.3 | AQUA-7B, spellcheck-mistral-7b, Mistral-7B-Instruct-demi-merge-v0.3-7B |
@@ -287,8 +309,8 @@ The following table provides Hugging Face repository links for key models used i
 | **Fine-tuning** | Llama-2-7b-ppo-lora | [renyiyu/llama-2-7b-ppo-lora-v0.1](https://huggingface.co/renyiyu/llama-2-7b-ppo-lora-v0.1) |
 | | Tulu-2-dpo-7b | [allenai/tulu-2-dpo-7b](https://huggingface.co/allenai/tulu-2-dpo-7b) |
 | | Llama2-7b-dpo | [mncai/llama2-7b-dpo-v1](https://huggingface.co/mncai/llama2-7b-dpo-v1) |
-| **Model Merging** | Evollm-jp-7b | [huggingface.co/allenai/tulu-2-dpo-7b](https://huggingface.co/allenai/tulu-2-dpo-7b) |
-| | Fusellm-7b | [huggingface.co/mncai/llama2-7b-dpo-v1](https://huggingface.co/mncai/llama2-7b-dpo-v1) |
+| **Model Merging** | Evollm-jp-7b | [SakanaAI/EvoLLM-JP-v1-7B](https://huggingface.co/SakanaAI/EvoLLM-JP-v1-7B) |
+| | Fusellm-7b | [Wanfq/FuseLLM-7B](https://huggingface.co/Wanfq/FuseLLM-7B) |
 | **Model Pruning** | Sheared-llama-1.3b | [princeton-nlp/Sheared-LLaMA-1.3B](https://huggingface.co/princeton-nlp/Sheared-LLaMA-1.3B) |
 | | Sheared-llama-2.7b | [princeton-nlp/Sheared-LLaMA-2.7B](https://huggingface.co/princeton-nlp/Sheared-LLaMA-2.7B) |
 | **Distillation** | Llama-3.1-8B-Open-R1-Distill | [asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill](https://huggingface.co/asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill) |
@@ -325,7 +347,7 @@ The following table provides Hugging Face repository links for key models used i
 
 **Homepage:** [https://zhb0119.github.io/AttnDiff/](https://zhb0119.github.io/AttnDiff/)
 
-The static website lives in [`docs/`](docs/). It presents the experimental protocol, interactive robustness comparisons, all six baselines, and key ablations. It can be published from this repository with GitHub Pages; **no separate `github.io` repository is needed**.
+The static website lives in [`docs/`](docs/). It presents an [experiment design matrix](https://zhb0119.github.io/AttnDiff/#matrix), a [searchable model directory](https://zhb0119.github.io/AttnDiff/#models), interactive robustness comparisons, all six baselines, and key ablations. It can be published from this repository with GitHub Pages; **no separate `github.io` repository is needed**.
 
 ```bash
 # Local preview
