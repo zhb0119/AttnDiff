@@ -61,7 +61,7 @@ These are **paper-reported results**, not newly run experiments. Similarity scor
 
 ### Installation
 
-**Option 1: Using uv (Recommended)**
+**Using uv (Recommended)**
 
 ```bash
 # Install uv
@@ -71,22 +71,6 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 git clone https://github.com/zhb0119/AttnDiff.git
 cd AttnDiff
 uv sync
-```
-
-**Option 2: Using pip + venv**
-
-```bash
-# Clone repository
-git clone https://github.com/zhb0119/AttnDiff.git
-cd AttnDiff
-
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# .venv\Scripts\activate   # Windows
-
-# Install dependencies
-pip install -e .
 ```
 
 ### Basic Usage
@@ -375,8 +359,6 @@ Contributions are welcome! Please open an issue or pull request on GitHub.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-
-Thank you for your interest in AttnDiff! We hope this tool aids your research.
 
 - Built with [PyTorch](https://pytorch.org/)
 - Uses [Hugging Face Transformers](https://huggingface.co/transformers)
