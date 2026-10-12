@@ -52,6 +52,7 @@ htmlcov/
 Thumbs.db
 
 # Project specific
+*.pdf
 output/
 dataset/*.json
 !dataset/README.md
