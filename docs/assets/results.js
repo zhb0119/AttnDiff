@@ -1,4 +1,4 @@
-/* Transcribed from neurips_2026.pdf. Values are similarity scores, not accuracy. */
+/* Paper-reported results: fine-tuning, merging, and pruning tables. Values are similarity scores, not accuracy. */
 window.ATTNDIFF_RESULTS = {
   fine: {
     title: "01 / Fine-tuning", source: "Table 1 · Llama-2-7B derivatives",

@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use AttnDiff, please cite the paper below."
+type: software
+title: "AttnDiff: Attention-based Differential Fingerprinting for Large Language Models"
+authors:
+  - family-names: Zhang
+    given-names: Haobo
+  - family-names: Xu
+    given-names: Zhenhua
+  - family-names: Li
+    given-names: Junxian
+  - family-names: Sheng
+    given-names: Shangfeng
+  - family-names: Kong
+    given-names: Dezhang
+  - family-names: Han
+    given-names: Meng
+repository-code: "https://github.com/zhb0119/AttnDiff"
+url: "https://zhb0119.github.io/AttnDiff/"
+license: MIT
+preferred-citation:
+  type: article
+  title: "AttnDiff: Attention-based Differential Fingerprinting for Large Language Models"
+  authors:
+    - family-names: Zhang
+      given-names: Haobo
+    - family-names: Xu
+      given-names: Zhenhua
+    - family-names: Li
+      given-names: Junxian
+    - family-names: Sheng
+      given-names: Shangfeng
+    - family-names: Kong
+      given-names: Dezhang
+    - family-names: Han
+      given-names: Meng
+  year: 2026
+  journal: arXiv
+  url: "https://arxiv.org/abs/2604.05502"

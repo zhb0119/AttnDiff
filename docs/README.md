@@ -1,7 +1,6 @@
-# AttnDiff project website
+# Project page
 
-A dependency-free, responsive static site for the paper. The intended public URL is
-https://zhb0119.github.io/AttnDiff/. A separate `zhb0119.github.io` repository is **not required**.
+The static site in this directory serves the existing **https://zhb0119.github.io/AttnDiff/** project page. It preserves the original site's model search, experiment filters, result tabs, and citation copying.
 
 ## Preview locally
 
@@ -11,49 +10,29 @@ From the repository root:
 python -m http.server 8000 --directory docs
 ```
 
-Open http://localhost:8000. You can also open `docs/index.html` directly.
+Open http://localhost:8000. Use an HTTP server to test subtitle loading; local `file://` pages may block caption requests.
 
-## Publish with GitHub Pages
+## Publish
 
-1. Commit and push `docs/`, `.github/workflows/pages.yml`, and the README changes to `main`.
-2. In [repository Settings → Pages](https://github.com/zhb0119/AttnDiff/settings/pages), set **Build and deployment → Source → GitHub Actions**.
-3. In **Actions → Deploy project website**, choose **Run workflow** (or push another website change).
-4. Wait for the deployment to finish, then open https://zhb0119.github.io/AttnDiff/.
+The [Pages workflow](../.github/workflows/pages.yml) uploads this directory when changes under `docs/` are pushed to `main`. The repository's **Settings → Pages → Build and deployment → Source** should be **GitHub Actions**. A manual run is also available through **Actions → Deploy project page → Run workflow**.
 
-The workflow publishes only `docs/`. No Node installation or build step is needed.
+No Node dependencies or build step are needed. All media and site assets are served locally by GitHub Pages.
 
-If the site returns 404 after enabling Pages, check the **Deploy project website**
-workflow. A run started before Pages was enabled can fail at **Configure Pages**
-with `Get Pages site failed`. Changing Settings does not retry that run: use
-**Run workflow** to deploy the current `main` branch. Only pushes changing `docs/`
-or `.github/workflows/pages.yml` trigger automatic deployment.
+## Content and media
 
-## Content and sources
+- `index.html`: authors, affiliations, paper links, figures, demo, experiment matrix, model directory, results, and citation.
+- `assets/style.css`: existing responsive design.
+- `assets/presentation.css`: page layout and media refinements.
+- `assets/site.js`: result tabs, search/filter controls, and citation copy.
+- `assets/results.js`: paper-reported fine-tuning, merging, and pruning values.
+- `assets/teaser.png`, `assets/pipeline.png`: unmodified paper artwork.
+- Matching `.webp` files: optimized display derivatives; clicking a figure opens the original PNG.
+- `assets/video/AttnDiff_story_20s_narrated.mp4`: supplied 20-second narrated demo, copied without re-encoding.
+- `assets/video/preview.gif`: supplied animated preview used by the README.
+- `assets/video/poster.webp`: optimized poster from the supplied video assets.
+- `assets/video/captions.en.vtt`: captions converted from the supplied narration.
+- `assets/video/captions.zh.vtt`: Chinese translation of that narration.
 
-- News: September 2026 NeurIPS acceptance, supplied by the repository owner.
-- Paper and author order: the existing README citation, arXiv:2604.05502.
-- Author affiliations, contribution marks, and contact details: the author block supplied by the repository owner.
-- Experimental text and numbers: the supplied `neurips_2026.pdf`, Tables 1–4,
-  9–11, and 14; Section 5.1, Section 5.6, and the computational-cost discussion.
-- Experiment design matrix: core Tables 1–4, extended Tables A1–A7,
-  ablation Tables 9–14, and Figure 5. Filterable rows remain readable without JavaScript.
-- Model directory: 56 named suspect/comparison entries across nine categories,
-  transcribed from Tables A9–A10 and the existing README taxonomy; the 2.7B
-  ShareGPT pruning variant is also listed in Table 3. Reference/source models
-  appear on the cards. The directory is not the 69-suspect discriminability pool.
-  Table A4’s explicit caption determines the 1.5B Qwen reference model
-  (the general taxonomy lists 7B). Checkpoint links follow Table A10
-  and existing Sheared model links. EvoLLM and FuseLLM checkpoint links were
-  checked against their Hugging Face model cards (2026-10-12).
-- `assets/results.js`: transcribed values with their table references. These are
-  paper-reported results, not newly executed experiments. Group averages in
-  Table 11 and the 69-suspect benchmark in Table 4 are different evaluation pools.
-- `assets/pipeline.webp`: optimized copy of the repository's `figure/pipeline.png`.
-- `assets/probe-budget.webp` and `assets/layer-similarity.webp`: figures cropped
-  from the supplied manuscript (Figures 5 and 6), without page furniture.
-- The Paper PDF button links to the public arXiv PDF; the local anonymous reviewer
-  manuscript is used as a content reference and is not included in the website.
+The teaser and video depict an illustrative model-provenance scenario. The displayed families, fingerprint patterns, and highlighted match are schematic, not experimental attribution results.
 
-Edit text, experiment rows, and model cards in `index.html`, design in `assets/style.css`, and interactive behavior
-in `assets/site.js`. Update `assets/results.js` if paper results change. All assets
-are local; there are no analytics, font services, or third-party JavaScript dependencies.
+Author information and new adaptive-suppression results follow the supplied LaTeX manuscript. The existing public arXiv identifier is retained. When the paper changes, update both the README and page, and keep `CITATION.cff` consistent with the BibTeX.

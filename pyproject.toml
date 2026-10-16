@@ -10,7 +10,12 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "AttnDiff Contributors"},
+    {name = "Haobo Zhang"},
+    {name = "Zhenhua Xu"},
+    {name = "Junxian Li"},
+    {name = "Shangfeng Sheng"},
+    {name = "Dezhang Kong"},
+    {name = "Meng Han"},
 ]
 keywords = ["llm", "fingerprinting", "attention", "model-similarity", "deep-learning"]
 classifiers = [
