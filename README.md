@@ -51,9 +51,9 @@ AttnDiff is a **data-efficient, white-box** framework for verifying whether a su
 <div align="center">
 <a href="https://zhb0119.github.io/AttnDiff/#demo"><img src="docs/assets/video/preview.gif" width="800" alt="Animated preview: released models, transformations, semantic-conflict probes, and attention fingerprint comparison. Click to watch the narrated video."></a>
 
-**[▶ Video](https://zhb0119.github.io/AttnDiff/#demo)** · [Download MP4](https://raw.githubusercontent.com/zhb0119/AttnDiff/main/docs/assets/video/AttnDiff_story_20s_narrated.mp4)
+**[▶ Video](https://zhb0119.github.io/AttnDiff/#demo)** · [Download MP4](https://raw.githubusercontent.com/zhb0119/AttnDiff/main/docs/assets/video/AttnDiff_story_20s_captioned.mp4)
 
-<sub>English narration · English and Chinese subtitles on the project page</sub>
+<sub>English narration and embedded captions · Optional Chinese subtitles on the project page</sub>
 </div>
 
 <a id="method"></a>
