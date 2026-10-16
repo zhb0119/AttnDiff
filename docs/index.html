@@ -63,17 +63,17 @@
 
 
   <section class="section demo-section" id="demo" aria-labelledby="demo-title">
-    <div class="section-heading"><div><div class="eyebrow">Watch / 20 seconds</div><h2 id="demo-title">Whose model is it?</h2></div><p>From released checkpoints to suspect models: see how differential attention provides evidence of shared lineage.</p></div>
+    <div class="section-heading"><div><div class="eyebrow">Watch / 60 seconds</div><h2 id="demo-title">Whose model is it?</h2></div><p>From released checkpoints to suspect models: see how differential attention provides evidence of shared lineage.</p></div>
     <figure class="video-frame">
-      <video id="story-video" controls playsinline preload="metadata" poster="assets/video/poster.webp" width="1920" height="1080" aria-label="AttnDiff: a 20-second narrated overview" aria-describedby="video-caption">
-        <source src="assets/video/AttnDiff_story_20s_captioned.mp4" type="video/mp4">
+      <video id="story-video" controls playsinline preload="metadata" poster="assets/video/poster.webp" width="1920" height="1080" aria-label="AttnDiff: a 60-second narrated overview" aria-describedby="video-caption">
+        <source src="assets/video/AttnDiff_story_60s_captioned.mp4" type="video/mp4">
         <track kind="captions" src="assets/video/captions.en.vtt" srclang="en" label="English">
         <track kind="subtitles" src="assets/video/captions.zh.vtt" srclang="zh" label="中文">
-        Your browser does not support embedded video. <a href="assets/video/AttnDiff_story_20s_captioned.mp4">Download the narrated demo.</a>
+        Your browser does not support embedded video. <a href="assets/video/AttnDiff_story_60s_captioned.mp4">Download the narrated demo.</a>
       </video>
-      <figcaption id="video-caption"><span><strong>AttnDiff, explained.</strong> English narration &amp; embedded captions · Optional 中文 subtitles</span><a href="assets/video/AttnDiff_story_20s_captioned.mp4" download>Download MP4 ↓</a></figcaption>
+      <figcaption id="video-caption"><span><strong>AttnDiff, explained.</strong> English narration &amp; embedded captions · Optional 中文 subtitles</span><a href="assets/video/AttnDiff_story_60s_captioned.mp4" download>Download MP4 ↓</a></figcaption>
     </figure>
-    <details class="detail transcript"><summary>Read the video transcript</summary><p>Publicly released models enter the ecosystem. Model laundering can hide their origins. Whose model is this suspect? AttnDiff probes semantic conflicts, measures attention changes, and extracts spectral fingerprints. Fingerprint similarity reveals evidence of model lineage.</p></details>
+    <details class="detail transcript"><summary>Read the video transcript</summary><p>Public model releases form an ecosystem of candidate reference models. Fine-tuning, pruning, merging, distillation, and quantization can alter a model. Combined, these operations may obscure its origin. A suspect model appears. Which reference model might it come from? AttnDiff uses matched prompts. A small word change creates a semantic conflict, revealing how attention responds. For every layer and head, attention maps are aligned when needed. Original attention is subtracted from corrupted attention. Singular value decomposition extracts compact spectral descriptors. Across layers, heads, and probes, these form a model fingerprint. The same probes independently fingerprint each model. Centered kernel alignment compares their structure, even when feature dimensions differ. Fingerprint similarity provides evidence for tracing model lineage.</p></details>
   </section>
 
   <section class="section" id="method" aria-labelledby="method-title">

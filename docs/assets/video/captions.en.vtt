@@ -1,17 +1,38 @@
 WEBVTT
 
-00:00:00.250 --> 00:00:02.800
-Publicly released models enter the ecosystem.
+1
+00:00:00.400 --> 00:00:05.800
+Public model releases form an ecosystem of candidate reference models.
 
-00:00:03.200 --> 00:00:05.750
-Model laundering can hide their origins.
+2
+00:00:06.400 --> 00:00:14.600
+Fine-tuning, pruning, merging, distillation, and quantization can alter a model. Combined, these operations may
+obscure its origin.
 
-00:00:06.250 --> 00:00:08.700
-Whose model is this suspect?
+3
+00:00:15.400 --> 00:00:20.600
+A suspect model appears. Which reference model might it come from?
 
-00:00:09.250 --> 00:00:14.650
-AttnDiff probes semantic conflicts, measures attention changes,
-and extracts spectral fingerprints.
+4
+00:00:21.400 --> 00:00:28.600
+AttnDiff uses matched prompts. A small word change creates a semantic conflict, revealing how attention
+responds.
 
-00:00:15.300 --> 00:00:18.800
-Fingerprint similarity reveals evidence of model lineage.
+5
+00:00:29.400 --> 00:00:37.600
+For every layer and head, attention maps are aligned when needed. Original attention is subtracted from
+corrupted attention.
+
+6
+00:00:38.400 --> 00:00:46.600
+Singular value decomposition extracts compact spectral descriptors. Across layers, heads, and probes, these
+form a model fingerprint.
+
+7
+00:00:47.400 --> 00:00:54.600
+The same probes independently fingerprint each model. Centered kernel alignment compares their structure,
+even when feature dimensions differ.
+
+8
+00:00:55.300 --> 00:00:59.000
+Fingerprint similarity provides evidence for tracing model lineage.

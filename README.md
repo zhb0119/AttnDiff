@@ -8,7 +8,7 @@
 
 [![Paper](https://img.shields.io/badge/arXiv-2604.05502-B31B1B?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2604.05502)
 [![Project Page](https://img.shields.io/badge/Project-Page-216557?logo=googlechrome&logoColor=white)](https://zhb0119.github.io/AttnDiff/)
-[![Video](https://img.shields.io/badge/▶_Video-20_seconds-E7AB46?labelColor=273D39)](https://zhb0119.github.io/AttnDiff/#demo)
+[![Video](https://img.shields.io/badge/▶_Video-60_seconds-E7AB46?labelColor=273D39)](https://zhb0119.github.io/AttnDiff/#demo)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-216557)](LICENSE)
@@ -51,7 +51,7 @@ AttnDiff is a **data-efficient, white-box** framework for verifying whether a su
 <div align="center">
 <a href="https://zhb0119.github.io/AttnDiff/#demo"><img src="docs/assets/video/preview.gif" width="800" alt="Animated preview: released models, transformations, semantic-conflict probes, and attention fingerprint comparison. Click to watch the narrated video."></a>
 
-**[▶ Video](https://zhb0119.github.io/AttnDiff/#demo)** · [Download MP4](https://raw.githubusercontent.com/zhb0119/AttnDiff/main/docs/assets/video/AttnDiff_story_20s_captioned.mp4)
+**[▶ Watch the 60-second video](https://zhb0119.github.io/AttnDiff/#demo)** · [Download MP4](https://raw.githubusercontent.com/zhb0119/AttnDiff/main/docs/assets/video/AttnDiff_story_60s_captioned.mp4)
 
 <sub>English narration and embedded captions · Optional Chinese subtitles on the project page</sub>
 </div>
