@@ -1,6 +1,7 @@
 <div align="center">
 
-# AttnDiff
+<h1><img src="docs/assets/mascot.webp" width="64" height="64" align="middle" alt="AttnDiff logo"> AttnDiff</h1>
+
 ### Attention-based Differential Fingerprinting for Large Language Models
 
 **NeurIPS 2026**
@@ -12,14 +13,14 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-216557)](LICENSE)
 
-**Haobo Zhang**<sup>1,3,*</sup> · **Zhenhua Xu**<sup>2,3,*</sup> · **Junxian Li**<sup>4</sup><br>
+**Haobo Zhang**<sup>1,3,&#42;</sup> · **Zhenhua Xu**<sup>2,3,&#42;</sup> · **Junxian Li**<sup>4</sup><br>
 **Shangfeng Sheng**<sup>5</sup> · **Dezhang Kong**<sup>2,3,†</sup> · **Meng Han**<sup>2,3,†</sup>
 
 <sup>1</sup> Renmin University of China<br>
 <sup>2</sup> Zhejiang University · <sup>3</sup> Binjiang Institute of Zhejiang University<br>
 <sup>4</sup> Shanghai Jiao Tong University · <sup>5</sup> University of Science and Technology of China
 
-<sup>*</sup> Equal contribution &nbsp; <sup>†</sup> Corresponding authors<br>
+<sup>&#42;</sup> Equal contribution &nbsp; <sup>†</sup> Corresponding authors<br>
 [haobo0119@gmail.com](mailto:haobo0119@gmail.com) · [xuzhenhua0326@zju.edu.cn](mailto:xuzhenhua0326@zju.edu.cn) · [mhan@zju.edu.cn](mailto:mhan@zju.edu.cn)
 
 **Trace model provenance through differential attention.**
@@ -28,7 +29,7 @@
 
 <sub>Model families, fingerprint patterns, and the highlighted match are illustrative.</sub>
 
-[Overview](#overview) · [Video](#video) · [Method](#method) · [Quick Start](#quick-start) · [Results](#results) · [Citation](#citation)
+[Overview](#overview) · [Video](#video) · [Method](#method) · [Quick Start](#quick-start) · [Results](#results) · [Model Zoo](#models) · [Citation](#citation)
 
 </div>
 
@@ -182,7 +183,217 @@ The following are **paper-reported results**, not measurements produced by the q
 The adaptive study covers one related Gemma-2 model pair. Its findings support private, refreshed probes within that setting; they do not establish robustness to unrestricted adaptive attacks. AUROC/AUPR are ranking metrics, not accuracy percentages.
 
 **[Explore interactive results and ablations →](https://zhb0119.github.io/AttnDiff/#results)**<br>
-**[Browse model families and checkpoints →](docs/model-zoo.md)**
+**[Browse model families and checkpoints →](#models)**
+
+<a id="models"></a>
+
+## 🗂️ Model Zoo
+
+**56 catalog entries · 9 experiment categories**
+
+Explore the model families and transformations evaluated in the paper. Each experiment uses its own subset; this directory is separate from the 36-related / 33-unrelated discriminability benchmark.
+
+<table>
+<tr>
+<td width="33%" valign="top">
+<h4>🧠 Fine-tuning</h4>
+<p><b>6 entries</b><br><sub>Llama-2-Finance · Vicuna · CodeLLaMA</sub></p>
+<a href="#models-fine">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>🎯 Preference optimization</h4>
+<p><b>4 entries</b><br><sub>PPO · PPO-LoRA · Tulu-2-DPO</sub></p>
+<a href="#models-preference">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>🔀 Model merging</h4>
+<p><b>2 entries</b><br><sub>EvoLLM-JP · FuseLLM</sub></p>
+<a href="#models-merge">Explore models ↓</a>
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+<h4>✂️ Model pruning</h4>
+<p><b>9 entries</b><br><sub>Sheared-LLaMA · Sparse · Wanda</sub></p>
+<a href="#models-prune">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>🌐 Cross-family &amp; scale</h4>
+<p><b>12 entries</b><br><sub>Qwen2.5 · Gemma-2 · Mistral</sub></p>
+<a href="#models-cross">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>🧪 Distillation</h4>
+<p><b>4 entries</b><br><sub>Open-R1 · DeepSeek-R1 · Logit distillation</sub></p>
+<a href="#models-distill">Explore models ↓</a>
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+<h4>🧩 Mixture of experts</h4>
+<p><b>3 entries</b><br><sub>Mixtral · Nous-Hermes · OpenBuddy</sub></p>
+<a href="#models-moe">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>⚡ Quantization</h4>
+<p><b>6 entries</b><br><sub>GPTQ · Llama · Qwen · Mistral</sub></p>
+<a href="#models-quant">Explore models ↓</a>
+</td>
+<td width="33%" valign="top">
+<h4>🔬 Unrelated controls</h4>
+<p><b>10 entries</b><br><sub>Llama-3 · MPT · Qwen · Gemma · Yi</sub></p>
+<a href="#models-control">Explore models ↓</a>
+</td>
+</tr>
+</table>
+
+<a id="models-fine"></a>
+
+<details open>
+<summary><b>🧠 Fine-tuning · 6 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| Llama-2-finance-7b | Llama-2-7B |
+| Vicuna-1.5-7b | Llama-2-7B |
+| WizardMath-7b | Llama-2-7B |
+| Chinese-LLaMA-2-7b | Llama-2-7B |
+| CodeLLaMA-7b | Llama-2-7B |
+| Llemma-7b | Llama-2-7B |
+
+</details>
+
+<a id="models-preference"></a>
+
+<details>
+<summary><b>🎯 Preference optimization · 4 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| llama-2-7b-ppo-v0.1-reward | Llama-2-7B |
+| [llama-2-7b-ppo-lora-v0.1](https://huggingface.co/renyiyu/llama-2-7b-ppo-lora-v0.1) | Llama-2-7B |
+| [tulu-2-dpo-7b](https://huggingface.co/allenai/tulu-2-dpo-7b) | Llama-2-7B |
+| [llama2-7b-dpo](https://huggingface.co/mncai/llama2-7b-dpo-v1) | Llama-2-7B |
+
+</details>
+
+<a id="models-merge"></a>
+
+<details>
+<summary><b>🔀 Model merging · 2 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Evollm-jp-7b](https://huggingface.co/SakanaAI/EvoLLM-JP-v1-7B) | Shisa-gamma-7b-v1<br>WizardMath-7b-1.1<br>Abel-7b-002 |
+| [Fusellm-7b](https://huggingface.co/Wanfq/FuseLLM-7B) | Llama-2-7B<br>OpenLLaMA-2-7b<br>mpt-7b |
+
+</details>
+
+<a id="models-prune"></a>
+
+<details>
+<summary><b>✂️ Model pruning · 9 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Sheared-LLaMA-1.3B](https://huggingface.co/princeton-nlp/Sheared-LLaMA-1.3B) | Llama-2-7B |
+| Sheared-LLaMA-1.3B-pruned | Llama-2-7B |
+| Sheared-LLaMA-1.3B-sharegpt | Llama-2-7B |
+| [Sheared-LLaMA-2.7B](https://huggingface.co/princeton-nlp/Sheared-LLaMA-2.7B) | Llama-2-7B |
+| Sheared-LLaMA-2.7B-pruned | Llama-2-7B |
+| Sheared-LLaMA-2.7B-sharegpt | Llama-2-7B |
+| Sparse-llama-2-7b | Llama-2-7B |
+| Wanda-llama-2-7b | Llama-2-7B |
+| GBLM-llama-2-7b | Llama-2-7B |
+
+</details>
+
+<a id="models-cross"></a>
+
+<details>
+<summary><b>🌐 Cross-family & scale · 12 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Qwen2.5-Coder-1.5B](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B) | Qwen2.5-1.5B |
+| [Qwen2.5-Math-1.5B](https://huggingface.co/Qwen/Qwen2.5-Math-1.5B) | Qwen2.5-1.5B |
+| [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) | Qwen2.5-1.5B |
+| [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct) | Qwen2.5-14B |
+| [oxy-1-small](https://huggingface.co/oxyapi/oxy-1-small) | Qwen2.5-14B |
+| [Qwen2.5-14B-Gutenberg-Instruct-Slerpeno](https://huggingface.co/v000000/Qwen2.5-14B-Gutenberg-Instruct-Slerpeno) | Qwen2.5-14B |
+| [gemma-2-2b-neogenesis-ita](https://huggingface.co/anakin87/gemma-2-2b-neogenesis-ita) | gemma-2-2b |
+| [gemma-2-baku-2b](https://huggingface.co/rinna/gemma-2-baku-2b) | gemma-2-2b |
+| [gemma2-2b-merged](https://huggingface.co/vonjack/gemma2-2b-merged) | gemma-2-2b |
+| [AQUA-7B](https://huggingface.co/KurmaAI/AQUA-7B) | Mistral-7B-v0.3 |
+| [spellcheck-mistral-7b](https://huggingface.co/openfoodfacts/spellcheck-mistral-7b) | Mistral-7B-v0.3 |
+| [Mistral-7B-Instruct-demi-merge-v0.3-7B](https://huggingface.co/grimjim/Mistral-7B-Instruct-demi-merge-v0.3-7B) | Mistral-7B-v0.3 |
+
+</details>
+
+<a id="models-distill"></a>
+
+<details>
+<summary><b>🧪 Distillation · 4 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Llama-3.1-8B-Instruct-Open-R1-Distill](https://huggingface.co/asas-ai/Llama-3.1-8B-Instruct-Open-R1-Distill) | Llama-3.1-8B |
+| [Qwen2.5-7B-Open-R1-Distill](https://huggingface.co/erickrus/Qwen2.5-7B-Open-R1-Distill) | Qwen2.5-7B |
+| [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | Qwen2.5-14B |
+| [llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2](https://huggingface.co/cygu/llama-2-7b-logit-watermark-distill-kgw-k1-gamma0.25-delta2) | Llama-2-7B |
+
+</details>
+
+<a id="models-moe"></a>
+
+<details>
+<summary><b>🧩 Mixture of experts · 3 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Instruct_Mixtral-8x7B-v0.1_Dolly15K](https://huggingface.co/Brillibits/Instruct_Mixtral-8x7B-v0.1_Dolly15K) | Mixtral-8x7B |
+| [Nous-Hermes-2-Mixtral-8x7B-DPO](https://huggingface.co/NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO) | Mixtral-8x7B |
+| [openbuddy-mixtral-8x7b-v15.4](https://huggingface.co/openbuddy/openbuddy-mixtral-8x7b-v15.4) | Mixtral-8x7B |
+
+</details>
+
+<a id="models-quant"></a>
+
+<details>
+<summary><b>⚡ Quantization · 6 entries</b></summary>
+
+| Model | Reference / source |
+| :--- | :--- |
+| [Qwen2.5-7B-Instruct-GPTQ-Int8](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int8) | Qwen2.5-7B |
+| [Qwen2.5-7B-Instruct-GPTQ-Int4](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4) | Qwen2.5-7B |
+| [Llama-2-7B-Chat-GPTQ](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GPTQ) | Llama-2-7B |
+| [Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8](https://huggingface.co/iqbalamo93/Meta-Llama-3.1-8B-Instruct-GPTQ-Q_8) | Llama-3.1-8B |
+| [LLaMA-3.1-8B-Instruct-INT4-GPTQ](https://huggingface.co/DaraV/LLaMA-3.1-8B-Instruct-INT4-GPTQ) | Llama-3.1-8B |
+| [Mistral-7B-Instruct-v0.3-GPTQ-4bit](https://huggingface.co/RedHatAI/Mistral-7B-Instruct-v0.3-GPTQ-4bit) | Mistral-7B-v0.3 |
+
+</details>
+
+<a id="models-control"></a>
+
+<details>
+<summary><b>🔬 Unrelated controls · 10 entries</b></summary>
+
+| Model | Compared against |
+| :--- | :--- |
+| Llama3-8B | Llama-2-7B |
+| mpt-7b | Llama-2-7B |
+| Qwen2.5-1.5B | Llama-2-7B |
+| Qwen2.5-3B | Llama-2-7B |
+| Qwen2.5-7B | Llama-2-7B |
+| Qwen2.5-14B | Llama-2-7B |
+| Qwen2.5-Math-7B | Llama-2-7B |
+| gemma-2-2b | Llama-2-7B |
+| Gemma-7B-it | Llama-2-7B |
+| Yi-6B | Llama-2-7B |
+
+</details>
+
+[🔎 Search all models on the project page](https://zhb0119.github.io/AttnDiff/#models) · [Full taxonomy & checkpoint directory](docs/model-zoo.md)
 
 ## 📁 Repository
 

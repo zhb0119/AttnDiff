@@ -3,6 +3,9 @@
 .topbar { background: #f8f9f5f5; }
 .hero { padding-top: 52px; }
 .hero h1 { font-size: clamp(76px, 9vw, 116px); }
+.brand-lockup { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 34px auto 26px; }
+.brand-lockup h1 { margin: 0; }
+.brand-mascot { width: 104px; height: 104px; border-radius: 18px; }
 .hero-summary { margin: 34px auto 28px; font-size: 19px; color: var(--muted); line-height: 1.7; }
 .teaser { text-align: left; padding: 20px; overflow: hidden; border-radius: 18px; }
 .teaser figcaption { padding: 14px 8px 0; }
@@ -37,6 +40,9 @@
   .adaptive-layout { gap: 24px; padding: 24px; }
 }
 @media (max-width: 700px) {
+  .brand-lockup { gap: 15px; margin-block: 28px 20px; }
+  .brand-lockup h1 { font-size: clamp(52px, 13vw, 76px); letter-spacing: -3px; }
+  .brand-mascot { width: 64px; height: 64px; border-radius: 12px; }
   .hero { padding-top: 34px; }
   .hero-summary { font-size: 17px; }
   .hero-summary br { display: none; }
